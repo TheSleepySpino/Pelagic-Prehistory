@@ -28,13 +28,13 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BigShark extends WaterAnimal implements GeoAnimatable {
+public class Cuttlefish extends WaterAnimal implements GeoAnimatable {
 
     // GECKOLIB //
     protected AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
-    protected static final RawAnimation ANIM_IDLE = RawAnimation.begin().thenPlay("animation.big_shark.idle");
+    protected static final RawAnimation ANIM_IDLE = RawAnimation.begin().thenPlay("animation.cuttlefish.idle");
 
-    protected BigShark(EntityType<? extends WaterAnimal> type, Level level) {
+    protected Cuttlefish(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 20, 5, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
@@ -42,13 +42,9 @@ public class BigShark extends WaterAnimal implements GeoAnimatable {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 200.0D)
-                .add(Attributes.ARMOR, 4.0D)
+                .add(Attributes.MAX_HEALTH, 12.0D)
                 .add(Attributes.MOVEMENT_SPEED, 1.28D)
-                .add(Attributes.ATTACK_DAMAGE, 1.0D)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75D)
-                .add(Attributes.ATTACK_KNOCKBACK, 1.0D)
-                .add(Attributes.FOLLOW_RANGE, 32.0D);
+                .add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     //// METHODS ////
@@ -62,8 +58,9 @@ public class BigShark extends WaterAnimal implements GeoAnimatable {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 20));
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 20));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 12.0F));
+        this.goalSelector.addGoal(8, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.0D, 1.0D));
         this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, ElderGuardian.class, 16.0F, 1.0D, 1.0D));
     }
 
@@ -101,11 +98,10 @@ public class BigShark extends WaterAnimal implements GeoAnimatable {
 
     //// GECKOLIB ////
 
-    private PlayState handleAnimation(AnimationState<BigShark> event) {
+    private PlayState handleAnimation(AnimationState<Cuttlefish> event) {
         event.getController().setAnimation(ANIM_IDLE);
         return PlayState.CONTINUE;
     }
-
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

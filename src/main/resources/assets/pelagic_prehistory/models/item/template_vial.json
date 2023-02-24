@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pelagic_prehistory:item/vial",
+    "layer1": "pelagic_prehistory:item/vial_overlay"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "pelagic_prehistory:block/analyzer_top",
+    "front": "pelagic_prehistory:block/analyzer_front",
+    "side": "pelagic_prehistory:block/analyzer_side"
+  }
+}

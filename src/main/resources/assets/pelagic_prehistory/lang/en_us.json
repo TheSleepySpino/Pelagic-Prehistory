@@ -1,4 +1,21 @@
 {
-  "item.bens_big_shark.big_shark_spawn_egg": "Big Shark Spawn Egg",
-  "entity.bens_big_shark.big_shark": "Big Shark"
+  "itemGroup.pelagic_prehistory": "Pelagic Prehistory",
+  "block.pelagic_prehistory.analyzer": "Analyzer",
+  "block.pelagic_prehistory.ancient_sediment": "Ancient Sediment",
+  "block.pelagic_prehistory.ancient_sediment_bricks": "Ancient Sediment Bricks",
+  "block.pelagic_prehistory.ancient_sediment_fossil": "Ancient Sediment Fossil",
+  "block.pelagic_prehistory.ancient_sediment_tablets": "Ancient Sediment Tablets",
+  "block.pelagic_prehistory.infuser": "Infuser",
+  "item.pelagic_prehistory.cuttlefish_stew": "Cuttlefish Stew",
+  "item.pelagic_prehistory.bawitius_vial": "Bawitius Vial",
+  "item.pelagic_prehistory.cladoselache_vial": "Cladoselache Vial",
+  "item.pelagic_prehistory.cymbospondylus_vial": "Cymbospondylus Vial",
+  "item.pelagic_prehistory.fossil": "Fossil",
+  "item.pelagic_prehistory.henodus_vial": "Henodus Vial",
+  "item.pelagic_prehistory.lepidotes_vial": "Lepidotes Vial",
+  "item.pelagic_prehistory.plesiosaurus_vial": "Plesiosaurus Vial",
+  "item.pelagic_prehistory.pliosaurus_vial": "Pliosaurus Vial",
+  "item.pelagic_prehistory.prognathodon_vial": "Prognathodon Vial",
+  "item.pelagic_prehistory.raw_cuttlefish": "Raw Cuttlefish",
+  "item.pelagic_prehistory.shonisaurus_vial": "Shonisaurus Vial"
 }

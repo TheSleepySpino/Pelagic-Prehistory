@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import org.jetbrains.annotations.Nullable;
 import pelagic_prehistory.PPRegistry;
 
-public class AnalyzerBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    public AnalyzerBlock(Properties properties) {
+public class InfuserBlock extends HorizontalDirectionalBlock implements EntityBlock {
+    public InfuserBlock(Properties properties) {
         super(properties);
     }
 
@@ -33,7 +33,7 @@ public class AnalyzerBlock extends HorizontalDirectionalBlock implements EntityB
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return PPRegistry.BlockEntityReg.ANALYZER.get().create(pPos, pState);
+        return null; // TODO
     }
 
     @Nullable

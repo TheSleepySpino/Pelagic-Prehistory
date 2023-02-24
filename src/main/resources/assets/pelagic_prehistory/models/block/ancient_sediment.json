@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "pelagic_prehistory:block/ancient_sediment"
+  }
+}

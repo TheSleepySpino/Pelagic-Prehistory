@@ -1,0 +1,48 @@
+{
+  "type": "pelagic_prehistory:analyzing",
+  "input": {
+    "item": "pelagic_prehistory:fossil"
+  },
+  "results": [
+    {
+      "item": "pelagic_prehistory:bawitius_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:cladoselache_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:cymbospondylus_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:dunkleosteus_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:henodus_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:lepidotes_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:plesiosaurus_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:pliosaurus_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:prognathodon_vial",
+      "weight": 10
+    },
+    {
+      "item": "pelagic_prehistory:shonisaurus_vial",
+      "weight": 10
+    }
+  ]
+}

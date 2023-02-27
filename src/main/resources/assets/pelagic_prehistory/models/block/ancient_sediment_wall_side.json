@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "pelagic_prehistory:block/ancient_sediment"
+  }
+}

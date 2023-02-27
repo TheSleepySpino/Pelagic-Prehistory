@@ -1,6 +1,7 @@
 package pelagic_prehistory.client;
 
 import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.PPRegistry;
+import pelagic_prehistory.client.menu.AnalyzerScreen;
 import pelagic_prehistory.item.VialItem;
 
 public final class ClientEvents {
@@ -28,7 +30,7 @@ public final class ClientEvents {
 
         @SubscribeEvent
         public static void onCommonSetup(final FMLCommonSetupEvent event) {
-
+            event.enqueueWork(ModHandler::onRegisterScreens);
         }
 
         @SubscribeEvent
@@ -39,6 +41,10 @@ public final class ClientEvents {
                 }
                 return -1;
             }, PPRegistry.ItemReg.getVialItems().stream().map(RegistryObject::get).toList().toArray(new Item[0]));
+        }
+
+        private static void onRegisterScreens() {
+            MenuScreens.register(PPRegistry.MenuReg.ANALYZER.get(), AnalyzerScreen::new);
         }
     }
 

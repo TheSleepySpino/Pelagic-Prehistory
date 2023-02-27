@@ -1,0 +1,9 @@
+{
+  "type": "pelagic_prehistory:infusing",
+  "input": {
+    "item": "pelagic_prehistory:bawitius_vial"
+  },
+  "result": {
+    "item": "pelagic_prehistory:ancient_sediment"
+  }
+}

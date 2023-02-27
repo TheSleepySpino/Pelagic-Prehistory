@@ -2,6 +2,11 @@
   "itemGroup.pelagic_prehistory": "Pelagic Prehistory",
   "block.pelagic_prehistory.analyzer": "Analyzer",
   "block.pelagic_prehistory.ancient_sediment": "Ancient Sediment",
+  "block.pelagic_prehistory.ancient_sediment_button": "Ancient Sediment Button",
+  "block.pelagic_prehistory.ancient_sediment_pressure_plate": "Ancient Sediment Pressure Plate",
+  "block.pelagic_prehistory.ancient_sediment_slab": "Ancient Sediment Slab",
+  "block.pelagic_prehistory.ancient_sediment_stairs": "Ancient Sediment Stairs",
+  "block.pelagic_prehistory.ancient_sediment_wall": "Ancient Sediment Wall",
   "block.pelagic_prehistory.ancient_sediment_bricks": "Ancient Sediment Bricks",
   "block.pelagic_prehistory.ancient_sediment_fossil": "Ancient Sediment Fossil",
   "block.pelagic_prehistory.ancient_sediment_tablets": "Ancient Sediment Tablets",
@@ -10,6 +15,7 @@
   "item.pelagic_prehistory.bawitius_vial": "Bawitius Vial",
   "item.pelagic_prehistory.cladoselache_vial": "Cladoselache Vial",
   "item.pelagic_prehistory.cymbospondylus_vial": "Cymbospondylus Vial",
+  "item.pelagic_prehistory.dunkleosteus_vial": "Dunkleosteus Vial",
   "item.pelagic_prehistory.fossil": "Fossil",
   "item.pelagic_prehistory.henodus_vial": "Henodus Vial",
   "item.pelagic_prehistory.lepidotes_vial": "Lepidotes Vial",
@@ -17,5 +23,6 @@
   "item.pelagic_prehistory.pliosaurus_vial": "Pliosaurus Vial",
   "item.pelagic_prehistory.prognathodon_vial": "Prognathodon Vial",
   "item.pelagic_prehistory.raw_cuttlefish": "Raw Cuttlefish",
-  "item.pelagic_prehistory.shonisaurus_vial": "Shonisaurus Vial"
+  "item.pelagic_prehistory.shonisaurus_vial": "Shonisaurus Vial",
+  "item.pelagic_prehistory.unknown_vial": "Unknown Vial"
 }

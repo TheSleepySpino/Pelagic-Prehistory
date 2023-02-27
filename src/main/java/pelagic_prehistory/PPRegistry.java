@@ -1,26 +1,28 @@
 package pelagic_prehistory;
 
-import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -31,11 +33,13 @@ import pelagic_prehistory.block.AnalyzerBlock;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
 import pelagic_prehistory.block.InfuserBlock;
 import pelagic_prehistory.item.VialItem;
+import pelagic_prehistory.menu.AnalyzerMenu;
+import pelagic_prehistory.recipe.AnalyzerRecipe;
+import pelagic_prehistory.recipe.InfuserRecipe;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Supplier;
 
 
 @SuppressWarnings("unused")
@@ -46,6 +50,8 @@ public final class PPRegistry {
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, PelagicPrehistory.MODID);
     private static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, PelagicPrehistory.MODID);
     private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PelagicPrehistory.MODID);
+    private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, PelagicPrehistory.MODID);
+    private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, PelagicPrehistory.MODID);
 
     public static void register() {
         BlockReg.register();
@@ -53,68 +59,24 @@ public final class PPRegistry {
         BlockEntityReg.register();
         EntityReg.register();
         MenuReg.register();
+        RecipeReg.register();
     }
 
     public static final class ItemReg {
 
         private static final List<RegistryObject<Item>> VIAL_ITEMS = new ArrayList<>();
-        private static CreativeModeTab tab;
 
         public static void register() {
             ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ItemReg::onTabRegister);
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ItemReg::onTabBuildContents);
-        }
-
-        public static void onTabRegister(final CreativeModeTabEvent.Register event) {
-            tab = event.registerCreativeModeTab(new ResourceLocation(PelagicPrehistory.MODID, "tab"), b -> b
-                    .title(Component.translatable("itemGroup." + PelagicPrehistory.MODID))
-                    .icon(Suppliers.memoize(() -> new ItemStack(PLESIOSAURUS_VIAL.get()))));
-        }
-
-        public static void onTabBuildContents(final CreativeModeTabEvent.BuildContents event) {
-            if(event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
-                event.accept(ANCIENT_SEDIMENT_BLOCK);
-                event.accept(ANCIENT_SEDIMENT_BRICKS_BLOCK);
-                event.accept(ANCIENT_SEDIMENT_FOSSIL_BLOCK);
-                event.accept(ANCIENT_SEDIMENT_TABLETS_BLOCK);
-            }
-            if(event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
-                event.accept(RAW_CUTTLEFISH);
-                event.accept(CUTTLEFISH_STEW);
-            }
-            if(event.getTab() == tab) {
-                // block items
-                event.accept(ANCIENT_SEDIMENT_BLOCK);
-                event.accept(ANCIENT_SEDIMENT_BRICKS_BLOCK);
-                event.accept(ANCIENT_SEDIMENT_FOSSIL_BLOCK);
-                event.accept(ANCIENT_SEDIMENT_TABLETS_BLOCK);
-                event.accept(ANALYZER_BLOCK);
-                event.accept(INFUSER_BLOCK);
-                // crafting materials
-                event.accept(FOSSIL);
-                event.accept(RAW_CUTTLEFISH);
-                event.accept(CUTTLEFISH_STEW);
-                // vials
-                event.accept(BAWITIUS_VIAL);
-                event.accept(CLADOSELACHE_VIAL);
-                event.accept(CYMBOSPONDYLUS_VIAL);
-                event.accept(DUNKLEOSTEUS_VIAL);
-                event.accept(HENODUS_VIAL);
-                event.accept(LEPIDOTES_VIAL);
-                event.accept(PLESIOSAURUS_VIAL);
-                event.accept(PLIOSAURUS_VIAL);
-                event.accept(PROGNATHODON_VIAL);
-                event.accept(SHONISAURUS_VIAL);
-            }
+            VIAL_ITEMS.add(UNKNOWN_VIAL);
         }
 
         // CRAFTING MATERIALS //
         private static final FoodProperties CUTTLEFISH_FOOD = new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build();
-        public static final RegistryObject<Item> RAW_CUTTLEFISH = ITEMS.register("raw_cuttlefish", () -> new Item(new Item.Properties().food(CUTTLEFISH_FOOD)));
+        public static final RegistryObject<Item> RAW_CUTTLEFISH = registerWithTab("raw_cuttlefish", () -> new Item(new Item.Properties().food(CUTTLEFISH_FOOD)));
         private static final FoodProperties CUTTLEFISH_STEW_FOOD = new FoodProperties.Builder().nutrition(8).saturationMod(0.3F).build();
-        public static final RegistryObject<Item> CUTTLEFISH_STEW = ITEMS.register("cuttlefish_stew", () -> new Item(new Item.Properties().food(CUTTLEFISH_STEW_FOOD)));
-        public static final RegistryObject<Item> FOSSIL = ITEMS.register("fossil", () -> new Item(new Item.Properties()));
+        public static final RegistryObject<Item> CUTTLEFISH_STEW = registerWithTab("cuttlefish_stew", () -> new Item(new Item.Properties().food(CUTTLEFISH_STEW_FOOD)));
+        public static final RegistryObject<Item> FOSSIL = registerWithTab("fossil", () -> new Item(new Item.Properties()));
 
         // VIALS //
         public static final RegistryObject<Item> BAWITIUS_VIAL = registerVial("bawitius",0xb75194);
@@ -127,22 +89,38 @@ public final class PPRegistry {
         public static final RegistryObject<Item> PLIOSAURUS_VIAL = registerVial("pliosaurus", 0x4e402c);
         public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVial("prognathodon", 0xa1ae75);
         public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVial("shonisaurus", 0x3a746b);
+        public static final RegistryObject<Item> UNKNOWN_VIAL = ITEMS.register("unknown_vial", () -> new VialItem(0xc0c0c0, new Item.Properties()));
 
-        // BLOCK ITEMS //
-        public static final RegistryObject<Item> ANALYZER_BLOCK = registerBlockItem(BlockReg.ANALYZER);
-        public static final RegistryObject<Item> INFUSER_BLOCK = registerBlockItem(BlockReg.INFUSER);
-        public static final RegistryObject<Item> ANCIENT_SEDIMENT_BLOCK = registerBlockItem(BlockReg.ANCIENT_SEDIMENT);
-        public static final RegistryObject<Item> ANCIENT_SEDIMENT_BRICKS_BLOCK = registerBlockItem(BlockReg.ANCIENT_SEDIMENT_BRICKS);
-        public static final RegistryObject<Item> ANCIENT_SEDIMENT_FOSSIL_BLOCK = registerBlockItem(BlockReg.ANCIENT_SEDIMENT_FOSSIL);
-        public static final RegistryObject<Item> ANCIENT_SEDIMENT_TABLETS_BLOCK = registerBlockItem(BlockReg.ANCIENT_SEDIMENT_TABLETS);
-
+        /**
+         * Creates a registry object for a block item and adds it to the mod creative tab
+         * @param block the block
+         * @return the registry object
+         */
         private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
-            return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
+            return registerWithTab(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
         }
 
+        /**
+         * Creates a registry object for the given vial item and adds it to the mod creative tab
+         * @param name the registry name
+         * @param color the vial color
+         * @return the item registry object
+         */
         private static RegistryObject<Item> registerVial(final String name, final int color) {
-            final RegistryObject<Item> item = ITEMS.register(name + "_vial", () -> new VialItem(color, new Item.Properties().stacksTo(16)));
+            final RegistryObject<Item> item = registerWithTab(name + "_vial", () -> new VialItem(color, new Item.Properties().stacksTo(16)));
             VIAL_ITEMS.add(item);
+            return item;
+        }
+
+        /**
+         * Creates a registry object for the given item and adds it to the mod creative tab
+         * @param name the registry name
+         * @param supplier the item supplier
+         * @return the item registry object
+         */
+        private static RegistryObject<Item> registerWithTab(final String name, final Supplier<Item> supplier) {
+            final RegistryObject<Item> item = ITEMS.register(name, supplier);
+            PPTab.add(item);
             return item;
         }
 
@@ -157,19 +135,33 @@ public final class PPRegistry {
             BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         }
 
-        public static final RegistryObject<Block> ANALYZER = BLOCKS.register("analyzer", () ->
+        public static final RegistryObject<Block> ANALYZER = registerWithItem("analyzer", () ->
                 new AnalyzerBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).sound(SoundType.METAL)));
-        public static final RegistryObject<Block> ANCIENT_SEDIMENT = BLOCKS.register("ancient_sediment", () ->
-                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
-        public static final RegistryObject<Block> ANCIENT_SEDIMENT_BRICKS = BLOCKS.register("ancient_sediment_bricks", () ->
-                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
-        public static final RegistryObject<Block> ANCIENT_SEDIMENT_FOSSIL = BLOCKS.register("ancient_sediment_fossil", () ->
-                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(4.0F, 8.0F).sound(SoundType.DEEPSLATE)));
-        public static final RegistryObject<Block> ANCIENT_SEDIMENT_TABLETS = BLOCKS.register("ancient_sediment_tablets", () ->
-                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
-        public static final RegistryObject<Block> INFUSER = BLOCKS.register("infuser", () ->
+        public static final RegistryObject<Block> INFUSER = registerWithItem("infuser", () ->
                 new InfuserBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).sound(SoundType.METAL)));
+        public static final RegistryObject<Block> ANCIENT_SEDIMENT = registerBlockSlabStairsWallPlateButton("ancient_sediment", BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE));
+        public static final RegistryObject<Block> ANCIENT_SEDIMENT_BRICKS = registerWithItem("ancient_sediment_bricks", () ->
+                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
+        public static final RegistryObject<Block> ANCIENT_SEDIMENT_FOSSIL = registerWithItem("ancient_sediment_fossil", () ->
+                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(4.0F, 8.0F).sound(SoundType.DEEPSLATE)));
+        public static final RegistryObject<Block> ANCIENT_SEDIMENT_TABLETS = registerWithItem("ancient_sediment_tablets", () ->
+                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
 
+        private static RegistryObject<Block> registerWithItem(final String name, final Supplier<Block> supplier) {
+            final RegistryObject<Block> block = BLOCKS.register(name, supplier);
+            ItemReg.registerBlockItem(block);
+            return block;
+        }
+
+        private static RegistryObject<Block> registerBlockSlabStairsWallPlateButton(final String name, final BlockBehaviour.Properties properties) {
+            final RegistryObject<Block> block = registerWithItem(name, () -> new Block(properties));
+            final RegistryObject<Block> slab = registerWithItem(name + "_slab", () -> new SlabBlock(properties));
+            final RegistryObject<Block> stairs = registerWithItem(name + "_stairs", () -> new StairBlock(() -> block.get().defaultBlockState(), properties));
+            final RegistryObject<Block> walls = registerWithItem(name + "_wall", () -> new WallBlock(properties));
+            final RegistryObject<Block> pressurePlate = registerWithItem(name + "_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, properties, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON));
+            final RegistryObject<Block> button = registerWithItem(name + "_button", () -> new ButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.STONE), 20, false, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON));
+            return block;
+        }
     }
 
     public static final class BlockEntityReg {
@@ -214,6 +206,14 @@ public final class PPRegistry {
             MENU_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         }
 
+        public static final RegistryObject<MenuType<AnalyzerMenu>> ANALYZER = MENU_TYPES.register("analyzer", () ->
+                IForgeMenuType.create(((windowId, inv, data) -> {
+                    final BlockPos pos = data.readBlockPos();
+                    return new AnalyzerMenu(MenuReg.ANALYZER.get(), windowId, inv, (AnalyzerBlockEntity) inv.player.level.getBlockEntity(pos));
+                })
+            )
+        );
+
         /*public static final RegistryObject<MenuType<PocketMenu>> POCKET = MENU_TYPES.register("pocket", () ->
                 IForgeMenuType.create((windowId, inv, data) -> {
                     final int entityId = data.readInt();
@@ -225,5 +225,19 @@ public final class PPRegistry {
                     return new PocketMenu(windowId, inv, iPocket.getInventory());
                 })
         );*/
+    }
+
+    public static final class RecipeReg {
+
+        public static void register() {
+            RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+            RECIPE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        }
+
+        public static final RegistryObject<RecipeType<AnalyzerRecipe>> ANALYZING_TYPE = RECIPE_TYPES.register("analyzing", () -> RecipeType.simple(new ResourceLocation(PelagicPrehistory.MODID, "analyzing")));
+        public static final RegistryObject<RecipeType<InfuserRecipe>> INFUSING_TYPE = RECIPE_TYPES.register("infusing", () -> RecipeType.simple(new ResourceLocation(PelagicPrehistory.MODID, "infusing")));
+
+        public static final RegistryObject<RecipeSerializer<AnalyzerRecipe>> ANALYZING_SERIALIZER = RECIPE_SERIALIZERS.register("analyzing", () -> new AnalyzerRecipe.Serializer());
+        public static final RegistryObject<RecipeSerializer<InfuserRecipe>> INFUSING_SERIALIZER = RECIPE_SERIALIZERS.register("infusing", () -> new InfuserRecipe.Serializer());
     }
 }

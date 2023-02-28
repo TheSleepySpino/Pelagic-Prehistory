@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
@@ -15,26 +14,27 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import pelagic_prehistory.PPRegistry;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
+import pelagic_prehistory.block.InfuserBlockEntity;
 
-public class AnalyzerMenu extends AbstractContainerMenu {
+public class InfuserMenu extends AbstractContainerMenu {
 
-    public static final int INPUT_SIZE = 1;
-    public static final int OUTPUT_SIZE = 5;
+    public static final int INPUT_SIZE = 2;
+    public static final int OUTPUT_SIZE = 1;
     public static final int CONTAINER_SIZE = INPUT_SIZE + OUTPUT_SIZE;
     public static final int CONTAINER_DATA_SIZE = 2;
 
     private static final int PLAYER_INV_Y = 84;
 
     private final Inventory inventory;
-    private final AnalyzerBlockEntity blockEntity;
+    private final InfuserBlockEntity blockEntity;
     private final Container container;
     private final ContainerData data;
 
-    public AnalyzerMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory pPlayerInventory, AnalyzerBlockEntity blockEntity) {
+    public InfuserMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory pPlayerInventory, InfuserBlockEntity blockEntity) {
         this(pMenuType, pContainerId, pPlayerInventory, new SimpleContainer(CONTAINER_SIZE), new SimpleContainerData(CONTAINER_DATA_SIZE), blockEntity);
     }
 
-    public AnalyzerMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory pPlayerInventory, Container container, ContainerData data, AnalyzerBlockEntity blockEntity) {
+    public InfuserMenu(@Nullable MenuType<?> pMenuType, int pContainerId, Inventory pPlayerInventory, Container container, ContainerData data, InfuserBlockEntity blockEntity) {
         super(pMenuType, pContainerId);
         checkContainerSize(blockEntity, CONTAINER_SIZE);
         this.inventory = pPlayerInventory;
@@ -43,10 +43,9 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         this.blockEntity = blockEntity;
 
         // add container slots
-        addSlot(new FossilSlot(this.container, 0, 80, 16));
-        for(int i = 0, x0 = 44, y0 = 54; i < OUTPUT_SIZE; i++) {
-            addSlot(new VialSlot(this.container, i + 1, x0 + i * 18, y0));
-        }
+        addSlot(new Slot(this.container, 0, 53, 26));
+        addSlot(new Slot(this.container, 1, 53, 44));
+        addSlot(new OutputSlot(this.container, 2, 106, 35));
 
         // add player inventory
         for(int playerRows = 0; playerRows < 3; ++playerRows) {
@@ -110,19 +109,8 @@ public class AnalyzerMenu extends AbstractContainerMenu {
 
     // SLOTS //
 
-    private static class FossilSlot extends Slot {
-        public FossilSlot(Container pContainer, int pSlot, int pX, int pY) {
-            super(pContainer, pSlot, pX, pY);
-        }
-
-        @Override
-        public boolean mayPlace(ItemStack pStack) {
-            return pStack.is(PPRegistry.ItemReg.FOSSIL.get());
-        }
-    }
-
-    private static class VialSlot extends Slot {
-        public VialSlot(Container pContainer, int pSlot, int pX, int pY) {
+    private static class OutputSlot extends Slot {
+        public OutputSlot(Container pContainer, int pSlot, int pX, int pY) {
             super(pContainer, pSlot, pX, pY);
         }
 

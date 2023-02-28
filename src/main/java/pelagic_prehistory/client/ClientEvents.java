@@ -1,9 +1,7 @@
 package pelagic_prehistory.client;
 
-import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,6 +11,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.PPRegistry;
 import pelagic_prehistory.client.menu.AnalyzerScreen;
+import pelagic_prehistory.client.menu.InfuserScreen;
 import pelagic_prehistory.item.VialItem;
 
 public final class ClientEvents {
@@ -45,6 +44,7 @@ public final class ClientEvents {
 
         private static void onRegisterScreens() {
             MenuScreens.register(PPRegistry.MenuReg.ANALYZER.get(), AnalyzerScreen::new);
+            MenuScreens.register(PPRegistry.MenuReg.INFUSER.get(), InfuserScreen::new);
         }
     }
 

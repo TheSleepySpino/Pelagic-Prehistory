@@ -18,29 +18,37 @@ import pelagic_prehistory.PPRegistry;
 public class InfuserRecipe implements Recipe<Container> {
 
     private final ResourceLocation id;
-    private final Ingredient input;
-    private final Ingredient egg;
+    private final Ingredient ingredient;
+    private final Ingredient base;
     private final ItemStack result;
 
-    public InfuserRecipe(final ResourceLocation id, Ingredient input, Ingredient egg, ItemStack result) {
+    public InfuserRecipe(final ResourceLocation id, Ingredient ingredient, Ingredient base, ItemStack result) {
         this.id = id;
-        this.input = input;
-        this.egg = egg;
+        this.ingredient = ingredient;
+        this.base = base;
         this.result = result;
     }
 
     @Override
     public boolean matches(Container pContainer, Level pLevel) {
         // validate recipe has input
-        if(input.isEmpty()) {
+        if(ingredient.isEmpty()) {
             return false;
         }
-        // validate container has item
+        // validate container has items
         if(pContainer.getContainerSize() < 2) {
             return false;
         }
-        // check if items are the same
-        return input.test(pContainer.getItem(0)) && egg.test(pContainer.getItem(1));
+        // check if items are the same (order does not matter)
+        final ItemStack itemA = pContainer.getItem(0);
+        final ItemStack itemB = pContainer.getItem(1);
+        if(ingredient.test(itemA) && base.test(itemB)) {
+            return true;
+        }
+        if(ingredient.test(itemB) && base.test(itemA)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -76,32 +84,32 @@ public class InfuserRecipe implements Recipe<Container> {
 
     public static class Serializer implements RecipeSerializer<InfuserRecipe> {
 
-        private static final String INPUT = "input";
-        private static final String EGG = "egg";
+        private static final String INGREDIENT = "ingredient";
+        private static final String BASE = "base";
         private static final String RESULT = "result";
 
         @Override
         public InfuserRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
             // parse input item
-            final Ingredient input = Ingredient.fromJson(pSerializedRecipe.get(INPUT));
-            final Ingredient egg = pSerializedRecipe.has(EGG) ? Ingredient.fromJson(pSerializedRecipe.get(EGG)) : Ingredient.of(Items.EGG);
+            final Ingredient ingredient = Ingredient.fromJson(pSerializedRecipe.get(INGREDIENT));
+            final Ingredient base = pSerializedRecipe.has(BASE) ? Ingredient.fromJson(pSerializedRecipe.get(BASE)) : Ingredient.of(Items.EGG);
             final ItemStack result = CraftingHelper.getItemStack(pSerializedRecipe.getAsJsonObject(RESULT), true, true);
             // create recipe
-            return new InfuserRecipe(pRecipeId, input, egg, result);
+            return new InfuserRecipe(pRecipeId, ingredient, base, result);
         }
 
         @Override
         public @Nullable InfuserRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            final Ingredient input = Ingredient.fromNetwork(pBuffer);
-            final Ingredient egg = Ingredient.fromNetwork(pBuffer);
+            final Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
+            final Ingredient base = Ingredient.fromNetwork(pBuffer);
             final ItemStack result = pBuffer.readItem();
-            return new InfuserRecipe(pRecipeId, input, egg, result);
+            return new InfuserRecipe(pRecipeId, ingredient, base, result);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf pBuffer, InfuserRecipe pRecipe) {
-            pRecipe.input.toNetwork(pBuffer);
-            pRecipe.egg.toNetwork(pBuffer);
+            pRecipe.ingredient.toNetwork(pBuffer);
+            pRecipe.base.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.result);
         }
     }

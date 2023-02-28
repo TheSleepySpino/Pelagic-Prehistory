@@ -7,21 +7,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import pelagic_prehistory.PelagicPrehistory;
-import pelagic_prehistory.menu.AnalyzerMenu;
+import pelagic_prehistory.menu.InfuserMenu;
 
-public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
+public class InfuserScreen extends AbstractContainerScreen<InfuserMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PelagicPrehistory.MODID, "textures/gui/analyzer.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(PelagicPrehistory.MODID, "textures/gui/infuser.png");
 
     private static final int IMAGE_WIDTH = 176;
     private static final int IMAGE_HEIGHT = 166;
 
-    private static final int PROGRESS_X = 51;
-    private static final int PROGRESS_Y = 25;
-    private static final int PROGRESS_WIDTH = 74;
-    private static final int PROGRESS_HEIGHT = 28;
+    private static final int PROGRESS_X = 72;
+    private static final int PROGRESS_Y = 18;
+    private static final int PROGRESS_WIDTH = 54;
+    private static final int PROGRESS_HEIGHT = 51;
 
-    public AnalyzerScreen(AnalyzerMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public InfuserScreen(InfuserMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
 
@@ -34,7 +34,7 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
         // render progress
         if(getMenu().isCrafting()) {
             final int progressHeight = getMenu().getScaledProgress(PROGRESS_HEIGHT);
-            blit(pPoseStack, this.leftPos + PROGRESS_X, this.topPos + PROGRESS_Y, IMAGE_WIDTH, 0, PROGRESS_WIDTH, progressHeight);
+            blit(pPoseStack, this.leftPos + PROGRESS_X, this.topPos + PROGRESS_Y + (PROGRESS_HEIGHT - progressHeight), IMAGE_WIDTH, (PROGRESS_HEIGHT - progressHeight), PROGRESS_WIDTH, progressHeight);
         }
     }
 

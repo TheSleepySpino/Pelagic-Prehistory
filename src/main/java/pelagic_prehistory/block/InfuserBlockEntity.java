@@ -17,91 +17,86 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import pelagic_prehistory.PPRegistry;
 import pelagic_prehistory.menu.AnalyzerMenu;
-import pelagic_prehistory.recipe.AnalyzerRecipe;
+import pelagic_prehistory.menu.InfuserMenu;
+import pelagic_prehistory.recipe.InfuserRecipe;
+import pelagic_prehistory.recipe.InfuserRecipe;
 
 import java.util.Optional;
 
-public class AnalyzerBlockEntity extends PPBlockEntityBase<AnalyzerRecipe> {
+public class InfuserBlockEntity extends PPBlockEntityBase<InfuserRecipe> {
 
-    public AnalyzerBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+    public InfuserBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
-        this.maxProgress = 200;
+        this.maxProgress = 120;
     }
 
     // TICKING //
 
-    public static void tick(Level level, BlockPos blockPos, BlockState blockState, AnalyzerBlockEntity blockEntity) {
+    public static void tick(Level level, BlockPos blockPos, BlockState blockState, InfuserBlockEntity blockEntity) {
         if(blockEntity.hasRecipe(level)) {
             // update progress
             blockEntity.progress = Math.min(blockEntity.progress + 1, blockEntity.maxProgress);
-            if(!blockEntity.isFull() && blockEntity.progress >= blockEntity.maxProgress) {
+            if(blockEntity.progress >= blockEntity.maxProgress) {
                 blockEntity.assembleRecipe(level);
             }
         } else {
             blockEntity.resetProgress();
         }
     }
-
+    
     // BLOCK ENTITY BASE //
 
     @Override
     protected Container createInputContainer() {
-        return new SimpleContainer(getItem(0));
+        return new SimpleContainer(getItem(0), getItem(1));
     }
 
     @Override
-    protected Optional<AnalyzerRecipe> getRecipeFor(Level level, Container input) {
-        return level.getRecipeManager().getRecipeFor(PPRegistry.RecipeReg.ANALYZING_TYPE.get(), input, level);
+    protected Optional<InfuserRecipe> getRecipeFor(Level level, Container input) {
+        return level.getRecipeManager().getRecipeFor(PPRegistry.RecipeReg.INFUSING_TYPE.get(), input, level);
     }
 
     @Override
-    protected void assembleRecipe(Level level, Container input, AnalyzerRecipe recipe) {
-        final ItemStack output = recipe.assemble(input, level.getRandom());
+    protected void assembleRecipe(Level level, Container input, InfuserRecipe recipe) {
+        final ItemStack output = recipe.assemble(input);
         if(output.isEmpty()) {
             return;
         }
         final IItemHandler itemHandler = this.itemHandler.orElse(EmptyHandler.INSTANCE);
-        for(int i = 1, n = itemHandler.getSlots(); i < n; i++) {
-            // insert item
-            if(itemHandler.insertItem(i, output, false).isEmpty()) {
-                // remove input
-                this.removeItem(0, 1);
-                this.resetProgress();
-                break;
-            }
+        if(itemHandler.insertItem(2, output, false).isEmpty()) {
+            // remove input
+            this.removeItem(0, 1);
+            this.removeItem(1, 1);
+            this.resetProgress();
         }
+    }
+
+    @Override
+    public int getContainerSize() {
+        return 3;
     }
 
     @Override
     protected IItemHandler createUnSidedHandler() {
         return new InvWrapper(this) {
             @Override
-            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return slot == 0 ? stack.is(PPRegistry.ItemReg.FOSSIL.get()) : super.isItemValid(slot, stack);
-            }
-
-            @Override
             public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return slot == 0 ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
+                return slot < 2 ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
             }
 
             @Override
             public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-                return /*slot > 0 || !stack.is(PPRegistry.ItemReg.FOSSIL.get()) ? stack : */super.insertItem(slot, stack, simulate);
+                return /*slot > 1 ? stack : */super.insertItem(slot, stack, simulate);
             }
         };
     }
 
-    @Override
-    public int getContainerSize() {
-        return 6;
-    }
 
     // MENU PROVIDER //
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new AnalyzerMenu(PPRegistry.MenuReg.ANALYZER.get(), pContainerId, pPlayerInventory, this, this.data, this);
+        return new InfuserMenu(PPRegistry.MenuReg.INFUSER.get(), pContainerId, pPlayerInventory, this, this.data, this);
     }
 }

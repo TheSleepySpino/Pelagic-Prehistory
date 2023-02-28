@@ -19,7 +19,7 @@ import java.util.List;
 
 public final class PPTab {
     private static CreativeModeTab tab;
-    private static List<RegistryObject<Item>> ITEMS = new ArrayList<>();
+    private static final List<RegistryObject<Item>> SORTED_ITEMS = new ArrayList<>();
 
     public static void register() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(PPTab::onTabRegister);
@@ -27,7 +27,7 @@ public final class PPTab {
     }
 
     public static void add(final RegistryObject<Item> item) {
-        ITEMS.add(item);
+        SORTED_ITEMS.add(item);
     }
 
     public static void onTabRegister(final CreativeModeTabEvent.Register event) {
@@ -42,6 +42,7 @@ public final class PPTab {
             event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "infuser"), ForgeRegistries.ITEMS));
         }
         if(event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "gingko_sapling"), ForgeRegistries.ITEMS));
             event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "ancient_sediment"), ForgeRegistries.ITEMS));
             event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "ancient_sediment_fossil"), ForgeRegistries.ITEMS));
         }
@@ -49,9 +50,12 @@ public final class PPTab {
             event.accept(ItemReg.RAW_CUTTLEFISH);
             event.accept(ItemReg.CUTTLEFISH_STEW);
         }
+        if(event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
+            ItemReg.getSpawnEggs().forEach(i -> event.accept(i));
+        }
         if(event.getTab() == tab) {
             // all items
-            ITEMS.forEach(i -> event.accept(i));
+            SORTED_ITEMS.forEach(i -> event.accept(i));
         }
     }
 }

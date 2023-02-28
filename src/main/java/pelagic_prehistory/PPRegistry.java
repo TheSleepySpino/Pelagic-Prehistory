@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -32,8 +33,10 @@ import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.block.AnalyzerBlock;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
 import pelagic_prehistory.block.InfuserBlock;
+import pelagic_prehistory.block.InfuserBlockEntity;
 import pelagic_prehistory.item.VialItem;
 import pelagic_prehistory.menu.AnalyzerMenu;
+import pelagic_prehistory.menu.InfuserMenu;
 import pelagic_prehistory.recipe.AnalyzerRecipe;
 import pelagic_prehistory.recipe.InfuserRecipe;
 
@@ -65,6 +68,7 @@ public final class PPRegistry {
     public static final class ItemReg {
 
         private static final List<RegistryObject<Item>> VIAL_ITEMS = new ArrayList<>();
+        private static final List<RegistryObject<Item>> SPAWN_EGGS = new ArrayList<>();
 
         public static void register() {
             ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -79,16 +83,17 @@ public final class PPRegistry {
         public static final RegistryObject<Item> FOSSIL = registerWithTab("fossil", () -> new Item(new Item.Properties()));
 
         // VIALS //
-        public static final RegistryObject<Item> BAWITIUS_VIAL = registerVial("bawitius",0xb75194);
-        public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVial("cladoselache",0xa254a9);
-        public static final RegistryObject<Item> CYMBOSPONDYLUS_VIAL = registerVial("cymbospondylus",0x80872c);
-        public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVial("dunkleosteus",0x3a9db3);
-        public static final RegistryObject<Item> HENODUS_VIAL = registerVial("henodus",0x977343);
-        public static final RegistryObject<Item> LEPIDOTES_VIAL = registerVial("lepidotes",0xb7bb65);
-        public static final RegistryObject<Item> PLESIOSAURUS_VIAL = registerVial("plesiosaurus", 0x429389);
-        public static final RegistryObject<Item> PLIOSAURUS_VIAL = registerVial("pliosaurus", 0x4e402c);
-        public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVial("prognathodon", 0xa1ae75);
-        public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVial("shonisaurus", 0x3a746b);
+        public static final RegistryObject<Item> GINGKO_TREE_VIAL = registerVial("gingko_tree", 0x0); // TODO color
+        public static final RegistryObject<Item> BAWITIUS_VIAL = registerVialAndEgg("bawitius",0xb75194);
+        public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVialAndEgg("cladoselache",0xa254a9);
+        public static final RegistryObject<Item> CYMBOSPONDYLUS_VIAL = registerVialAndEgg("cymbospondylus",0x80872c);
+        public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVialAndEgg("dunkleosteus",0x3a9db3);
+        public static final RegistryObject<Item> HENODUS_VIAL = registerVialAndEgg("henodus",0x977343);
+        public static final RegistryObject<Item> LEPIDOTES_VIAL = registerVialAndEgg("lepidotes",0xb7bb65);
+        public static final RegistryObject<Item> PLESIOSAURUS_VIAL = registerVialAndEgg("plesiosaurus", 0x429389);
+        public static final RegistryObject<Item> PLIOSAURUS_VIAL = registerVialAndEgg("pliosaurus", 0x4e402c);
+        public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVialAndEgg("prognathodon", 0xa1ae75);
+        public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVialAndEgg("shonisaurus", 0x3a746b);
         public static final RegistryObject<Item> UNKNOWN_VIAL = ITEMS.register("unknown_vial", () -> new VialItem(0xc0c0c0, new Item.Properties()));
 
         /**
@@ -107,9 +112,29 @@ public final class PPRegistry {
          * @return the item registry object
          */
         private static RegistryObject<Item> registerVial(final String name, final int color) {
-            final RegistryObject<Item> item = registerWithTab(name + "_vial", () -> new VialItem(color, new Item.Properties().stacksTo(16)));
-            VIAL_ITEMS.add(item);
-            return item;
+            final RegistryObject<Item> vial = registerWithTab(name + "_vial", () -> new VialItem(color, new Item.Properties().stacksTo(16)));
+            VIAL_ITEMS.add(vial);
+            return vial;
+        }
+
+        /**
+         * Creates a registry object for the given vial item, egg item, spawn egg item,
+         * and adds them to the correct creative tabs
+         * @param name the registry name
+         * @param color the vial color
+         * @return the item registry object
+         */
+        private static RegistryObject<Item> registerVialAndEgg(final String name, final int color) {
+            final RegistryObject<Item> vial = registerVial(name, color);
+            /* TODO use entity type once all entities are added
+            final RegistryObject<EntityType<?>> entityType = RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, name), ForgeRegistries.ENTITY_TYPES);
+            final RegistryObject<Item> egg = registerWithTab(name + "_egg", () -> new ForgeSpawnEggItem(entityType, color, 0xC0C0C0, new Item.Properties()));
+            final RegistryObject<Item> spawnEgg = ITEMS.register(name + "_spawn_egg", () -> new ForgeSpawnEggItem(entityType, color, 0xC0C0C0, new Item.Properties()));
+            SPAWN_EGGS.add(spawnEgg);*/
+            final RegistryObject<Item> egg = registerWithTab(name + "_egg", () -> new Item(new Item.Properties()));
+            final RegistryObject<Item> spawnEgg = ITEMS.register(name + "_spawn_egg", () -> new Item(new Item.Properties()));
+            SPAWN_EGGS.add(spawnEgg);
+            return vial;
         }
 
         /**
@@ -127,6 +152,11 @@ public final class PPRegistry {
         public static List<RegistryObject<Item>> getVialItems() {
             return ImmutableList.copyOf(VIAL_ITEMS);
         }
+
+        public static List<RegistryObject<Item>> getSpawnEggs() {
+            return ImmutableList.copyOf(SPAWN_EGGS);
+        }
+
     }
 
     public static final class BlockReg {
@@ -146,6 +176,9 @@ public final class PPRegistry {
                 new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(4.0F, 8.0F).sound(SoundType.DEEPSLATE)));
         public static final RegistryObject<Block> ANCIENT_SEDIMENT_TABLETS = registerWithItem("ancient_sediment_tablets", () ->
                 new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
+        public static final RegistryObject<Block> GINGKO_SAPLING = registerWithItem("gingko_sapling", () ->
+                new Block(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+
 
         private static RegistryObject<Block> registerWithItem(final String name, final Supplier<Block> supplier) {
             final RegistryObject<Block> block = BLOCKS.register(name, supplier);
@@ -173,6 +206,11 @@ public final class PPRegistry {
        public static final RegistryObject<BlockEntityType<AnalyzerBlockEntity>> ANALYZER = BLOCK_ENTITY_TYPES.register("analyzer", () ->
                 BlockEntityType.Builder.of((pos, state) -> new AnalyzerBlockEntity(BlockEntityReg.ANALYZER.get(), pos, state),
                                 BlockReg.ANALYZER.get())
+                        .build(null));
+
+        public static final RegistryObject<BlockEntityType<InfuserBlockEntity>> INFUSER = BLOCK_ENTITY_TYPES.register("infuser", () ->
+                BlockEntityType.Builder.of((pos, state) -> new InfuserBlockEntity(BlockEntityReg.INFUSER.get(), pos, state),
+                                BlockReg.INFUSER.get())
                         .build(null));
     }
 
@@ -214,17 +252,13 @@ public final class PPRegistry {
             )
         );
 
-        /*public static final RegistryObject<MenuType<PocketMenu>> POCKET = MENU_TYPES.register("pocket", () ->
-                IForgeMenuType.create((windowId, inv, data) -> {
-                    final int entityId = data.readInt();
-                    CompoundTag pocketTag = data.readNbt();
-                    IPocket iPocket = inv.player.getCapability(PoliceModule.POCKET_CAPABILITY).orElse(PocketCapability.EMPTY);
-                    if (iPocket != PocketCapability.EMPTY && pocketTag != null) {
-                        iPocket.deserializeNBT(pocketTag);
-                    }
-                    return new PocketMenu(windowId, inv, iPocket.getInventory());
-                })
-        );*/
+        public static final RegistryObject<MenuType<InfuserMenu>> INFUSER = MENU_TYPES.register("infuser", () ->
+                IForgeMenuType.create(((windowId, inv, data) -> {
+                            final BlockPos pos = data.readBlockPos();
+                            return new InfuserMenu(MenuReg.INFUSER.get(), windowId, inv, (InfuserBlockEntity) inv.player.level.getBlockEntity(pos));
+                        })
+                )
+        );
     }
 
     public static final class RecipeReg {

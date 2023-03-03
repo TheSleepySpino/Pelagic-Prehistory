@@ -42,7 +42,7 @@ public final class PPTab {
             event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "infuser"), ForgeRegistries.ITEMS));
         }
         if(event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "gingko_sapling"), ForgeRegistries.ITEMS));
+            event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "ginkgo_sapling"), ForgeRegistries.ITEMS));
             event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "ancient_sediment"), ForgeRegistries.ITEMS));
             event.accept(RegistryObject.create(new ResourceLocation(PelagicPrehistory.MODID, "ancient_sediment_fossil"), ForgeRegistries.ITEMS));
         }

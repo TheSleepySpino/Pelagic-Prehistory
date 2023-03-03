@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_rh",
+  "textures": {
+    "top": "pelagic_prehistory:block/ginkgo_door_top",
+    "bottom": "pelagic_prehistory:block/ginkgo_door_bottom"
+  }
+}

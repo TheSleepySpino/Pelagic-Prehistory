@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pelagic_prehistory:item/gingko_tree_vial"
+    "layer0": "minecraft:item/ginkgo_door"
   }
 }

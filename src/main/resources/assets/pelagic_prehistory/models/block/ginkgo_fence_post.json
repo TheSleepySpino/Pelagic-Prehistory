@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "texture": "pelagic_prehistory:block/ginkgo_planks"
+  }
+}

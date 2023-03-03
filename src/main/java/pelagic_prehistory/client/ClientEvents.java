@@ -10,6 +10,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.PPRegistry;
+import pelagic_prehistory.client.entity.DugongRenderer;
 import pelagic_prehistory.client.menu.AnalyzerScreen;
 import pelagic_prehistory.client.menu.InfuserScreen;
 import pelagic_prehistory.item.VialItem;
@@ -24,7 +25,7 @@ public final class ClientEvents {
     public static final class ModHandler {
         @SubscribeEvent
         public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-
+            event.registerEntityRenderer(PPRegistry.EntityReg.DUGONG.get(), DugongRenderer::new);
         }
 
         @SubscribeEvent

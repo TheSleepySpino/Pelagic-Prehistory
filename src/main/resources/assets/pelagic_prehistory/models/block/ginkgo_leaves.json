@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "pelagic_prehistory:block/ginkgo_leaves"
+  }
+}

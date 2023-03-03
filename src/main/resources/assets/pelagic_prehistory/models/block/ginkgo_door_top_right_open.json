@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right_open",
+  "textures": {
+    "bottom": "pelagic_prehistory:block/ginkgo_door_bottom",
+    "top": "pelagic_prehistory:block/ginkgo_door_top"
+  }
+}

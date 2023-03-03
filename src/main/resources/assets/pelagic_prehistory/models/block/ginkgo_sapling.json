@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cross",
   "render_type": "cutout",
   "textures": {
-    "cross": "pelagic_prehistory:block/gingko_sapling"
+    "cross": "pelagic_prehistory:block/ginkgo_sapling"
   }
 }

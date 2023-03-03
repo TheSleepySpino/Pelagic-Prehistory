@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "pelagic_prehistory:block/ginkgo_slab"
+    },
+    "type=double": {
+      "model": "pelagic_prehistory:block/ginkgo_planks"
+    },
+    "type=top": {
+      "model": "pelagic_prehistory:block/ginkgo_slab_top"
+    }
+  }
+}

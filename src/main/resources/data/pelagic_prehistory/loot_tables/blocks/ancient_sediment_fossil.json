@@ -24,13 +24,18 @@
                   }
                 }
               ],
-              "name": "pelagic_prehistory:ancient_sediment"
+              "name": "pelagic_prehistory:ancient_sediment_fossil"
             },
             {
               "type": "minecraft:item",
-              "conditions": [
+              "functions": [
                 {
-                  "condition": "minecraft:survives_explosion"
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:ore_drops",
+                  "function": "minecraft:apply_bonus"
+                },
+                {
+                  "function": "minecraft:explosion_decay"
                 }
               ],
               "name": "pelagic_prehistory:fossil"

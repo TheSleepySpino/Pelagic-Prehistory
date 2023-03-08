@@ -7,11 +7,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 public class DugongRenderer<T extends Dugong> extends GeoEntityRenderer<T> {
 
     public DugongRenderer(EntityRendererProvider.Context context) {
-        super(context, new DugongModel<>());
-    }
-
-    @Override
-    protected float getDeathMaxRotation(T animatable) {
-        return 0;
+        super(context, new SimplePitchGeoModel<T>("dugong"));
     }
 }

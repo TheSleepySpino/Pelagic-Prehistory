@@ -81,6 +81,13 @@ public class InfuserRecipe implements Recipe<Container> {
         return PPRegistry.RecipeReg.INFUSING_TYPE.get();
     }
 
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+    public Ingredient getBase() {
+        return base;
+    }
 
     public static class Serializer implements RecipeSerializer<InfuserRecipe> {
 

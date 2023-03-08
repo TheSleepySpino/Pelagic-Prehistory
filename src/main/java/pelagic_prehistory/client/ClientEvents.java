@@ -11,6 +11,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.PPRegistry;
 import pelagic_prehistory.client.entity.DugongRenderer;
+import pelagic_prehistory.client.entity.HenodusRenderer;
+import pelagic_prehistory.client.entity.LepidotesRenderer;
+import pelagic_prehistory.client.entity.PlesiosaurusRenderer;
+import pelagic_prehistory.client.entity.PliosaurusRenderer;
 import pelagic_prehistory.client.menu.AnalyzerScreen;
 import pelagic_prehistory.client.menu.InfuserScreen;
 import pelagic_prehistory.item.VialItem;
@@ -26,6 +30,10 @@ public final class ClientEvents {
         @SubscribeEvent
         public static void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(PPRegistry.EntityReg.DUGONG.get(), DugongRenderer::new);
+            event.registerEntityRenderer(PPRegistry.EntityReg.HENODUS.get(), HenodusRenderer::new);
+            event.registerEntityRenderer(PPRegistry.EntityReg.LEPIDOTES.get(), LepidotesRenderer::new);
+            event.registerEntityRenderer(PPRegistry.EntityReg.PLESIOSAURUS.get(), PlesiosaurusRenderer::new);
+            event.registerEntityRenderer(PPRegistry.EntityReg.PLIOSAURUS.get(), PliosaurusRenderer::new);
         }
 
         @SubscribeEvent

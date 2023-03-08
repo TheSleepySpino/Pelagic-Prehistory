@@ -26,8 +26,9 @@ public final class PPTab {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(PPTab::onTabBuildContents);
     }
 
-    public static void add(final RegistryObject<Item> item) {
+    public static RegistryObject<Item> add(final RegistryObject<Item> item) {
         SORTED_ITEMS.add(item);
+        return item;
     }
 
     public static void onTabRegister(final CreativeModeTabEvent.Register event) {

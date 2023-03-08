@@ -28,23 +28,23 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class Dugong extends WaterAnimal implements GeoAnimatable {
+public class Henodus extends WaterAnimal implements GeoAnimatable {
 
     // GECKOLIB //
     protected AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
     protected static final RawAnimation ANIM_IDLE = RawAnimation.begin().thenPlay("swim");
 
-    public Dugong(EntityType<? extends WaterAnimal> type, Level level) {
+    public Henodus(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 30, 10, 0.02F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 30, 10, 0.02F, 0.06F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 15);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 1.08D)
-                .add(Attributes.ATTACK_DAMAGE, 1.0D);
+                .add(Attributes.MOVEMENT_SPEED, 1.14D)
+                .add(Attributes.ATTACK_DAMAGE, 5.0D);
     }
 
     //// METHODS ////
@@ -59,7 +59,7 @@ public class Dugong extends WaterAnimal implements GeoAnimatable {
         super.registerGoals();
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 12.0F));
         this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 8.0F, 1.0D, 1.0D));
     }
 
@@ -80,7 +80,7 @@ public class Dugong extends WaterAnimal implements GeoAnimatable {
 
     @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.485F;
+        return 0.09375F;
     }
 
     //// NBT ////
@@ -97,8 +97,8 @@ public class Dugong extends WaterAnimal implements GeoAnimatable {
 
     //// GECKOLIB ////
 
-    private PlayState handleAnimation(AnimationState<Dugong> event) {
-        event.getController().setAnimation(ANIM_IDLE);
+    private PlayState handleAnimation(AnimationState<Henodus> event) {
+        // TODO anim event.getController().setAnimation(ANIM_IDLE);
         return PlayState.CONTINUE;
     }
 

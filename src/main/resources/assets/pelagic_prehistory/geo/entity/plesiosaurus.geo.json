@@ -1,0 +1,87 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.plesiosaurus",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "plesio",
+					"pivot": [0, 0, 0],
+					"rotation": [0, 180, 0]
+				},
+				{
+					"name": "body",
+					"parent": "plesio",
+					"pivot": [0, 4, 0],
+					"cubes": [
+						{"origin": [-4.5, 0, -13], "size": [9, 7, 21.5], "uv": [0, 38]}
+					]
+				},
+				{
+					"name": "neck",
+					"parent": "body",
+					"pivot": [1, 4, 8],
+					"cubes": [
+						{"origin": [-1.5, 1.5, 6], "size": [3, 5, 33], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "neck",
+					"pivot": [1, 4, 39],
+					"cubes": [
+						{"origin": [-2, 3, 39], "size": [4, 3, 5], "inflate": 0.002, "uv": [0, 24]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [-0.5, 5, -12],
+					"cubes": [
+						{"origin": [-1.5, 2, -27], "size": [3, 4, 16], "uv": [39, 0]},
+						{"origin": [0, 6, -26], "size": [0, 2, 5], "uv": [13, 19]}
+					]
+				},
+				{
+					"name": "fin1",
+					"parent": "body",
+					"pivot": [-4, 2, 5],
+					"cubes": [
+						{"origin": [-12, 1, 2], "size": [8, 1, 5], "uv": [0, 18]}
+					]
+				},
+				{
+					"name": "fin2",
+					"parent": "body",
+					"pivot": [4, 2, 5],
+					"cubes": [
+						{"origin": [4, 1, 2], "size": [8, 1, 5], "uv": [0, 12]}
+					]
+				},
+				{
+					"name": "fin3",
+					"parent": "body",
+					"pivot": [4, 3, -9],
+					"cubes": [
+						{"origin": [4, 2, -12], "size": [8, 1, 5], "uv": [0, 6]}
+					]
+				},
+				{
+					"name": "fin4",
+					"parent": "body",
+					"pivot": [-4, 3, -9],
+					"cubes": [
+						{"origin": [-12, 2, -12], "size": [8, 1, 5], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -6,15 +6,19 @@
   "results": [
     {
       "item": "pelagic_prehistory:ginkgo_tree_vial",
-      "weight": 10
+      "weight": 20
+    },
+    {
+      "item": "pelagic_prehistory:charnia_vial",
+      "weight": 20
     },
     {
       "item": "pelagic_prehistory:bawitius_vial",
-      "weight": 10
+      "weight": 20
     },
     {
       "item": "pelagic_prehistory:cladoselache_vial",
-      "weight": 10
+      "weight": 15
     },
     {
       "item": "pelagic_prehistory:cymbospondylus_vial",
@@ -22,7 +26,7 @@
     },
     {
       "item": "pelagic_prehistory:dunkleosteus_vial",
-      "weight": 5
+      "weight": 7
     },
     {
       "item": "pelagic_prehistory:henodus_vial",
@@ -30,7 +34,7 @@
     },
     {
       "item": "pelagic_prehistory:lepidotes_vial",
-      "weight": 10
+      "weight": 20
     },
     {
       "item": "pelagic_prehistory:plesiosaurus_vial",
@@ -38,7 +42,7 @@
     },
     {
       "item": "pelagic_prehistory:pliosaurus_vial",
-      "weight": 5
+      "weight": 3
     },
     {
       "item": "pelagic_prehistory:prognathodon_vial",
@@ -46,7 +50,7 @@
     },
     {
       "item": "pelagic_prehistory:shonisaurus_vial",
-      "weight": 3
+      "weight": 2
     }
   ]
 }

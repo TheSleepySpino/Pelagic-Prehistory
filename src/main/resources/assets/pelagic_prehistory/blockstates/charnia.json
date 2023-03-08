@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "pelagic_prehistory:block/charnia_bottom"
+    },
+    "half=upper": {
+      "model": "pelagic_prehistory:block/charnia_top"
+    }
+  }
+}

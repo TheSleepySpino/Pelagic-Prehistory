@@ -1,0 +1,21 @@
+{
+  "values": [
+    "#minecraft:snow",
+    "minecraft:air",
+    "minecraft:cave_air",
+    "minecraft:fire",
+    "minecraft:soul_fire",
+    "minecraft:grass",
+    "minecraft:moss_carpet",
+    "minecraft:cave_vines",
+    "minecraft:cave_vines_plant",
+    "minecraft:weeping_vines",
+    "minecraft:weeping_vines_plant",
+    "minecraft:twisting_vines",
+    "minecraft:twisting_vines_plant",
+    "minecraft:vine",
+    "minecraft:sculk_vein",
+    "minecraft:water",
+    "minecraft:lava"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pelagic_prehistory:item/pliosaurus_egg"
+    "layer0": "pelagic_prehistory:item/lepidotes_eggs"
   }
 }

@@ -12,59 +12,60 @@
 			},
 			"bones": [
 				{
-					"name": "body",
-					"pivot": [0, 0, 2],
+					"name": "Henodus",
+					"pivot": [0, 0, 0],
+					"rotation": [0, 180, 0],
 					"cubes": [
-						{"origin": [-5.5, 0, -6], "size": [11, 3, 11], "uv": [0, 0]}
+						{"origin": [-5.5, 0, -5.5], "size": [11, 3, 11], "uv": [0, 0]}
 					]
 				},
 				{
-					"name": "head",
-					"parent": "body",
-					"pivot": [0, 1, 5],
+					"name": "Head",
+					"parent": "Henodus",
+					"pivot": [0, 1, 5.5],
 					"cubes": [
-						{"origin": [-1.5, 0, 5], "size": [3, 2, 3], "uv": [11, 26]},
-						{"origin": [-2.5, 0, 7], "size": [5, 1, 2], "uv": [0, 24]}
+						{"origin": [-1.5, 0, 5.5], "size": [3, 2, 3], "uv": [11, 26]},
+						{"origin": [-2.5, 0, 7.5], "size": [5, 1, 2], "uv": [0, 24]}
 					]
 				},
 				{
 					"name": "RFrontFlipper",
-					"parent": "body",
-					"pivot": [3.5, 1, 4],
+					"parent": "Henodus",
+					"pivot": [3.5, 1, 4.5],
 					"cubes": [
-						{"origin": [2.5, 0, 4], "size": [5, 1, 2], "uv": [18, 23]}
+						{"origin": [2.5, 0, 4.5], "size": [5, 1, 2], "uv": [18, 23]}
 					]
 				},
 				{
 					"name": "LFrontFlipper",
-					"parent": "body",
-					"pivot": [-3.5, 1, 4],
+					"parent": "Henodus",
+					"pivot": [-3.5, 1, 4.5],
 					"cubes": [
-						{"origin": [-7.5, 0, 4], "size": [5, 1, 2], "uv": [18, 23], "mirror": true}
+						{"origin": [-7.5, 0, 4.5], "size": [5, 1, 2], "uv": [18, 23], "mirror": true}
 					]
 				},
 				{
 					"name": "RBackFlipper",
-					"parent": "body",
-					"pivot": [3.5, 1, -6],
+					"parent": "Henodus",
+					"pivot": [3.5, 1, -5.5],
 					"cubes": [
-						{"origin": [2.5, 0, -9], "size": [2, 1, 4], "uv": [12, 14]}
+						{"origin": [2.5, 0, -8.5], "size": [2, 1, 4], "uv": [12, 14]}
 					]
 				},
 				{
 					"name": "LBackFlipper",
-					"parent": "body",
-					"pivot": [-3.5, 1, -6],
+					"parent": "Henodus",
+					"pivot": [-3.5, 1, -5.5],
 					"cubes": [
-						{"origin": [-4.5, 0, -9], "size": [2, 1, 4], "uv": [12, 14], "mirror": true}
+						{"origin": [-4.5, 0, -8.5], "size": [2, 1, 4], "uv": [12, 14], "mirror": true}
 					]
 				},
 				{
 					"name": "Tail",
-					"parent": "body",
-					"pivot": [0, 1, -6],
+					"parent": "Henodus",
+					"pivot": [0, 1, -5.5],
 					"cubes": [
-						{"origin": [-1, 0, -13], "size": [2, 2, 8], "uv": [0, 14]}
+						{"origin": [-1, 0, -12.5], "size": [2, 2, 8], "uv": [0, 14]}
 					]
 				}
 			]

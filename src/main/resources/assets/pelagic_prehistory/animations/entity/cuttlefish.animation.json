@@ -5,7 +5,7 @@
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"bone": {
+				"body": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -20,7 +20,7 @@
 						}
 					}
 				},
-				"bone2": {
+				"head": {
 					"rotation": {
 						"0.0": {
 							"vector": [5, 0, 0]
@@ -54,7 +54,7 @@
 			"loop": true,
 			"animation_length": 3,
 			"bones": {
-				"bone": {
+				"body": {
 					"position": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -67,7 +67,7 @@
 						}
 					}
 				},
-				"bone2": {
+				"head": {
 					"position": {
 						"0.0": {
 							"vector": [0, 0, 0]

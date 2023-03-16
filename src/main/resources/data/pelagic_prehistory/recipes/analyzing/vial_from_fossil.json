@@ -21,10 +21,6 @@
       "weight": 15
     },
     {
-      "item": "pelagic_prehistory:cymbospondylus_vial",
-      "weight": 5
-    },
-    {
       "item": "pelagic_prehistory:dunkleosteus_vial",
       "weight": 7
     },
@@ -35,6 +31,10 @@
     {
       "item": "pelagic_prehistory:lepidotes_vial",
       "weight": 20
+    },
+    {
+      "item": "pelagic_prehistory:opthalmosaurus_vial",
+      "weight": 5
     },
     {
       "item": "pelagic_prehistory:plesiosaurus_vial",

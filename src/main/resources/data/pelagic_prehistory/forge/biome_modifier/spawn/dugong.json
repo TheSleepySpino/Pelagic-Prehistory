@@ -8,7 +8,11 @@
 	  {
 		"type": "forge:not",
 		"value": "minecraft:frozen_ocean"
-	  }
+	  },
+      {
+        "type": "forge:not",
+        "value": "minecraft:deep_frozen_ocean"
+      }
     ]
   },
   "spawners":

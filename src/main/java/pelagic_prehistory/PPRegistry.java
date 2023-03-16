@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -58,6 +59,7 @@ import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.block.AnalyzerBlock;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
 import pelagic_prehistory.block.CharniaBlock;
+import pelagic_prehistory.entity.Cuttlefish;
 import pelagic_prehistory.entity.Henodus;
 import pelagic_prehistory.entity.Lepidotes;
 import pelagic_prehistory.worldgen.GinkgoTreeFeature;
@@ -93,6 +95,7 @@ public final class PPRegistry {
     private static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSORS = DeferredRegister.create(BuiltInRegistries.STRUCTURE_PROCESSOR.key(), PelagicPrehistory.MODID);
     private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, PelagicPrehistory.MODID);
     private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, PelagicPrehistory.MODID);
+    private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PelagicPrehistory.MODID);
 
     public static void register() {
         BlockReg.register();
@@ -102,6 +105,7 @@ public final class PPRegistry {
         FeatureReg.register();
         MenuReg.register();
         RecipeReg.register();
+        SoundReg.register();
     }
 
     public static final class ItemReg {
@@ -122,6 +126,7 @@ public final class PPRegistry {
         public static final RegistryObject<Item> FOSSIL = registerWithTab("fossil", () -> new Item(new Item.Properties()));
 
         // SPAWN EGGS //
+        public static final RegistryObject<Item> CUTTLEFISH_SPAWN_EGG = registerSpawnEgg("cuttlefish", EntityReg.CUTTLEFISH, 0x0, 0x0); // TODO color
         public static final RegistryObject<Item> DUGONG_SPAWN_EGG = registerSpawnEgg("dugong", EntityReg.DUGONG, 0x0, 0x0); // TODO color
 
         // VIALS, EGGS, AND SPAWN EGGS //
@@ -129,7 +134,7 @@ public final class PPRegistry {
         public static final RegistryObject<Item> GINKGO_TREE_VIAL = registerVial("ginkgo_tree", 0x9bd367);
         public static final RegistryObject<Item> BAWITIUS_VIAL = registerVialAndEggs(null, "bawitius", "eggs",0xb75194);
         public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVialAndEggs(null, "cladoselache", "eggs",0xa254a9);
-        public static final RegistryObject<Item> CYMBOSPONDYLUS_VIAL = registerVialAndEggs(null, "cymbospondylus", "egg",0x80872c);
+        public static final RegistryObject<Item> OPTHALMOSAURUS_VIAL = registerVialAndEggs(null, "opthalmosaurus", "egg",0x80872c);
         public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVialAndEggs(null, "dunkleosteus", "egg",0x3a9db3);
         public static final RegistryObject<Item> HENODUS_VIAL = registerVialAndEggs(EntityReg.HENODUS, "henodus", "egg",0x977343);
         public static final RegistryObject<Item> LEPIDOTES_VIAL = registerVialAndEggs(EntityReg.LEPIDOTES, "lepidotes", "eggs",0xb7bb65);
@@ -343,6 +348,7 @@ public final class PPRegistry {
         }
 
         public static void onEntityAttributeCreation(final EntityAttributeCreationEvent event) {
+            event.put(CUTTLEFISH.get(), Cuttlefish.createAttributes().build());
             event.put(DUGONG.get(), Dugong.createAttributes().build());
             event.put(HENODUS.get(), Henodus.createAttributes().build());
             event.put(LEPIDOTES.get(), Lepidotes.createAttributes().build());
@@ -351,12 +357,18 @@ public final class PPRegistry {
         }
 
         public static void onRegisterSpawnPlacement(final SpawnPlacementRegisterEvent event) {
+            event.register(CUTTLEFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(DUGONG.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(HENODUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(LEPIDOTES.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLESIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
         }
+
+        public static final RegistryObject<EntityType<Cuttlefish>> CUTTLEFISH = ENTITY_TYPES.register("cuttlefish", () ->
+                EntityType.Builder.of(Cuttlefish::new, MobCategory.WATER_CREATURE)
+                        .sized(0.48F, 0.748F)
+                        .build("cuttlefish"));
 
         public static final RegistryObject<EntityType<Dugong>> DUGONG = ENTITY_TYPES.register("dugong", () ->
                 EntityType.Builder.of(Dugong::new, MobCategory.WATER_CREATURE)
@@ -380,7 +392,7 @@ public final class PPRegistry {
 
         public static final RegistryObject<EntityType<Pliosaurus>> PLIOSAURUS = ENTITY_TYPES.register("pliosaurus", () ->
                 EntityType.Builder.of(Pliosaurus::new, MobCategory.WATER_CREATURE)
-                        .sized(0.98F, 0.48F)
+                        .sized(1.875F, 0.92F)
                         .build("pliosaurus"));
     }
 
@@ -438,6 +450,14 @@ public final class PPRegistry {
 
         public static final RegistryObject<RecipeSerializer<AnalyzerRecipe>> ANALYZING_SERIALIZER = RECIPE_SERIALIZERS.register("analyzing", () -> new AnalyzerRecipe.Serializer());
         public static final RegistryObject<RecipeSerializer<InfuserRecipe>> INFUSING_SERIALIZER = RECIPE_SERIALIZERS.register("infusing", () -> new InfuserRecipe.Serializer());
+    }
+
+    public static final class SoundReg {
+
+        public static void register() {
+            SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        }
+        // TODO
     }
 
     //// FLAMMABLE BLOCKS ////

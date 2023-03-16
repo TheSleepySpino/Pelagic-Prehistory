@@ -13,44 +13,44 @@
 			"bones": [
 				{
 					"name": "Lepidotes",
-					"pivot": [0, 0, 0],
+					"pivot": [0, 0, -0.5],
 					"cubes": [
-						{"origin": [-3, 1, -7], "size": [6, 10, 15], "uv": [0, 0]},
-						{"origin": [0, 0, 5], "size": [0, 3, 5], "uv": [27, 0]},
-						{"origin": [0, 8, 5], "size": [0, 4, 5], "uv": [16, 20]}
+						{"origin": [-3, 1, -7.5], "size": [6, 10, 15], "uv": [0, 0]},
+						{"origin": [0, 0, 4.5], "size": [0, 3, 5], "uv": [27, 0]},
+						{"origin": [0, 8, 4.5], "size": [0, 4, 5], "uv": [16, 20]}
 					]
 				},
 				{
-					"name": "head",
+					"name": "Head",
 					"parent": "Lepidotes",
-					"pivot": [0, 5, -7],
+					"pivot": [0, 5, -7.5],
 					"cubes": [
-						{"origin": [-2.5, 1, -13], "size": [5, 6, 6], "uv": [0, 25]}
+						{"origin": [-2.5, 1, -13.5], "size": [5, 6, 6], "uv": [0, 25]}
 					]
 				},
 				{
 					"name": "Tail",
 					"parent": "Lepidotes",
-					"pivot": [0, 7, 8],
+					"pivot": [0, 7, 7.5],
 					"cubes": [
-						{"origin": [0, 2, 12], "size": [0, 9, 4], "uv": [0, 0]},
-						{"origin": [-2, 4, 8], "size": [4, 4, 6], "uv": [22, 25]}
+						{"origin": [0, 2, 11.5], "size": [0, 9, 4], "uv": [0, 0]},
+						{"origin": [-2, 4, 7.5], "size": [4, 4, 6], "uv": [22, 25]}
 					]
 				},
 				{
 					"name": "FinR",
 					"parent": "Lepidotes",
-					"pivot": [-3, 2, -5],
+					"pivot": [-3, 2, -5.5],
 					"cubes": [
-						{"origin": [-3.01, 0, -6], "size": [0, 3, 5], "uv": [27, 3], "mirror": true}
+						{"origin": [-3.01, 0, -6.5], "size": [0, 3, 5], "uv": [27, 3], "mirror": true}
 					]
 				},
 				{
 					"name": "FinL",
 					"parent": "Lepidotes",
-					"pivot": [3, 2, -5],
+					"pivot": [3, 2, -5.5],
 					"cubes": [
-						{"origin": [3.01, 0, -6], "size": [0, 3, 5], "uv": [27, 3]}
+						{"origin": [3.01, 0, -6.5], "size": [0, 3, 5], "uv": [27, 3]}
 					]
 				}
 			]

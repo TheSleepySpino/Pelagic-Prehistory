@@ -16,7 +16,6 @@ public class PelagicPrehistory {
 
     public PelagicPrehistory() {
         PPRegistry.register();
-        PPTab.register();
         PPEvents.register();
         // client events
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvents::register);

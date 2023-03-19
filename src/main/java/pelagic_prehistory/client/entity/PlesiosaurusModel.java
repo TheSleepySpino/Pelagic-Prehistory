@@ -1,14 +1,8 @@
 package pelagic_prehistory.client.entity;
 
-import net.minecraft.world.entity.LivingEntity;
-import pelagic_prehistory.PelagicPrehistory;
 import pelagic_prehistory.entity.Plesiosaurus;
-import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.model.DefaultedEntityGeoModel;
-import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.processor.IBone;
 
 import java.util.Optional;
 
@@ -24,14 +18,14 @@ public class PlesiosaurusModel<T extends Plesiosaurus> extends SimplePitchGeoMod
     }
 
     @Override
-    protected void rotateHead(T animatable, long instanceId, AnimationState<T> animationState) {
-        Optional<GeoBone> head = getHeadBone();
-        Optional<GeoBone> neck = getBone("neck");
+    protected void rotateHead(T animatable, int instanceId, AnimationEvent animationState) {
+        Optional<IBone> head = getHeadBone();
+        Optional<IBone> neck = Optional.ofNullable(getBone("neck"));
         if(head.isPresent() && neck.isPresent()) {
-            float yRot = animationState.getData(DataTickets.ENTITY_MODEL_DATA).netHeadYaw();
+            float yRot = getNetHeadYaw(animatable, animationState.getPartialTick());
             float angle = (float) Math.toRadians(yRot);
-            head.get().setRotY(angle * 0.5F);
-            neck.get().setRotY(angle * 0.5F);
+            head.get().setRotationY(angle * 0.5F);
+            neck.get().setRotationY(angle * 0.5F);
         }
     }
 }

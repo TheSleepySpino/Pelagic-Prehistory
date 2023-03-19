@@ -19,20 +19,20 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Dugong extends WaterAnimal implements GeoAnimatable {
+public class Dugong extends WaterAnimal implements IAnimatable {
 
     // GECKOLIB //
-    protected AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
-    protected static final RawAnimation ANIM_IDLE = RawAnimation.begin().thenPlay("swim");
+    protected AnimationFactory instanceCache = GeckoLibUtil.createFactory(this);
+    protected static final AnimationBuilder ANIM_IDLE = new AnimationBuilder().addAnimation("swim");
 
     public Dugong(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
@@ -97,23 +97,18 @@ public class Dugong extends WaterAnimal implements GeoAnimatable {
 
     //// GECKOLIB ////
 
-    private PlayState handleAnimation(AnimationState<Dugong> event) {
+    private PlayState handleAnimation(AnimationEvent<Dugong> event) {
         event.getController().setAnimation(ANIM_IDLE);
         return PlayState.CONTINUE;
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::handleAnimation));
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 2F, this::handleAnimation));
     }
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return instanceCache;
-    }
-
-    @Override
-    public double getTick(Object object) {
-        return tickCount;
     }
 }

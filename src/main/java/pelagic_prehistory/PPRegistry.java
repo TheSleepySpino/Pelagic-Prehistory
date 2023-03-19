@@ -3,7 +3,7 @@ package pelagic_prehistory;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -15,8 +15,10 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -34,8 +36,10 @@ import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StoneButtonBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.WoodButtonBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -92,7 +96,7 @@ public final class PPRegistry {
     private static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, PelagicPrehistory.MODID);
     private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PelagicPrehistory.MODID);
     private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, PelagicPrehistory.MODID);
-    private static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSORS = DeferredRegister.create(BuiltInRegistries.STRUCTURE_PROCESSOR.key(), PelagicPrehistory.MODID);
+    private static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSORS = DeferredRegister.create(Registry.STRUCTURE_PROCESSOR.key(), PelagicPrehistory.MODID);
     private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, PelagicPrehistory.MODID);
     private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, PelagicPrehistory.MODID);
     private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PelagicPrehistory.MODID);
@@ -110,6 +114,13 @@ public final class PPRegistry {
 
     public static final class ItemReg {
 
+        public static final CreativeModeTab TAB = new CreativeModeTab(PelagicPrehistory.MODID) {
+            @Override
+            public ItemStack makeIcon() {
+                return new ItemStack(ItemReg.CHARNIA_VIAL.get());
+            }
+        };
+
         private static final List<RegistryObject<Item>> VIAL_ITEMS = new ArrayList<>();
         private static final List<RegistryObject<Item>> SPAWN_EGGS = new ArrayList<>();
 
@@ -120,10 +131,10 @@ public final class PPRegistry {
 
         // CRAFTING MATERIALS //
         private static final FoodProperties CUTTLEFISH_FOOD = new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build();
-        public static final RegistryObject<Item> RAW_CUTTLEFISH = registerWithTab("raw_cuttlefish", () -> new Item(new Item.Properties().food(CUTTLEFISH_FOOD)));
+        public static final RegistryObject<Item> RAW_CUTTLEFISH = register("raw_cuttlefish", () -> new Item(new Item.Properties().tab(TAB).food(CUTTLEFISH_FOOD)));
         private static final FoodProperties CUTTLEFISH_STEW_FOOD = new FoodProperties.Builder().nutrition(8).saturationMod(0.3F).build();
-        public static final RegistryObject<Item> CUTTLEFISH_STEW = registerWithTab("cuttlefish_stew", () -> new Item(new Item.Properties().food(CUTTLEFISH_STEW_FOOD)));
-        public static final RegistryObject<Item> FOSSIL = registerWithTab("fossil", () -> new Item(new Item.Properties()));
+        public static final RegistryObject<Item> CUTTLEFISH_STEW = register("cuttlefish_stew", () -> new Item(new Item.Properties().tab(TAB).food(CUTTLEFISH_STEW_FOOD)));
+        public static final RegistryObject<Item> FOSSIL = register("fossil", () -> new Item(new Item.Properties().tab(TAB)));
 
         // SPAWN EGGS //
         public static final RegistryObject<Item> CUTTLEFISH_SPAWN_EGG = registerSpawnEgg("cuttlefish", EntityReg.CUTTLEFISH, 0x0, 0x0); // TODO color
@@ -142,7 +153,7 @@ public final class PPRegistry {
         public static final RegistryObject<Item> PLIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLIOSAURUS, "pliosaurus", "pup", 0x4e402c);
         public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVialAndEggs(null, "prognathodon", "egg", 0xa1ae75);
         public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVialAndEggs(null, "shonisaurus", "egg", 0x3a746b);
-        public static final RegistryObject<Item> UNKNOWN_VIAL = ITEMS.register("unknown_vial", () -> new VialItem(0x4c4c4c, new Item.Properties()));
+        public static final RegistryObject<Item> UNKNOWN_VIAL = ITEMS.register("unknown_vial", () -> new VialItem(0x4c4c4c, new Item.Properties().tab(TAB)));
 
         /**
          * Creates a registry object for a block item and adds it to the mod creative tab
@@ -150,7 +161,7 @@ public final class PPRegistry {
          * @return the registry object
          */
         private static RegistryObject<Item> registerBlockItem(final RegistryObject<Block> block) {
-            return registerWithTab(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
+            return register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(TAB)));
         }
 
         /**
@@ -160,7 +171,7 @@ public final class PPRegistry {
          * @return the item registry object
          */
         private static RegistryObject<Item> registerVial(final String name, final int color) {
-            final RegistryObject<Item> vial = registerWithTab(name + "_vial", () -> new VialItem(color, new Item.Properties().stacksTo(16)));
+            final RegistryObject<Item> vial = register(name + "_vial", () -> new VialItem(color, new Item.Properties().tab(TAB).stacksTo(16)));
             VIAL_ITEMS.add(vial);
             return vial;
         }
@@ -174,7 +185,7 @@ public final class PPRegistry {
          * @return the item registry object
          */
         private static <T extends Mob> RegistryObject<Item> registerSpawnEgg(final String name, final RegistryObject<EntityType<T>> entityType, final int bgColor, final int fgColor) {
-            final RegistryObject<Item> spawnEgg = ITEMS.register(name + "_spawn_egg", () -> new ForgeSpawnEggItem(entityType, bgColor, fgColor, new Item.Properties()));
+            final RegistryObject<Item> spawnEgg = ITEMS.register(name + "_spawn_egg", () -> new ForgeSpawnEggItem(entityType, bgColor, fgColor, new Item.Properties().tab(TAB)));
             SPAWN_EGGS.add(spawnEgg);
             return spawnEgg;
         }
@@ -192,10 +203,10 @@ public final class PPRegistry {
             final RegistryObject<Item> vial = registerVial(name, color);
             if(null == entityType) {
                 // TODO remove this when entity types are no longer null
-                final RegistryObject<Item> egg = registerWithTab(name + "_" + eggSuffix, () -> new Item(new Item.Properties()));
-                final RegistryObject<Item> spawnEgg = registerWithTab(name + "_spawn_egg", () -> new Item(new Item.Properties()));
+                final RegistryObject<Item> egg = register(name + "_" + eggSuffix, () -> new Item(new Item.Properties().tab(TAB)));
+                final RegistryObject<Item> spawnEgg = register(name + "_spawn_egg", () -> new Item(new Item.Properties().tab(TAB)));
             } else {
-                final RegistryObject<Item> egg = registerWithTab(name + "_" + eggSuffix, () -> new ForgeSpawnEggItem(entityType, -1, -1, new Item.Properties()));
+                final RegistryObject<Item> egg = register(name + "_" + eggSuffix, () -> new ForgeSpawnEggItem(entityType, -1, -1, new Item.Properties().tab(TAB)));
                 final RegistryObject<Item> spawnEgg = registerSpawnEgg(name, entityType, color, 0xC0C0C0);
             }
 
@@ -208,8 +219,8 @@ public final class PPRegistry {
          * @param supplier the item supplier
          * @return the item registry object
          */
-        private static RegistryObject<Item> registerWithTab(final String name, final Supplier<Item> supplier) {
-            return PPTab.add(ITEMS.register(name, supplier));
+        private static RegistryObject<Item> register(final String name, final Supplier<Item> supplier) {
+            return ITEMS.register(name, supplier);
         }
 
         public static List<RegistryObject<Item>> getVialItems() {
@@ -241,7 +252,7 @@ public final class PPRegistry {
                 new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
         public static final RegistryObject<Block> CHARNIA = registerWithItem("charnia",
                 () -> new CharniaBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_WATER_PLANT).noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ)),
-                b -> ItemReg.registerWithTab("charnia", () -> new DoubleHighBlockItem(b.get(), new Item.Properties())));
+                b -> ItemReg.register("charnia", () -> new DoubleHighBlockItem(b.get(), new Item.Properties().tab(ItemReg.TAB))));
         public static final RegistryObject<Block> GINKGO_SAPLING = registerWithItem("ginkgo_sapling", () ->
                 new SaplingBlock(new GinkgoTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
         public static final RegistryObject<Block> GINKGO_LOG = registerWoodBlocks("ginkgo", 2.0F, 3.0F, MaterialColor.WOOD, MaterialColor.SAND, 5, 5, 20);
@@ -262,8 +273,8 @@ public final class PPRegistry {
             final RegistryObject<Block> slab = registerWithItem(name + "_slab", () -> new SlabBlock(properties));
             final RegistryObject<Block> stairs = registerWithItem(name + "_stairs", () -> new StairBlock(() -> block.get().defaultBlockState(), properties));
             final RegistryObject<Block> walls = registerWithItem(name + "_wall", () -> new WallBlock(properties));
-            final RegistryObject<Block> pressurePlate = registerWithItem(name + "_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, properties, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON));
-            final RegistryObject<Block> button = registerWithItem(name + "_button", () -> new ButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.STONE), 20, false, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON));
+            final RegistryObject<Block> pressurePlate = registerWithItem(name + "_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, properties));
+            final RegistryObject<Block> button = registerWithItem(name + "_button", () -> new StoneButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.STONE)));
             return block;
         }
 
@@ -299,12 +310,12 @@ public final class PPRegistry {
             final RegistryObject<Block> planks = registerWithItem(name + "_planks", () -> new FlammableBlock(woodProperties, fireSpread, planksFlammability));
             final RegistryObject<Block> slab = registerWithItem(name + "_slab", () -> new FlammableSlabBlock(woodProperties, fireSpread, planksFlammability));
             final RegistryObject<Block> stairs = registerWithItem(name + "_stairs", () -> new FlammableStairBlock(() -> planks.get().defaultBlockState(), woodProperties, fireSpread, planksFlammability));
-            final RegistryObject<Block> door = registerWithItem(name + "_door", () -> new DoorBlock(doorProperties, SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN));
-            final RegistryObject<Block> trapdoor = registerWithItem(name + "_trapdoor", () -> new TrapDoorBlock(doorProperties, SoundEvents.WOODEN_TRAPDOOR_CLOSE, SoundEvents.WOODEN_TRAPDOOR_OPEN));
-            final RegistryObject<Block> pressurePlate = registerWithItem(name + "_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, woodProperties, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_ON));
-            final RegistryObject<Block> button = registerWithItem(name + "_button", () -> new ButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD), 30, true, SoundEvents.WOODEN_BUTTON_CLICK_OFF, SoundEvents.WOODEN_BUTTON_CLICK_ON));
+            final RegistryObject<Block> door = registerWithItem(name + "_door", () -> new DoorBlock(doorProperties));
+            final RegistryObject<Block> trapdoor = registerWithItem(name + "_trapdoor", () -> new TrapDoorBlock(doorProperties));
+            final RegistryObject<Block> pressurePlate = registerWithItem(name + "_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, woodProperties));
+            final RegistryObject<Block> button = registerWithItem(name + "_button", () -> new WoodButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD)));
             final RegistryObject<Block> fence = registerWithItem(name + "_fence", () -> new FenceBlock(woodProperties));
-            final RegistryObject<Block> fenceGate = registerWithItem(name + "_fence_gate", () -> new FenceGateBlock(woodProperties, SoundEvents.FENCE_GATE_CLOSE, SoundEvents.FENCE_GATE_OPEN));
+            final RegistryObject<Block> fenceGate = registerWithItem(name + "_fence_gate", () -> new FenceGateBlock(woodProperties));
             return log;
         }
 

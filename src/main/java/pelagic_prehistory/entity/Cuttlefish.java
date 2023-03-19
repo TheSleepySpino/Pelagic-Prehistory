@@ -30,22 +30,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Cuttlefish extends WaterAnimal implements GeoAnimatable {
+public class Cuttlefish extends WaterAnimal implements IAnimatable {
 
     // GECKOLIB //
-    protected AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
-    protected static final RawAnimation ANIM_IDLE = RawAnimation.begin().thenPlay("idle");
-    protected static final RawAnimation ANIM_SWIM = RawAnimation.begin().thenPlay("swim");
+    protected AnimationFactory instanceCache = GeckoLibUtil.createFactory(this);
+    protected static final AnimationBuilder ANIM_IDLE = new AnimationBuilder().addAnimation("idle");
+    protected static final AnimationBuilder ANIM_SWIM = new AnimationBuilder().addAnimation("swim");
 
     public Cuttlefish(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
@@ -221,7 +221,7 @@ public class Cuttlefish extends WaterAnimal implements GeoAnimatable {
 
     //// GECKOLIB ////
 
-    private PlayState handleAnimation(AnimationState<Cuttlefish> event) {
+    private PlayState handleAnimation(AnimationEvent<Cuttlefish> event) {
         if(getDeltaMovement().lengthSqr() > 2.5000003E-7F) {
             event.getController().setAnimation(ANIM_SWIM);
         } else {
@@ -231,18 +231,13 @@ public class Cuttlefish extends WaterAnimal implements GeoAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::handleAnimation));
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 2F, this::handleAnimation));
     }
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return instanceCache;
-    }
-
-    @Override
-    public double getTick(Object object) {
-        return tickCount;
     }
 
     //// LOOK CONTROL ////

@@ -3,14 +3,11 @@ package pelagic_prehistory.entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -28,20 +25,19 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.UUID;
 
-public class Pliosaurus extends WaterAnimal implements GeoAnimatable, NeutralMob {
+public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
 
     // NEUTRAL MOB //
     private static final UniformInt ANGER_RANGE = TimeUtil.rangeOfSeconds(20, 39);
@@ -49,8 +45,8 @@ public class Pliosaurus extends WaterAnimal implements GeoAnimatable, NeutralMob
     private UUID angerTarget;
 
     // GECKOLIB //
-    protected AnimatableInstanceCache instanceCache = GeckoLibUtil.createInstanceCache(this);
-    protected static final RawAnimation ANIM_IDLE = RawAnimation.begin().thenPlay("swim");
+    protected AnimationFactory instanceCache = GeckoLibUtil.createFactory(this);
+    protected static final AnimationBuilder ANIM_IDLE = new AnimationBuilder().addAnimation("swim");
 
     public Pliosaurus(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
@@ -147,23 +143,18 @@ public class Pliosaurus extends WaterAnimal implements GeoAnimatable, NeutralMob
 
     //// GECKOLIB ////
 
-    private PlayState handleAnimation(AnimationState<Pliosaurus> event) {
+    private PlayState handleAnimation(AnimationEvent<Pliosaurus> event) {
         // TODO anim event.getController().setAnimation(ANIM_IDLE);
         return PlayState.CONTINUE;
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::handleAnimation));
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 2F, this::handleAnimation));
     }
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return instanceCache;
-    }
-
-    @Override
-    public double getTick(Object object) {
-        return tickCount;
     }
 }

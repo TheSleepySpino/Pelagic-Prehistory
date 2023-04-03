@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "bone",
+					"name": "body",
 					"pivot": [0, 6, 0],
 					"cubes": [
 						{"origin": [-8, 0, -21], "size": [16, 14, 43], "uv": [0, 0]}
@@ -20,7 +20,7 @@
 				},
 				{
 					"name": "BRflipper",
-					"parent": "bone",
+					"parent": "body",
 					"pivot": [-7, 2, 19],
 					"cubes": [
 						{"origin": [-9, -24, 15], "size": [2, 26, 9], "uv": [50, 77]}
@@ -28,7 +28,7 @@
 				},
 				{
 					"name": "FRflipper",
-					"parent": "bone",
+					"parent": "body",
 					"pivot": [-7, 2, -11],
 					"cubes": [
 						{"origin": [-9, -24, -15], "size": [2, 26, 9], "uv": [94, 81]}
@@ -36,7 +36,7 @@
 				},
 				{
 					"name": "BLflipper",
-					"parent": "bone",
+					"parent": "body",
 					"pivot": [7, 2, 20],
 					"cubes": [
 						{"origin": [7, -24, 15], "size": [2, 26, 9], "uv": [72, 81]}
@@ -44,7 +44,7 @@
 				},
 				{
 					"name": "FLflipper",
-					"parent": "bone",
+					"parent": "body",
 					"pivot": [7, 2, -11],
 					"cubes": [
 						{"origin": [7, -24, -15], "size": [2, 26, 9], "uv": [0, 99]}
@@ -52,7 +52,7 @@
 				},
 				{
 					"name": "Tail",
-					"parent": "bone",
+					"parent": "body",
 					"pivot": [0, 10, 22],
 					"cubes": [
 						{"origin": [-2, 7, 22], "size": [4, 6, 17], "uv": [0, 0]},
@@ -61,7 +61,7 @@
 				},
 				{
 					"name": "Head",
-					"parent": "bone",
+					"parent": "body",
 					"pivot": [0, 7, -21],
 					"cubes": [
 						{"origin": [-5, 2, -29], "size": [10, 11, 8], "uv": [75, 22]}

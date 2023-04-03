@@ -13,11 +13,6 @@ public class CuttlefishModel<T extends Cuttlefish> extends SimplePitchGeoModel<T
     }
 
     @Override
-    protected float getPitchMultiplier() {
-        return -1.0F;
-    }
-
-    @Override
     protected Optional<IBone> getBodyBone() {
         return Optional.ofNullable(getBone("root"));
     }

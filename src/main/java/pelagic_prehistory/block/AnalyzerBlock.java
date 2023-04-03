@@ -74,7 +74,7 @@ public class AnalyzerBlock extends HorizontalDirectionalBlock implements EntityB
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return pLevel.isClientSide() ? null : (BlockEntityTicker<T>) (BlockEntityTicker<AnalyzerBlockEntity>) (AnalyzerBlockEntity::tick);
+        return pLevel.isClientSide() || !pState.is(this) ? null : (BlockEntityTicker<T>) (BlockEntityTicker<AnalyzerBlockEntity>) (AnalyzerBlockEntity::tick);
     }
 
     // REDSTONE //

@@ -22,8 +22,8 @@ license="GNU LGPLv3"
     ordering="NONE"
     side="BOTH"
 [[dependencies.pelagic_prehistory]]
-    modId="geckolib"
+    modId="geckolib3"
     mandatory=true
-    versionRange="[3.1.36,4)"
+    versionRange="[3.1.36,)"
     ordering="NONE"
     side="BOTH"

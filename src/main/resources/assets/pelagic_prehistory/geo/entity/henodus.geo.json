@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "Henodus",
+					"name": "body",
 					"pivot": [0, 0, 0],
 					"rotation": [0, 180, 0],
 					"cubes": [
@@ -21,7 +21,7 @@
 				},
 				{
 					"name": "Head",
-					"parent": "Henodus",
+					"parent": "body",
 					"pivot": [0, 1, 5.5],
 					"cubes": [
 						{"origin": [-1.5, 0, 5.5], "size": [3, 2, 3], "uv": [11, 26]},
@@ -30,7 +30,7 @@
 				},
 				{
 					"name": "RFrontFlipper",
-					"parent": "Henodus",
+					"parent": "body",
 					"pivot": [3.5, 1, 4.5],
 					"cubes": [
 						{"origin": [2.5, 0, 4.5], "size": [5, 1, 2], "uv": [18, 23]}
@@ -38,7 +38,7 @@
 				},
 				{
 					"name": "LFrontFlipper",
-					"parent": "Henodus",
+					"parent": "body",
 					"pivot": [-3.5, 1, 4.5],
 					"cubes": [
 						{"origin": [-7.5, 0, 4.5], "size": [5, 1, 2], "uv": [18, 23], "mirror": true}
@@ -46,7 +46,7 @@
 				},
 				{
 					"name": "RBackFlipper",
-					"parent": "Henodus",
+					"parent": "body",
 					"pivot": [3.5, 1, -5.5],
 					"cubes": [
 						{"origin": [2.5, 0, -8.5], "size": [2, 1, 4], "uv": [12, 14]}
@@ -54,7 +54,7 @@
 				},
 				{
 					"name": "LBackFlipper",
-					"parent": "Henodus",
+					"parent": "body",
 					"pivot": [-3.5, 1, -5.5],
 					"cubes": [
 						{"origin": [-4.5, 0, -8.5], "size": [2, 1, 4], "uv": [12, 14], "mirror": true}
@@ -62,7 +62,7 @@
 				},
 				{
 					"name": "Tail",
-					"parent": "Henodus",
+					"parent": "body",
 					"pivot": [0, 1, -5.5],
 					"cubes": [
 						{"origin": [-1, 0, -12.5], "size": [2, 2, 8], "uv": [0, 14]}

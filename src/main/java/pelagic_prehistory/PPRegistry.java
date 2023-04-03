@@ -63,7 +63,9 @@ import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.block.AnalyzerBlock;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
 import pelagic_prehistory.block.CharniaBlock;
+import pelagic_prehistory.entity.Cladoselache;
 import pelagic_prehistory.entity.Cuttlefish;
+import pelagic_prehistory.entity.Dunkleosteus;
 import pelagic_prehistory.entity.Henodus;
 import pelagic_prehistory.entity.Lepidotes;
 import pelagic_prehistory.worldgen.GinkgoTreeFeature;
@@ -144,9 +146,9 @@ public final class PPRegistry {
         public static final RegistryObject<Item> CHARNIA_VIAL = registerVial("charnia", 0xada74c);
         public static final RegistryObject<Item> GINKGO_TREE_VIAL = registerVial("ginkgo_tree", 0x9bd367);
         public static final RegistryObject<Item> BAWITIUS_VIAL = registerVialAndEggs(null, "bawitius", "eggs",0xb75194);
-        public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVialAndEggs(null, "cladoselache", "eggs",0xa254a9);
+        public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVialAndEggs(EntityReg.CLADOSELACHE, "cladoselache", "eggs",0xa254a9);
         public static final RegistryObject<Item> OPTHALMOSAURUS_VIAL = registerVialAndEggs(null, "opthalmosaurus", "egg",0x80872c);
-        public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVialAndEggs(null, "dunkleosteus", "egg",0x3a9db3);
+        public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVialAndEggs(EntityReg.DUNKLEOSTEUS, "dunkleosteus", "egg",0x3a9db3);
         public static final RegistryObject<Item> HENODUS_VIAL = registerVialAndEggs(EntityReg.HENODUS, "henodus", "egg",0x977343);
         public static final RegistryObject<Item> LEPIDOTES_VIAL = registerVialAndEggs(EntityReg.LEPIDOTES, "lepidotes", "eggs",0xb7bb65);
         public static final RegistryObject<Item> PLESIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLESIOSAURUS, "plesiosaurus", "egg", 0x429389);
@@ -359,8 +361,10 @@ public final class PPRegistry {
         }
 
         public static void onEntityAttributeCreation(final EntityAttributeCreationEvent event) {
+            event.put(CLADOSELACHE.get(), Cladoselache.createAttributes().build());
             event.put(CUTTLEFISH.get(), Cuttlefish.createAttributes().build());
             event.put(DUGONG.get(), Dugong.createAttributes().build());
+            event.put(DUNKLEOSTEUS.get(), Dugong.createAttributes().build());
             event.put(HENODUS.get(), Henodus.createAttributes().build());
             event.put(LEPIDOTES.get(), Lepidotes.createAttributes().build());
             event.put(PLESIOSAURUS.get(), Plesiosaurus.createAttributes().build());
@@ -368,13 +372,20 @@ public final class PPRegistry {
         }
 
         public static void onRegisterSpawnPlacement(final SpawnPlacementRegisterEvent event) {
+            event.register(CLADOSELACHE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(CUTTLEFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(DUGONG.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+            event.register(DUNKLEOSTEUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(HENODUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(LEPIDOTES.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLESIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
         }
+
+        public static final RegistryObject<EntityType<Cladoselache>> CLADOSELACHE = ENTITY_TYPES.register("cladoselache", () ->
+                EntityType.Builder.of(Cladoselache::new, MobCategory.WATER_CREATURE)
+                        .sized(1.46F, 0.625F)
+                        .build("cladoselache"));
 
         public static final RegistryObject<EntityType<Cuttlefish>> CUTTLEFISH = ENTITY_TYPES.register("cuttlefish", () ->
                 EntityType.Builder.of(Cuttlefish::new, MobCategory.WATER_CREATURE)
@@ -385,6 +396,11 @@ public final class PPRegistry {
                 EntityType.Builder.of(Dugong::new, MobCategory.WATER_CREATURE)
                         .sized(0.98F, 0.746F)
                         .build("dugong"));
+
+        public static final RegistryObject<EntityType<Dunkleosteus>> DUNKLEOSTEUS = ENTITY_TYPES.register("dunkleosteus", () ->
+                EntityType.Builder.of(Dunkleosteus::new, MobCategory.WATER_CREATURE)
+                        .sized(1.15F, 1.15F)
+                        .build("dunkleosteus"));
 
         public static final RegistryObject<EntityType<Henodus>> HENODUS = ENTITY_TYPES.register("henodus", () ->
                 EntityType.Builder.of(Henodus::new, MobCategory.WATER_CREATURE)

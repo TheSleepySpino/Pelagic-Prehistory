@@ -1,8 +1,10 @@
 package pelagic_prehistory.entity;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -25,7 +27,9 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
+import pelagic_prehistory.PPRegistry;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -101,6 +105,11 @@ public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
         return dimensions.height * 0.485F;
     }
 
+    @Override
+    public AABB getBoundingBoxForCulling() {
+        return super.getBoundingBoxForCulling().inflate(1.0F, 0.5F, 1.0F);
+    }
+
     //// NEUTRAL MOB ////
 
     @Override
@@ -128,6 +137,37 @@ public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
         return this.angerTarget;
     }
 
+    //// SOUNDS ////
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        final float factor = isInWaterOrBubble() ? 0.8F : 0.4F;
+        return super.getSoundVolume() * factor;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return PPRegistry.SoundReg.PLIOSAURUS_AMBIENT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return PPRegistry.SoundReg.PLIOSAURUS_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return PPRegistry.SoundReg.PLIOSAURUS_DEATH.get();
+    }
+
     //// NBT ////
 
     @Override
@@ -146,9 +186,9 @@ public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
 
     private PlayState handleAnimation(AnimationEvent<Pliosaurus> event) {
         if(isInWaterOrBubble()) {
-            event.getController().setAnimation(ANIM_IDLE_DRY);
-        } else {
             event.getController().setAnimation(ANIM_SWIM);
+        } else {
+            event.getController().setAnimation(ANIM_IDLE_DRY);
         }
         return PlayState.CONTINUE;
     }

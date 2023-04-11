@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
@@ -25,7 +24,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
@@ -63,6 +61,7 @@ import net.minecraftforge.registries.RegistryObject;
 import pelagic_prehistory.block.AnalyzerBlock;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
 import pelagic_prehistory.block.CharniaBlock;
+import pelagic_prehistory.block.SeaSpongeBlock;
 import pelagic_prehistory.entity.Cladoselache;
 import pelagic_prehistory.entity.Cuttlefish;
 import pelagic_prehistory.entity.Dunkleosteus;
@@ -144,6 +143,7 @@ public final class PPRegistry {
 
         // VIALS, EGGS, AND SPAWN EGGS //
         public static final RegistryObject<Item> CHARNIA_VIAL = registerVial("charnia", 0xada74c);
+        public static final RegistryObject<Item> GREEN_SEA_SPONGE_VIAL = registerVial("green_sea_sponge", 0x8c840a);
         public static final RegistryObject<Item> GINKGO_TREE_VIAL = registerVial("ginkgo_tree", 0x9bd367);
         public static final RegistryObject<Item> BAWITIUS_VIAL = registerVialAndEggs(null, "bawitius", "eggs",0xb75194);
         public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVialAndEggs(EntityReg.CLADOSELACHE, "cladoselache", "eggs",0xa254a9);
@@ -252,9 +252,11 @@ public final class PPRegistry {
                 new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(4.0F, 8.0F).sound(SoundType.DEEPSLATE)));
         public static final RegistryObject<Block> ANCIENT_SEDIMENT_TABLETS = registerWithItem("ancient_sediment_tablets", () ->
                 new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
-        public static final RegistryObject<Block> CHARNIA = registerWithItem("charnia",
-                () -> new CharniaBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_WATER_PLANT).noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ)),
+        public static final RegistryObject<Block> CHARNIA = registerWithItem("charnia", () ->
+                new CharniaBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_WATER_PLANT).noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ)),
                 b -> ItemReg.register("charnia", () -> new DoubleHighBlockItem(b.get(), new Item.Properties().tab(ItemReg.TAB))));
+        public static final RegistryObject<Block> GREEN_SEA_SPONGE = registerWithItem("green_sea_sponge", () ->
+                new SeaSpongeBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_WATER_PLANT).noCollission().instabreak().sound(SoundType.WET_GRASS)));
         public static final RegistryObject<Block> GINKGO_SAPLING = registerWithItem("ginkgo_sapling", () ->
                 new SaplingBlock(new GinkgoTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
         public static final RegistryObject<Block> GINKGO_LOG = registerWoodBlocks("ginkgo", 2.0F, 3.0F, MaterialColor.WOOD, MaterialColor.SAND, 5, 5, 20);
@@ -484,7 +486,24 @@ public final class PPRegistry {
         public static void register() {
             SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         }
-        // TODO
+
+        private static RegistryObject<SoundEvent> registerSound(final String name) {
+            return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(PelagicPrehistory.MODID, name)));
+        }
+        
+        public static final RegistryObject<SoundEvent> PLESIOSAURUS_AMBIENT = registerSound("entity.plesiosaurus.ambient");
+        public static final RegistryObject<SoundEvent> PLESIOSAURUS_HURT = registerSound("entity.plesiosaurus.hurt");
+        public static final RegistryObject<SoundEvent> PLESIOSAURUS_DEATH = registerSound("entity.plesiosaurus.death");
+        public static final RegistryObject<SoundEvent> PLIOSAURUS_AMBIENT = registerSound("entity.pliosaurus.ambient");
+        public static final RegistryObject<SoundEvent> PLIOSAURUS_HURT = registerSound("entity.pliosaurus.hurt");
+        public static final RegistryObject<SoundEvent> PLIOSAURUS_DEATH = registerSound("entity.pliosaurus.death");
+        public static final RegistryObject<SoundEvent> PROGNATHODON_AMBIENT = registerSound("entity.prognathodon.ambient");
+        public static final RegistryObject<SoundEvent> PROGNATHODON_HURT = registerSound("entity.prognathodon.hurt");
+        public static final RegistryObject<SoundEvent> PROGNATHODON_DEATH = registerSound("entity.prognathodon.death");
+        public static final RegistryObject<SoundEvent> SHONISAURUS_AMBIENT = registerSound("entity.shonisaurus.ambient");
+        public static final RegistryObject<SoundEvent> SHONISAURUS_HURT = registerSound("entity.shonisaurus.hurt");
+        public static final RegistryObject<SoundEvent> SHONISAURUS_DEATH = registerSound("entity.shonisaurus.death");
+        
     }
 
     //// FLAMMABLE BLOCKS ////

@@ -7,6 +7,6 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 public class LepidotesRenderer<T extends Lepidotes> extends GeoEntityRenderer<T> {
 
     public LepidotesRenderer(EntityRendererProvider.Context context) {
-        super(context, new SimplePitchGeoModel<T>("lepidotes"));
+        super(context, new LepidotesModel<>("lepidotes"));
     }
 }

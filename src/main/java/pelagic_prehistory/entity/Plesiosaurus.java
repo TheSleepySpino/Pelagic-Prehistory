@@ -1,6 +1,8 @@
 package pelagic_prehistory.entity;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -18,6 +20,9 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
+import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
+import pelagic_prehistory.PPRegistry;
 import pelagic_prehistory.entity.goal.BreachGoal;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -84,6 +89,42 @@ public class Plesiosaurus extends WaterAnimal implements IAnimatable {
     @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.485F;
+    }
+
+    @Override
+    public AABB getBoundingBoxForCulling() {
+        return super.getBoundingBoxForCulling().inflate(1.25F, 0.25F, 1.25F);
+    }
+
+    //// SOUNDS ////
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        final float factor = isInWaterOrBubble() ? 0.8F : 0.4F;
+        return super.getSoundVolume() * factor;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return PPRegistry.SoundReg.PLESIOSAURUS_AMBIENT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return PPRegistry.SoundReg.PLESIOSAURUS_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return PPRegistry.SoundReg.PLESIOSAURUS_DEATH.get();
     }
 
     //// NBT ////

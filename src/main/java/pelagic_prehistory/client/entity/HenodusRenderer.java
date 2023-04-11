@@ -7,6 +7,6 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 public class HenodusRenderer<T extends Henodus> extends GeoEntityRenderer<T> {
 
     public HenodusRenderer(EntityRendererProvider.Context context) {
-        super(context, new SimplePitchGeoModel<T>("henodus"));
+        super(context, new HenodusModel<>("henodus"));
     }
 }

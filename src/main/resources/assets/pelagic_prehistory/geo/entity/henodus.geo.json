@@ -20,7 +20,7 @@
 					]
 				},
 				{
-					"name": "Head",
+					"name": "head",
 					"parent": "body",
 					"pivot": [0, 1, 5.5],
 					"cubes": [

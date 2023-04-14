@@ -58,7 +58,7 @@ public class Lepidotes extends WaterAnimal implements IAnimatable {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
         //this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 8.0F, 1.0D, 1.0D));
+        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 10.0F, 1.0D, 1.0D));
     }
 
     @Override
@@ -69,6 +69,11 @@ public class Lepidotes extends WaterAnimal implements IAnimatable {
     @Override
     public void tick() {
         super.tick();
+    }
+
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
     }
 
     @Override
@@ -96,7 +101,7 @@ public class Lepidotes extends WaterAnimal implements IAnimatable {
     //// GECKOLIB ////
 
     private PlayState handleAnimation(AnimationEvent<Lepidotes> event) {
-        // TODO anim event.getController().setAnimation(ANIM_IDLE);
+        event.getController().setAnimation(ANIM_IDLE);
         return PlayState.CONTINUE;
     }
 

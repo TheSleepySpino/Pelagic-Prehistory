@@ -18,6 +18,7 @@ import pelagic_prehistory.client.entity.HenodusRenderer;
 import pelagic_prehistory.client.entity.LepidotesRenderer;
 import pelagic_prehistory.client.entity.PlesiosaurusRenderer;
 import pelagic_prehistory.client.entity.PliosaurusRenderer;
+import pelagic_prehistory.client.entity.PrognathodonRenderer;
 import pelagic_prehistory.client.menu.AnalyzerScreen;
 import pelagic_prehistory.client.menu.InfuserScreen;
 import pelagic_prehistory.item.VialItem;
@@ -40,6 +41,7 @@ public final class ClientEvents {
             event.registerEntityRenderer(PPRegistry.EntityReg.LEPIDOTES.get(), LepidotesRenderer::new);
             event.registerEntityRenderer(PPRegistry.EntityReg.PLESIOSAURUS.get(), PlesiosaurusRenderer::new);
             event.registerEntityRenderer(PPRegistry.EntityReg.PLIOSAURUS.get(), PliosaurusRenderer::new);
+            event.registerEntityRenderer(PPRegistry.EntityReg.PROGNATHODON.get(), PrognathodonRenderer::new);
         }
 
         @SubscribeEvent

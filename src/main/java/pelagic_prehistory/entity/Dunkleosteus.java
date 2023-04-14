@@ -18,10 +18,12 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -74,8 +76,9 @@ public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
-        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 8.0F, 1.0D, 1.0D));
+        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 10.0F, 1.0D, 1.0D));
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Drowned.class, true, false));
         this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(this, false));
     }
 
@@ -90,6 +93,11 @@ public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable
     @Override
     public void tick() {
         super.tick();
+    }
+
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
     }
 
     @Override
@@ -139,17 +147,19 @@ public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable
     @Override
     public void readAdditionalSaveData(final CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        readPersistentAngerSaveData(this.level, tag);
     }
 
     @Override
     public void addAdditionalSaveData(final CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        addPersistentAngerSaveData(tag);
     }
 
     //// GECKOLIB ////
 
     private PlayState handleAnimation(AnimationEvent<Dunkleosteus> event) {
-        // TODO anim event.getController().setAnimation(ANIM_IDLE);
+        event.getController().setAnimation(ANIM_IDLE);
         return PlayState.CONTINUE;
     }
 

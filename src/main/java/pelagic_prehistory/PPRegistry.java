@@ -67,6 +67,7 @@ import pelagic_prehistory.entity.Cuttlefish;
 import pelagic_prehistory.entity.Dunkleosteus;
 import pelagic_prehistory.entity.Henodus;
 import pelagic_prehistory.entity.Lepidotes;
+import pelagic_prehistory.entity.Prognathodon;
 import pelagic_prehistory.worldgen.GinkgoTreeFeature;
 import pelagic_prehistory.worldgen.GinkgoTreeGrower;
 import pelagic_prehistory.block.InfuserBlock;
@@ -153,7 +154,7 @@ public final class PPRegistry {
         public static final RegistryObject<Item> LEPIDOTES_VIAL = registerVialAndEggs(EntityReg.LEPIDOTES, "lepidotes", "eggs",0xb7bb65);
         public static final RegistryObject<Item> PLESIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLESIOSAURUS, "plesiosaurus", "egg", 0x429389);
         public static final RegistryObject<Item> PLIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLIOSAURUS, "pliosaurus", "pup", 0x4e402c);
-        public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVialAndEggs(null, "prognathodon", "egg", 0xa1ae75);
+        public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVialAndEggs(EntityReg.PROGNATHODON, "prognathodon", "egg", 0xa1ae75);
         public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVialAndEggs(null, "shonisaurus", "egg", 0x3a746b);
         public static final RegistryObject<Item> UNKNOWN_VIAL = ITEMS.register("unknown_vial", () -> new VialItem(0x4c4c4c, new Item.Properties().tab(TAB)));
 
@@ -252,6 +253,8 @@ public final class PPRegistry {
                 new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(4.0F, 8.0F).sound(SoundType.DEEPSLATE)));
         public static final RegistryObject<Block> ANCIENT_SEDIMENT_TABLETS = registerWithItem("ancient_sediment_tablets", () ->
                 new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
+        public static final RegistryObject<Block> ANCIENT_SEDIMENT_COAL_ORE = registerWithItem("ancient_sediment_coal_ore", () ->
+                new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BROWN).requiresCorrectToolForDrops().strength(4.0F, 8.0F).sound(SoundType.DEEPSLATE)));
         public static final RegistryObject<Block> CHARNIA = registerWithItem("charnia", () ->
                 new CharniaBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_WATER_PLANT).noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ)),
                 b -> ItemReg.register("charnia", () -> new DoubleHighBlockItem(b.get(), new Item.Properties().tab(ItemReg.TAB))));
@@ -366,11 +369,12 @@ public final class PPRegistry {
             event.put(CLADOSELACHE.get(), Cladoselache.createAttributes().build());
             event.put(CUTTLEFISH.get(), Cuttlefish.createAttributes().build());
             event.put(DUGONG.get(), Dugong.createAttributes().build());
-            event.put(DUNKLEOSTEUS.get(), Dugong.createAttributes().build());
+            event.put(DUNKLEOSTEUS.get(), Dunkleosteus.createAttributes().build());
             event.put(HENODUS.get(), Henodus.createAttributes().build());
             event.put(LEPIDOTES.get(), Lepidotes.createAttributes().build());
             event.put(PLESIOSAURUS.get(), Plesiosaurus.createAttributes().build());
             event.put(PLIOSAURUS.get(), Pliosaurus.createAttributes().build());
+            event.put(PROGNATHODON.get(), Prognathodon.createAttributes().build());
         }
 
         public static void onRegisterSpawnPlacement(final SpawnPlacementRegisterEvent event) {
@@ -382,6 +386,7 @@ public final class PPRegistry {
             event.register(LEPIDOTES.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLESIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+            event.register(PROGNATHODON.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
         }
 
         public static final RegistryObject<EntityType<Cladoselache>> CLADOSELACHE = ENTITY_TYPES.register("cladoselache", () ->
@@ -423,6 +428,11 @@ public final class PPRegistry {
                 EntityType.Builder.of(Pliosaurus::new, MobCategory.WATER_CREATURE)
                         .sized(1.875F, 0.92F)
                         .build("pliosaurus"));
+
+        public static final RegistryObject<EntityType<Prognathodon>> PROGNATHODON = ENTITY_TYPES.register("prognathodon", () ->
+                EntityType.Builder.of(Prognathodon::new, MobCategory.WATER_CREATURE)
+                        .sized(1.825F, 0.98F)
+                        .build("prognathodon"));
     }
 
     public static final class FeatureReg {

@@ -79,6 +79,11 @@ public class Plesiosaurus extends WaterAnimal implements IAnimatable {
     }
 
     @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
+    @Override
     protected PathNavigation createNavigation(Level level) {
         final WaterBoundPathNavigation nav = new WaterBoundPathNavigation(this, level);
         nav.allowBreaching = true;

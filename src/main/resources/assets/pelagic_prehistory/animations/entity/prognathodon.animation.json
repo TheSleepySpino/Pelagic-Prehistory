@@ -1,0 +1,108 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"swim": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 180) * 6", 0]
+					}
+				},
+				"bone2": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.5) * 180) * 12", 0]
+					}
+				},
+				"bone3": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 15", 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 4", 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 3", 0]
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 6", 0]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 6", 0]
+					}
+				},
+				"bone9": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 6", 0]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 6", 0]
+					}
+				}
+			}
+		},
+		"swim_fast": {
+			"loop": true,
+			"animation_length": 0.83333,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 420) * 6", 0]
+					}
+				},
+				"bone2": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.5) * 420) * 12", 0]
+					}
+				},
+				"bone3": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.5) * 420) * 12", 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 4", 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 3", 0]
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 6", 0]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 6", 0]
+					}
+				},
+				"bone9": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 6", 0]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 6", 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

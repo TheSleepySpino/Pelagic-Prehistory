@@ -1,5 +1,6 @@
 package pelagic_prehistory.client.entity;
 
+import net.minecraft.world.phys.Vec2;
 import pelagic_prehistory.entity.Prognathodon;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
@@ -13,19 +14,17 @@ public class PrognathodonModel<T extends Prognathodon> extends SimplePitchGeoMod
     }
 
     @Override
-    protected float getPitchMultiplier() {
-        return -1.0F;
-    }
-
-    @Override
     protected void rotateHead(T animatable, int instanceId, AnimationEvent animationState) {
-        Optional<IBone> head = getHeadBone();
-        Optional<IBone> neck = Optional.ofNullable(getBone("neck"));
-        if(head.isPresent() && neck.isPresent()) {
-            float yRot = getNetHeadYaw(animatable, animationState.getPartialTick());
-            float angle = (float) Math.toRadians(-yRot);
-            head.get().setRotationY(angle * 0.5F);
-            neck.get().setRotationY(angle * 0.5F);
+        Optional<IBone> oHead = getHeadBone();
+        Optional<IBone> oNeck = Optional.ofNullable(getBone("neck"));
+        if(oHead.isPresent() && oNeck.isPresent()) {
+            final IBone head = oHead.get();
+            final IBone neck = oNeck.get();
+            final Vec2 rotations = getHeadRotations(animatable, instanceId, animationState).scale(0.5F);
+            head.setRotationX(head.getRotationX() + rotations.x);
+            head.setRotationY(head.getRotationY() + rotations.y);
+            neck.setRotationX(neck.getRotationX() + rotations.x);
+            neck.setRotationY(neck.getRotationY() + rotations.y);
         }
     }
 }

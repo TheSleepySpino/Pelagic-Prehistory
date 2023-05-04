@@ -1,13 +1,17 @@
 package pelagic_prehistory.client.entity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec2;
 import pelagic_prehistory.PelagicPrehistory;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 import java.util.Optional;
 
@@ -55,30 +59,32 @@ public class SimplePitchGeoModel<T extends LivingEntity & IAnimatable> extends A
     }
 
     protected float getPitchMultiplier() {
-        return -1;
+        return 1;
     }
 
     protected void rotateBody(T animatable, int instanceId, AnimationEvent animationState) {
         Optional<IBone> bone = getBodyBone();
         if(bone.isPresent()) {
-            float xRot = animatable.getViewXRot(animationState.getPartialTick()) * getPitchMultiplier();
+            float xRot = (-1.0F) * animatable.getViewXRot(animationState.getPartialTick()) * getPitchMultiplier();
             float angle = (float) Math.toRadians(xRot);
             bone.get().setRotationX(angle);
         }
     }
 
     protected void rotateHead(T animatable, int instanceId, AnimationEvent animationState) {
-        Optional<IBone> bone = getHeadBone();
-        if(bone.isPresent()) {
-            float yRot = getNetHeadYaw(animatable, animationState.getPartialTick());
-            float angle = (float) Math.toRadians(yRot);
-            bone.get().setRotationY(angle);
+        Optional<IBone> oBone = getHeadBone();
+        if(oBone.isPresent()) {
+            final IBone bone = oBone.get();
+            final Vec2 rotations = getHeadRotations(animatable, instanceId, animationState);
+            bone.setRotationX(bone.getRotationX() + rotations.x * getPitchMultiplier());
+            bone.setRotationY(bone.getRotationY() + rotations.y);
         }
     }
 
-    protected float getNetHeadYaw(final T entity, final float partialTick) {
-        float yBodyRot = Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot);
-        float yHeadRot = Mth.rotLerp(partialTick, entity.yHeadRotO, entity.yHeadRot);
-        return yHeadRot - yBodyRot;
+    protected Vec2 getHeadRotations(T animatable, int instanceId, AnimationEvent animationState) {
+        EntityModelData extraData = (EntityModelData) animationState.getExtraDataOfType(EntityModelData.class).get(0);
+        AnimationData manager = animatable.getFactory().getOrCreateAnimationData(instanceId);
+        int unpausedMultiplier = !Minecraft.getInstance().isPaused() || manager.shouldPlayWhilePaused ? 1 : 0;
+        return new Vec2(extraData.headPitch, extraData.netHeadYaw).scale(Mth.DEG_TO_RAD * unpausedMultiplier);
     }
 }

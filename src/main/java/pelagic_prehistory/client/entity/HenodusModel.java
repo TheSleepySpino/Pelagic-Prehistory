@@ -10,6 +10,6 @@ public class HenodusModel<T extends Henodus> extends SimplePitchGeoModel<T> {
 
     @Override
     protected float getPitchMultiplier() {
-        return 1.0F;
+        return -1.0F;
     }
 }

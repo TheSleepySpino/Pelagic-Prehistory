@@ -1,6 +1,9 @@
 package pelagic_prehistory.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -42,8 +45,16 @@ public class InfuserBlockEntity extends PPBlockEntityBase<InfuserRecipe> {
         } else {
             blockEntity.resetProgress();
         }
+        // sound
+        blockEntity.tickSound(level, blockPos);
     }
-    
+
+    @Override
+    protected SoundEvent getSound() {
+        // TODO infuser sound
+        return SoundEvents.CAMPFIRE_CRACKLE;
+    }
+
     // BLOCK ENTITY BASE //
 
     @Override
@@ -90,7 +101,6 @@ public class InfuserBlockEntity extends PPBlockEntityBase<InfuserRecipe> {
             }
         };
     }
-
 
     // MENU PROVIDER //
 

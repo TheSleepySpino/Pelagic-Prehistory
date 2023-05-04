@@ -5,6 +5,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
@@ -235,5 +239,28 @@ public abstract class PPBlockEntityBase<R extends Recipe<?>> extends BlockEntity
         tag.putInt(KEY_PROGRESS, progress);
         tag.putInt(KEY_MAX_PROGRESS, maxProgress);
         ContainerHelper.saveAllItems(tag, getInventory());
+    }
+
+    // SOUND //
+
+    protected abstract SoundEvent getSound();
+
+    protected void tickSound(final Level level, final BlockPos pos) {
+        final SoundEvent sound = getSound();
+        final int soundInterval = getSoundInterval();
+        if (sound != null && soundInterval > 0 && level.getRandom().nextInt(soundInterval) == 0) {
+            level.playSound(null, pos, getSound(), SoundSource.BLOCKS, 1.0F, getSoundPitch(level.getRandom()));
+        }
+    }
+
+    protected int getSoundInterval() {
+        if(progress > 0 && progress < maxProgress) {
+            return 80;
+        }
+        return 0;
+    }
+
+    protected float getSoundPitch(final RandomSource random) {
+        return 0.8F + random.nextFloat() * 0.4F;
     }
 }

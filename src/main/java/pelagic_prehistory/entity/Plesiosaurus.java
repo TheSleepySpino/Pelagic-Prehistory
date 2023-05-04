@@ -37,7 +37,7 @@ public class Plesiosaurus extends WaterAnimal implements IAnimatable {
 
     // GECKOLIB //
     protected AnimationFactory instanceCache = GeckoLibUtil.createFactory(this);
-    protected static final AnimationBuilder ANIM_IDLE = new AnimationBuilder().addAnimation("swim");
+    protected static final AnimationBuilder ANIM_SWIM = new AnimationBuilder().addAnimation("swim");
 
     public Plesiosaurus(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
@@ -147,7 +147,7 @@ public class Plesiosaurus extends WaterAnimal implements IAnimatable {
     //// GECKOLIB ////
 
     private PlayState handleAnimation(AnimationEvent<Plesiosaurus> event) {
-        event.getController().setAnimation(ANIM_IDLE);
+        event.getController().setAnimation(ANIM_SWIM);
         return PlayState.CONTINUE;
     }
 

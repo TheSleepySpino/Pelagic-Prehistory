@@ -110,6 +110,12 @@ public class Cuttlefish extends WaterAnimal implements IAnimatable {
         super.tick();
     }
 
+    @Override
+    public boolean requiresCustomPersistence() {
+        return super.requiresCustomPersistence();
+    }
+
+    @Override
     public void travel(Vec3 pTravelVector) {
         this.move(MoverType.SELF, this.getDeltaMovement());
     }

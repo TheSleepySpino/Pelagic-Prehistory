@@ -62,12 +62,15 @@ import pelagic_prehistory.block.AnalyzerBlock;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
 import pelagic_prehistory.block.CharniaBlock;
 import pelagic_prehistory.block.SeaSpongeBlock;
+import pelagic_prehistory.entity.Bawitius;
 import pelagic_prehistory.entity.Cladoselache;
 import pelagic_prehistory.entity.Cuttlefish;
 import pelagic_prehistory.entity.Dunkleosteus;
 import pelagic_prehistory.entity.Henodus;
+import pelagic_prehistory.entity.Irritator;
 import pelagic_prehistory.entity.Lepidotes;
 import pelagic_prehistory.entity.Prognathodon;
+import pelagic_prehistory.entity.Shonisaurus;
 import pelagic_prehistory.worldgen.GinkgoTreeFeature;
 import pelagic_prehistory.worldgen.GinkgoTreeGrower;
 import pelagic_prehistory.block.InfuserBlock;
@@ -146,16 +149,16 @@ public final class PPRegistry {
         public static final RegistryObject<Item> CHARNIA_VIAL = registerVial("charnia", 0xada74c);
         public static final RegistryObject<Item> GREEN_SEA_SPONGE_VIAL = registerVial("green_sea_sponge", 0x8c840a);
         public static final RegistryObject<Item> GINKGO_TREE_VIAL = registerVial("ginkgo_tree", 0x9bd367);
-        public static final RegistryObject<Item> BAWITIUS_VIAL = registerVialAndEggs(null, "bawitius", "eggs",0xb75194);
+        public static final RegistryObject<Item> BAWITIUS_VIAL = registerVialAndEggs(EntityReg.BAWITIUS, "bawitius", "eggs",0xb75194);
         public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVialAndEggs(EntityReg.CLADOSELACHE, "cladoselache", "eggs",0xa254a9);
-        public static final RegistryObject<Item> OPTHALMOSAURUS_VIAL = registerVialAndEggs(null, "opthalmosaurus", "egg",0x80872c);
+        public static final RegistryObject<Item> IRRITATOR_VIAL = registerVialAndEggs(EntityReg.IRRITATOR, "irritator", "egg",0x80872c);
         public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVialAndEggs(EntityReg.DUNKLEOSTEUS, "dunkleosteus", "egg",0x3a9db3);
         public static final RegistryObject<Item> HENODUS_VIAL = registerVialAndEggs(EntityReg.HENODUS, "henodus", "egg",0x977343);
         public static final RegistryObject<Item> LEPIDOTES_VIAL = registerVialAndEggs(EntityReg.LEPIDOTES, "lepidotes", "eggs",0xb7bb65);
         public static final RegistryObject<Item> PLESIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLESIOSAURUS, "plesiosaurus", "egg", 0x429389);
         public static final RegistryObject<Item> PLIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLIOSAURUS, "pliosaurus", "pup", 0x4e402c);
         public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVialAndEggs(EntityReg.PROGNATHODON, "prognathodon", "egg", 0xa1ae75);
-        public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVialAndEggs(null, "shonisaurus", "egg", 0x3a746b);
+        public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVialAndEggs(EntityReg.SHONISAURUS, "shonisaurus", "egg", 0x3a746b);
         public static final RegistryObject<Item> UNKNOWN_VIAL = ITEMS.register("unknown_vial", () -> new VialItem(0x4c4c4c, new Item.Properties().tab(TAB)));
 
         /**
@@ -204,15 +207,8 @@ public final class PPRegistry {
          */
         private static <T extends Mob> RegistryObject<Item> registerVialAndEggs(final RegistryObject<EntityType<T>> entityType, final String name, final String eggSuffix, final int color) {
             final RegistryObject<Item> vial = registerVial(name, color);
-            if(null == entityType) {
-                // TODO remove this when entity types are no longer null
-                final RegistryObject<Item> egg = register(name + "_" + eggSuffix, () -> new Item(new Item.Properties().tab(TAB)));
-                final RegistryObject<Item> spawnEgg = register(name + "_spawn_egg", () -> new Item(new Item.Properties().tab(TAB)));
-            } else {
-                final RegistryObject<Item> egg = register(name + "_" + eggSuffix, () -> new ForgeSpawnEggItem(entityType, -1, -1, new Item.Properties().tab(TAB)));
-                final RegistryObject<Item> spawnEgg = registerSpawnEgg(name, entityType, color, 0xC0C0C0);
-            }
-
+            final RegistryObject<Item> egg = register(name + "_" + eggSuffix, () -> new ForgeSpawnEggItem(entityType, -1, -1, new Item.Properties().tab(TAB)));
+            final RegistryObject<Item> spawnEgg = registerSpawnEgg(name, entityType, color, 0xC0C0C0);
             return vial;
         }
 
@@ -366,28 +362,39 @@ public final class PPRegistry {
         }
 
         public static void onEntityAttributeCreation(final EntityAttributeCreationEvent event) {
+            event.put(BAWITIUS.get(), Bawitius.createAttributes().build());
             event.put(CLADOSELACHE.get(), Cladoselache.createAttributes().build());
             event.put(CUTTLEFISH.get(), Cuttlefish.createAttributes().build());
             event.put(DUGONG.get(), Dugong.createAttributes().build());
             event.put(DUNKLEOSTEUS.get(), Dunkleosteus.createAttributes().build());
             event.put(HENODUS.get(), Henodus.createAttributes().build());
+            event.put(IRRITATOR.get(), Irritator.createAttributes().build());
             event.put(LEPIDOTES.get(), Lepidotes.createAttributes().build());
             event.put(PLESIOSAURUS.get(), Plesiosaurus.createAttributes().build());
             event.put(PLIOSAURUS.get(), Pliosaurus.createAttributes().build());
             event.put(PROGNATHODON.get(), Prognathodon.createAttributes().build());
+            event.put(SHONISAURUS.get(), Shonisaurus.createAttributes().build());
         }
 
         public static void onRegisterSpawnPlacement(final SpawnPlacementRegisterEvent event) {
+            event.register(BAWITIUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(CLADOSELACHE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(CUTTLEFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(DUGONG.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(DUNKLEOSTEUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(HENODUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+            event.register(IRRITATOR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Irritator::checkIrritatorSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(LEPIDOTES.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLESIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PLIOSAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(PROGNATHODON.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+            event.register(SHONISAURUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
         }
+
+        public static final RegistryObject<EntityType<Bawitius>> BAWITIUS = ENTITY_TYPES.register("bawitius", () ->
+                EntityType.Builder.of(Bawitius::new, MobCategory.WATER_CREATURE)
+                        .sized(0.95F, 0.88F)
+                        .build("bawitius"));
 
         public static final RegistryObject<EntityType<Cladoselache>> CLADOSELACHE = ENTITY_TYPES.register("cladoselache", () ->
                 EntityType.Builder.of(Cladoselache::new, MobCategory.WATER_CREATURE)
@@ -414,6 +421,11 @@ public final class PPRegistry {
                         .sized(0.746F, 0.188F)
                         .build("henodus"));
 
+        public static final RegistryObject<EntityType<Irritator>> IRRITATOR = ENTITY_TYPES.register("irritator", () ->
+                EntityType.Builder.of(Irritator::new, MobCategory.CREATURE)
+                        .sized(1.44F, 1.96F)
+                        .build("irritator"));
+
         public static final RegistryObject<EntityType<Lepidotes>> LEPIDOTES = ENTITY_TYPES.register("lepidotes", () ->
                 EntityType.Builder.of(Lepidotes::new, MobCategory.WATER_CREATURE)
                         .sized(0.875F, 0.625F)
@@ -433,6 +445,11 @@ public final class PPRegistry {
                 EntityType.Builder.of(Prognathodon::new, MobCategory.WATER_CREATURE)
                         .sized(1.825F, 0.98F)
                         .build("prognathodon"));
+
+        public static final RegistryObject<EntityType<Shonisaurus>> SHONISAURUS = ENTITY_TYPES.register("shonisaurus", () ->
+                EntityType.Builder.of(Shonisaurus::new, MobCategory.WATER_CREATURE)
+                        .sized(2.98F, 2.08F)
+                        .build("shonisaurus"));
     }
 
     public static final class FeatureReg {

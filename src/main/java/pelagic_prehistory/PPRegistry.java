@@ -517,7 +517,10 @@ public final class PPRegistry {
         private static RegistryObject<SoundEvent> registerSound(final String name) {
             return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(PelagicPrehistory.MODID, name)));
         }
-        
+
+        public static final RegistryObject<SoundEvent> IRRITATOR_AMBIENT = registerSound("entity.irritator.ambient");
+        public static final RegistryObject<SoundEvent> IRRITATOR_HURT = registerSound("entity.irritator.hurt");
+        public static final RegistryObject<SoundEvent> IRRITATOR_DEATH = registerSound("entity.irritator.death");
         public static final RegistryObject<SoundEvent> PLESIOSAURUS_AMBIENT = registerSound("entity.plesiosaurus.ambient");
         public static final RegistryObject<SoundEvent> PLESIOSAURUS_HURT = registerSound("entity.plesiosaurus.hurt");
         public static final RegistryObject<SoundEvent> PLESIOSAURUS_DEATH = registerSound("entity.plesiosaurus.death");

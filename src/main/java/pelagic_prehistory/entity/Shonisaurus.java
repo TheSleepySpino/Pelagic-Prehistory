@@ -73,7 +73,7 @@ public class Shonisaurus extends WaterAnimal implements IAnimatable {
     public void tick() {
         super.tick();
         if(isInWater() && !isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
-            setDeltaMovement(getDeltaMovement().add(0, 0.04D, 0));
+            setDeltaMovement(getDeltaMovement().add(0, -0.04D, 0));
         }
     }
 

@@ -1,4 +1,19 @@
 {
+  "entity.irritator.ambient": {
+    "sounds": [
+      "pelagic_prehistory:irritator_ambient",
+      "pelagic_prehistory:irritator_broad"
+    ],
+    "subtitle": "subtitles.entity.pelagic_prehistory.irritator.ambient"
+  },
+  "entity.irritator.hurt": {
+    "sounds": ["pelagic_prehistory:irritator_hurt"],
+    "subtitle": "subtitles.entity.pelagic_prehistory.irritator.hurt"
+  },
+  "entity.irritator.death": {
+    "sounds": ["pelagic_prehistory:irritator_death"],
+    "subtitle": "subtitles.entity.pelagic_prehistory.irritator.death"
+  },
   "entity.plesiosaurus.ambient": {
     "sounds": [
       "pelagic_prehistory:plesiosaurus_ambient_1",

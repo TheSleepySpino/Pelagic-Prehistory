@@ -3,11 +3,13 @@ package pelagic_prehistory.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -40,6 +42,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
+import pelagic_prehistory.PPRegistry;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -219,6 +222,28 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
     @Override
     public UUID getPersistentAngerTarget() {
         return this.angerTarget;
+    }
+
+    //// SOUNDS ////
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return PPRegistry.SoundReg.IRRITATOR_AMBIENT.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return PPRegistry.SoundReg.IRRITATOR_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return PPRegistry.SoundReg.IRRITATOR_DEATH.get();
     }
 
     //// NBT ////

@@ -152,12 +152,12 @@ public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
 
     @Override
     public int getAmbientSoundInterval() {
-        return 80;
+        return 160;
     }
 
     @Override
     protected float getSoundVolume() {
-        final float factor = isInWaterOrBubble() ? 0.8F : 0.4F;
+        final float factor = isInWaterOrBubble() ? 0.5F : 0.32F;
         return super.getSoundVolume() * factor;
     }
 

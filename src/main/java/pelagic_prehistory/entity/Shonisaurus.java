@@ -2,6 +2,8 @@ package pelagic_prehistory.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -20,6 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
+import org.jetbrains.annotations.Nullable;
+import pelagic_prehistory.PPRegistry;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -99,7 +103,38 @@ public class Shonisaurus extends WaterAnimal implements IAnimatable {
 
     @Override
     public AABB getBoundingBoxForCulling() {
-        return super.getBoundingBoxForCulling().inflate(2.0F, 0.5F, 2.0F);
+        return super.getBoundingBoxForCulling().inflate(4.0F, 0.5F, 4.0F);
+    }
+
+    //// SOUNDS ////
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 160;
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        final float factor = isInWaterOrBubble() ? 0.5F : 0.32F;
+        return super.getSoundVolume() * factor;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return PPRegistry.SoundReg.SHONISAURUS_AMBIENT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return PPRegistry.SoundReg.SHONISAURUS_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return PPRegistry.SoundReg.SHONISAURUS_DEATH.get();
     }
 
     //// NBT ////

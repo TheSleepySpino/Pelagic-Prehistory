@@ -1,6 +1,8 @@
 package pelagic_prehistory;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -12,6 +14,7 @@ import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -59,6 +62,12 @@ public final class PPEvents {
                     }
                 });
             }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerLogin(final PlayerEvent.PlayerLoggedInEvent event) {
+            // TODO remove for release
+            event.getEntity().displayClientMessage(Component.literal("You are using a beta version of Pelagic Prehistory, do not distribute").withStyle(ChatFormatting.AQUA), false);
         }
     }
 

@@ -9,8 +9,8 @@
           "Name": "pelagic_prehistory:ancient_sediment_fossil"
         },
         "target": {
-          "predicate_type": "minecraft:block_match",
-          "block": "pelagic_prehistory:ancient_sediment"
+          "predicate_type": "minecraft:tag_match",
+          "tag": "forge:ore_bearing_ground/ancient_sediment"
         }
       }
     ]

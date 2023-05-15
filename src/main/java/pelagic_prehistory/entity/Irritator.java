@@ -4,13 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -24,6 +22,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -33,15 +32,15 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
 import pelagic_prehistory.PPRegistry;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -83,7 +82,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.32D)
                 .add(Attributes.ATTACK_DAMAGE, 5.0D)
-                .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 0.6D);
+                .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 0.8D);
     }
 
     public static boolean checkIrritatorSpawnRules(EntityType<? extends PathfinderMob> entity, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
@@ -120,7 +119,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0F, false));
-        this.goalSelector.addGoal(2, new Irritator.MoveToShallowWaterGoal(this, 1.0D));
+        this.goalSelector.addGoal(4, new Irritator.MoveToShallowWaterGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.9D, 80));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
@@ -154,11 +153,11 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
 
     @Override
     public float getWalkTargetValue(BlockPos pPos, LevelReader pLevel) {
-        if(isShallowWater(pLevel, pPos)) {
-            return 10.0F;
-        }
-        final BlockPathTypes pathType = pLevel.getBlockState(pPos).getBlockPathType(pLevel, pPos, this);
-        if(pathType == BlockPathTypes.WATER_BORDER || pathType == BlockPathTypes.WATER) {
+        final BlockPos posBelow = pPos.below();
+        final BlockState blockState = pLevel.getBlockState(posBelow);
+        final BlockPathTypes pathType = blockState.getBlockPathType(pLevel, posBelow, this);
+        if(pathType == BlockPathTypes.WATER_BORDER || pathType == BlockPathTypes.WATER
+                || blockState.is(Blocks.GRASS_BLOCK) || isShallowWater(pLevel, pPos)) {
             return 8.0F;
         }
         return super.getWalkTargetValue(pPos, pLevel);
@@ -228,7 +227,12 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
 
     @Override
     public int getAmbientSoundInterval() {
-        return 80;
+        return 160;
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.4F;
     }
 
     @Override
@@ -288,40 +292,26 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
 
     //// GOALS ////
 
-    private static class MoveToShallowWaterGoal extends Goal {
-
-        private final PathfinderMob mob;
-        private final double speedModifier;
+    private static class MoveToShallowWaterGoal extends MoveToBlockGoal {
 
         public MoveToShallowWaterGoal(PathfinderMob pMob, final double speedModifier) {
-            this.mob = pMob;
-            this.speedModifier = speedModifier;
-            this.setFlags(EnumSet.of(Flag.MOVE));
+            super(pMob, speedModifier, 8, 3);
+            this.verticalSearchStart = -2;
         }
 
         @Override
         public boolean canUse() {
-            return this.mob.isOnGround() && !this.mob.level.isWaterAt(this.mob.blockPosition());
+            return this.mob.isOnGround() && !this.mob.level.isWaterAt(this.mob.blockPosition()) && super.canUse();
         }
 
         @Override
         public void start() {
-            BlockPos targetPos = null;
-
-            for (BlockPos p : BlockPos.betweenClosed(Mth.floor(this.mob.getX() - 2.0D), Mth.floor(this.mob.getY() - 2.0D), Mth.floor(this.mob.getZ() - 2.0D), Mth.floor(this.mob.getX() + 2.0D), this.mob.getBlockY(), Mth.floor(this.mob.getZ() + 2.0D))) {
-                if (isValidTarget(this.mob.level, p)) {
-                    targetPos = p;
-                    break;
-                }
-            }
-
-            if (targetPos != null) {
-                this.mob.getMoveControl().setWantedPosition(targetPos.getX(), targetPos.getY(), targetPos.getZ(), speedModifier);
-            }
+            super.start();
         }
 
+        @Override
         protected boolean isValidTarget(final LevelReader level, final BlockPos pos) {
-            return isShallowWater(level, pos);
+            return isShallowWater(level, pos.above(1));
         }
     }
 }

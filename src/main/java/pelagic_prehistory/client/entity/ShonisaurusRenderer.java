@@ -9,4 +9,14 @@ public class ShonisaurusRenderer<T extends Shonisaurus> extends GeoEntityRendere
     public ShonisaurusRenderer(EntityRendererProvider.Context context) {
         super(context, new SimplePitchGeoModel<T>("shonisaurus"));
     }
+
+    @Override
+    public float getWidthScale(T entity) {
+        return 2.0F;
+    }
+
+    @Override
+    public float getHeightScale(T entity) {
+        return 2.0F;
+    }
 }

@@ -66,8 +66,8 @@ public final class PPEvents {
 
         @SubscribeEvent
         public static void onPlayerLogin(final PlayerEvent.PlayerLoggedInEvent event) {
-            // TODO remove for release
-            event.getEntity().displayClientMessage(Component.literal("You are using a beta version of Pelagic Prehistory, do not distribute").withStyle(ChatFormatting.AQUA), false);
+            // remove for release
+            // event.getEntity().displayClientMessage(Component.literal("You are using a beta version of Pelagic Prehistory, do not distribute").withStyle(ChatFormatting.AQUA), false);
         }
     }
 

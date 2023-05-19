@@ -3,6 +3,7 @@ package pelagic_prehistory.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -76,7 +77,7 @@ public class Shonisaurus extends WaterAnimal implements IAnimatable {
     @Override
     public void tick() {
         super.tick();
-        if(isInWater() && !isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
+        if(isInWater() && !level.getFluidState(new BlockPos(position().add(0, getBbHeight(), 0))).is(FluidTags.WATER)) {
             setDeltaMovement(getDeltaMovement().add(0, -0.04D, 0));
         }
     }

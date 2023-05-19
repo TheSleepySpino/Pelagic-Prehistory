@@ -144,8 +144,8 @@ public final class PPRegistry {
         public static final RegistryObject<Item> FOSSIL = register("fossil", () -> new Item(new Item.Properties().tab(TAB)));
 
         // SPAWN EGGS //
-        public static final RegistryObject<Item> CUTTLEFISH_SPAWN_EGG = registerSpawnEgg("cuttlefish", EntityReg.CUTTLEFISH, 0x0, 0x0); // TODO color
-        public static final RegistryObject<Item> DUGONG_SPAWN_EGG = registerSpawnEgg("dugong", EntityReg.DUGONG, 0x0, 0x0); // TODO color
+        public static final RegistryObject<Item> CUTTLEFISH_SPAWN_EGG = registerSpawnEgg("cuttlefish", EntityReg.CUTTLEFISH, 0xb16053, 0xC0C0C0);
+        public static final RegistryObject<Item> DUGONG_SPAWN_EGG = registerSpawnEgg("dugong", EntityReg.DUGONG, 0xa9a47e, 0xC0C0C0);
 
         // VIALS, EGGS, AND SPAWN EGGS //
         public static final RegistryObject<Item> CHARNIA_VIAL = registerVial("charnia", 0xada74c);
@@ -153,14 +153,14 @@ public final class PPRegistry {
         public static final RegistryObject<Item> GINKGO_TREE_VIAL = registerVial("ginkgo_tree", 0x9bd367);
         public static final RegistryObject<Item> BAWITIUS_VIAL = registerVialAndEggs(EntityReg.BAWITIUS, "bawitius", "eggs",0xb75194);
         public static final RegistryObject<Item> CLADOSELACHE_VIAL = registerVialAndEggs(EntityReg.CLADOSELACHE, "cladoselache", "eggs",0xa254a9);
-        public static final RegistryObject<Item> IRRITATOR_VIAL = registerVialAndEggs(EntityReg.IRRITATOR, "irritator", "egg",0x80872c);
-        public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVialAndEggs(EntityReg.DUNKLEOSTEUS, "dunkleosteus", "egg",0x3a9db3);
+        public static final RegistryObject<Item> DUNKLEOSTEUS_VIAL = registerVialAndEggs(EntityReg.DUNKLEOSTEUS, "dunkleosteus", "eggs",0x3a9db3);
         public static final RegistryObject<Item> HENODUS_VIAL = registerVialAndEggs(EntityReg.HENODUS, "henodus", "egg",0x977343);
+        public static final RegistryObject<Item> IRRITATOR_VIAL = registerVialAndEggs(EntityReg.IRRITATOR, "irritator", "egg",0x80872c);
         public static final RegistryObject<Item> LEPIDOTES_VIAL = registerVialAndEggs(EntityReg.LEPIDOTES, "lepidotes", "eggs",0xb7bb65);
-        public static final RegistryObject<Item> PLESIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLESIOSAURUS, "plesiosaurus", "egg", 0x429389);
+        public static final RegistryObject<Item> PLESIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLESIOSAURUS, "plesiosaurus", "pup", 0x429389);
         public static final RegistryObject<Item> PLIOSAURUS_VIAL = registerVialAndEggs(EntityReg.PLIOSAURUS, "pliosaurus", "pup", 0x4e402c);
-        public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVialAndEggs(EntityReg.PROGNATHODON, "prognathodon", "egg", 0xa1ae75);
-        public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVialAndEggs(EntityReg.SHONISAURUS, "shonisaurus", "egg", 0x3a746b);
+        public static final RegistryObject<Item> PROGNATHODON_VIAL = registerVialAndEggs(EntityReg.PROGNATHODON, "prognathodon", "pup", 0xa1ae75);
+        public static final RegistryObject<Item> SHONISAURUS_VIAL = registerVialAndEggs(EntityReg.SHONISAURUS, "shonisaurus", "pup", 0x3a746b);
         public static final RegistryObject<Item> UNKNOWN_VIAL = ITEMS.register("unknown_vial", () -> new VialItem(0x4c4c4c, new Item.Properties().tab(TAB)));
 
         /**

@@ -120,7 +120,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0F, false));
         this.goalSelector.addGoal(4, new Irritator.MoveToShallowWaterGoal(this, 1.0D));
-        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.9D, 80));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.9D, 110));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Drowned.class, true, false));

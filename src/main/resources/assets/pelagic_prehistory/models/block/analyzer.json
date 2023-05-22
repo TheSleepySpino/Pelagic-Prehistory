@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
+    "bottom": "pelagic_prehistory:block/ancient_sediment",
     "top": "pelagic_prehistory:block/analyzer_top",
     "front": "pelagic_prehistory:block/analyzer_front",
     "side": "pelagic_prehistory:block/analyzer_side"

@@ -1,0 +1,25 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "unusualprehistory"
+        }
+      ],
+      "recipe": {
+        "type": "pelagic_prehistory:analyzing",
+        "input": {
+          "item": "unusualprehistory:ginkgo_fruit"
+        },
+        "results": [
+          {
+            "weight": 100,
+            "item": "unusualprehistory:ginkgo_flask"
+          }
+        ]
+      }
+    }
+  ]
+}

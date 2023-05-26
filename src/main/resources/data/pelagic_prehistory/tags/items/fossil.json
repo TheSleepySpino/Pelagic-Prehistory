@@ -1,0 +1,41 @@
+{
+  "values": [
+    "pelagic_prehistory:fossil",
+    {
+      "id": "unusualprehistory:mezo_fossil",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:paleo_fossil",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:plant_fossil_item",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:amber_fossil",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:raw_scau",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:raw_stetha",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:raw_coty",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:ginkgo_fruit",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:petrified_wood",
+      "required": false
+    }
+  ]
+}

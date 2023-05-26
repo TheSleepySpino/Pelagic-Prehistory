@@ -1,0 +1,33 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "unusualprehistory"
+        }
+      ],
+      "recipe": {
+        "type": "pelagic_prehistory:analyzing",
+        "input": {
+          "tag": "unusualprehistory:petrified_wood"
+        },
+        "results": [
+          {
+            "weight": 50,
+            "item": "minecraft:coal"
+          },
+          {
+            "weight": 50,
+            "item": "minecraft:cobblestone"
+          },
+          {
+            "weight": 15,
+            "item": "unusualprehistory:ginkgo_flask"
+          }
+        ]
+      }
+    }
+  ]
+}

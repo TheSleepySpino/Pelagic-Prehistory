@@ -90,9 +90,10 @@ dependencies {
 	implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:${project.geckolib_version}")
 
     // JEI
-	//compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 	implementation fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
+    // Unusual Prehistory
+    implementation fg.deobf("curse.maven:unusual-prehistory-${project.unusual_prehistory_project}:${project.unusual_prehistory_file}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

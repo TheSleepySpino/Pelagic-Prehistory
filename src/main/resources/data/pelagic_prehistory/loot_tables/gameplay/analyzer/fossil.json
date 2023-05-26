@@ -1,0 +1,94 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "minecraft:coal"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "minecraft:cobblestone"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "minecraft:bone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:ginkgo_tree_vial",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:charnia_vial",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:green_sea_sponge_vial",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:bawitius_vial",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:cladoselache_vial",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:dunkleosteus_vial",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:henodus_vial",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:lepidotes_vial",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:irritator_vial",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:plesiosaurus_vial",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:pliosaurus_vial",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:prognathodon_vial",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pelagic_prehistory:shonisaurus_vial",
+          "weight": 2
+        }
+      ]
+    }
+  ]
+}
+
+
+
+

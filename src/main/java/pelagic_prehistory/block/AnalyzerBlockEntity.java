@@ -1,13 +1,16 @@
 package pelagic_prehistory.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -15,15 +18,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.EmptyHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import pelagic_prehistory.PPRegistry;
+import pelagic_prehistory.PelagicPrehistory;
 import pelagic_prehistory.menu.AnalyzerMenu;
 import pelagic_prehistory.recipe.AnalyzerRecipe;
 
 import java.util.Optional;
 
 public class AnalyzerBlockEntity extends PPBlockEntityBase<AnalyzerRecipe> {
+
+    private static final TagKey<Item> FOSSIL = ForgeRegistries.ITEMS.tags().createTagKey(new ResourceLocation(PelagicPrehistory.MODID, "fossil"));
 
     public AnalyzerBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
@@ -87,17 +94,12 @@ public class AnalyzerBlockEntity extends PPBlockEntityBase<AnalyzerRecipe> {
         return new InvWrapper(this) {
             @Override
             public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return slot == 0 ? stack.is(PPRegistry.ItemReg.FOSSIL.get()) : super.isItemValid(slot, stack);
+                return slot == 0 ? stack.is(FOSSIL) : super.isItemValid(slot, stack);
             }
 
             @Override
             public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
                 return slot == 0 ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
-            }
-
-            @Override
-            public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-                return /*slot > 0 || !stack.is(PPRegistry.ItemReg.FOSSIL.get()) ? stack : */super.insertItem(slot, stack, simulate);
             }
         };
     }

@@ -1,0 +1,22 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "unusualprehistory"
+        }
+      ],
+      "recipe": {
+        "type": "unusualprehistory:analyzing",
+        "ingredients": [
+          {
+            "item": "pelagic_prehistory:fossil"
+          }
+        ],
+        "output": "pelagic_prehistory:gameplay/analyzer/fossil"
+      }
+    }
+  ]
+}

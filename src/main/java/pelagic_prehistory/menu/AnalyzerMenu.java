@@ -1,5 +1,7 @@
 package pelagic_prehistory.menu;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -11,9 +13,12 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import pelagic_prehistory.PPRegistry;
+import pelagic_prehistory.PelagicPrehistory;
 import pelagic_prehistory.block.AnalyzerBlockEntity;
 
 public class AnalyzerMenu extends AbstractContainerMenu {
@@ -111,13 +116,15 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     // SLOTS //
 
     private static class FossilSlot extends Slot {
+        private static final TagKey<Item> FOSSIL = ForgeRegistries.ITEMS.tags().createTagKey(new ResourceLocation(PelagicPrehistory.MODID, "fossil"));
+
         public FossilSlot(Container pContainer, int pSlot, int pX, int pY) {
             super(pContainer, pSlot, pX, pY);
         }
 
         @Override
         public boolean mayPlace(ItemStack pStack) {
-            return pStack.is(PPRegistry.ItemReg.FOSSIL.get());
+            return pStack.is(FOSSIL);
         }
     }
 

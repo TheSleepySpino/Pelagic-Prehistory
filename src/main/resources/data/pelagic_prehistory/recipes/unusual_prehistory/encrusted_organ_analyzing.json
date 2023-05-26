@@ -1,0 +1,25 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "unusualprehistory"
+        }
+      ],
+      "recipe": {
+        "type": "pelagic_prehistory:analyzing",
+        "input": {
+          "tag": "unusualprehistory:encrusted_organ"
+        },
+        "results": [
+          {
+            "weight": 100,
+            "item": "unusualprehistory:encrusted_flask"
+          }
+        ]
+      }
+    }
+  ]
+}

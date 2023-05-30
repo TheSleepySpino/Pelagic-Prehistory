@@ -8,6 +8,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
@@ -15,7 +16,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
@@ -23,16 +23,18 @@ import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Drowned;
-import net.minecraft.world.entity.monster.Guardian;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import pelagic_prehistory.PPRegistry;
+import pelagic_prehistory.entity.goal.FloppingGoal;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -44,7 +46,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.UUID;
 
-public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
+public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob, Enemy {
 
     // NEUTRAL MOB //
     private static final UniformInt ANGER_RANGE = TimeUtil.rangeOfSeconds(20, 39);
@@ -80,10 +82,12 @@ public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0F, false));
+        this.goalSelector.addGoal(1, new FloppingGoal(this, 0.4F, 8));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0F, false));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 10.0F));
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Drowned.class, true, false));
         this.targetSelector.addGoal(7, new ResetUniversalAngerTargetGoal<>(this, false));
     }
@@ -121,7 +125,22 @@ public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
         return super.getBoundingBoxForCulling().inflate(1.0F, 0.5F, 1.0F);
     }
 
+    @Override
+    public int getMaxHeadXRot() {
+        return 20;
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 20;
+    }
+
     //// NEUTRAL MOB ////
+
+    @Override
+    public boolean canAttack(LivingEntity pTarget) {
+        return super.canAttack(pTarget) && pTarget.isInWaterOrBubble();
+    }
 
     @Override
     public void startPersistentAngerTimer() {
@@ -146,6 +165,13 @@ public class Pliosaurus extends WaterAnimal implements IAnimatable, NeutralMob {
     @Override
     public UUID getPersistentAngerTarget() {
         return this.angerTarget;
+    }
+
+    //// HOSTILE MOB ////
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
     }
 
     //// SOUNDS ////

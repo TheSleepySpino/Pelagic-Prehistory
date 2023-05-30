@@ -6,6 +6,7 @@ import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
@@ -18,15 +19,14 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
-import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import pelagic_prehistory.entity.goal.FloppingGoal;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -74,6 +74,7 @@ public class Cladoselache extends WaterAnimal implements NeutralMob, IAnimatable
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(1, new FloppingGoal(this, 0.4F, 2));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
         this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 10.0F, 1.0D, 1.0D));
@@ -114,7 +115,22 @@ public class Cladoselache extends WaterAnimal implements NeutralMob, IAnimatable
         return super.getBoundingBoxForCulling().inflate(0.5F, 0.25F, 0.5F);
     }
 
+    @Override
+    public int getMaxHeadXRot() {
+        return 20;
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 20;
+    }
+
     //// NEUTRAL MOB ////
+
+    @Override
+    public boolean canAttack(LivingEntity pTarget) {
+        return super.canAttack(pTarget) && pTarget.isInWaterOrBubble();
+    }
 
     @Override
     public void startPersistentAngerTimer() {

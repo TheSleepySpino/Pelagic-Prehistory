@@ -13,24 +13,32 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.ai.goal.BreathAirGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -40,6 +48,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import pelagic_prehistory.PPRegistry;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -55,7 +64,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.UUID;
 
-public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable {
+public class Irritator extends PathfinderMob implements IAnimatable, NeutralMob, Enemy {
 
     // NEUTRAL MOB //
     private static final UniformInt ANGER_RANGE = TimeUtil.rangeOfSeconds(20, 39);
@@ -69,12 +78,16 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
     protected static final AnimationBuilder ANIM_SWIM = new AnimationBuilder().addAnimation("swim");
 
     // OTHER //
-    protected boolean isBodyInWater;
+    private boolean isBodyInWater;
+    private final EntityDimensions swimmingSize;
 
     public Irritator(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.moveControl = new Irritator.IrritatorMoveControl(this);
+        this.lookControl = new SmoothSwimmingLookControl(this, 20);
+        this.swimmingSize = EntityDimensions.scalable(type.getDimensions().width, type.getDimensions().height * 0.62F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -117,15 +130,16 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new BreathAirGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0F, false));
         this.goalSelector.addGoal(4, new Irritator.MoveToShallowWaterGoal(this, 1.0D));
-        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.9D, 110));
+        this.goalSelector.addGoal(5, new Irritator.IrritatorSwimmingGoal(this, 0.9D, 40));
+        this.goalSelector.addGoal(5, new Irritator.IrritatorWanderGoal(this, 0.9D, 40));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Drowned.class, true, false));
         this.targetSelector.addGoal(7, new ResetUniversalAngerTargetGoal<>(this, false));
-
     }
 
     @Override
@@ -139,6 +153,10 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
     public void tick() {
         super.tick();
         updateFluidOnBody();
+        if(this.tickCount % 4 == 0 && isShallowWater(level, blockPosition())) {
+            this.isBodyInWater = false;
+            refreshDimensions();
+        }
     }
 
     @Override
@@ -148,7 +166,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
 
     @Override
     protected PathNavigation createNavigation(Level level) {
-        return new GroundPathNavigation(this, level);
+        return new AmphibiousPathNavigation(this, level);
     }
 
     @Override
@@ -165,22 +183,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
 
     @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.95F;
-    }
-
-    @Override
-    public double getFluidJumpThreshold() {
-        return 1.1D;
-    }
-
-    @Override
-    protected boolean isAffectedByFluids() {
-        return !this.getEyeInFluidType().isAir();
-    }
-
-    @Override
-    protected float getWaterSlowDown() {
-        return super.getWaterSlowDown();
+        return dimensions.height * (isBodyInWater() ? 0.72F : 0.95F);
     }
 
     @Override
@@ -188,12 +191,14 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
         return super.getBoundingBoxForCulling().inflate(0.5F, 0.0F, 0.5F);
     }
 
-    private void updateFluidOnBody() {
-        double bodyY = this.getY() + getDimensions(getPose()).height * 0.5D;
-        BlockPos blockpos = new BlockPos(this.getX(), bodyY, this.getZ());
-        FluidState fluidstate = this.level.getFluidState(blockpos);
-        double fluidHeight = (float)blockpos.getY() + fluidstate.getHeight(this.level, blockpos);
-        this.isBodyInWater = !fluidstate.isEmpty() && fluidHeight > bodyY;
+    @Override
+    public int getMaxHeadXRot() {
+        return 30;
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 30;
     }
 
     //// NEUTRAL MOB ////
@@ -221,6 +226,68 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
     @Override
     public UUID getPersistentAngerTarget() {
         return this.angerTarget;
+    }
+
+    //// HOSTILE MOB ////
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
+    }
+
+    //// SWIMMING ////
+
+    @Override
+    public double getFluidJumpThreshold() {
+        return 1.1D;
+    }
+
+    @Override
+    protected boolean isAffectedByFluids() {
+        return !this.getEyeInFluidType().isAir();
+    }
+
+    @Override
+    protected float getWaterSlowDown() {
+        return super.getWaterSlowDown();
+    }
+
+    @Override
+    public int getMaxAirSupply() {
+        return 2400;
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pPose) {
+        final EntityDimensions dimensions = isBodyInWater() ? swimmingSize : super.getDimensions(pPose);
+        return dimensions.scale(this.getScale());
+    }
+
+    @Override
+    public void travel(Vec3 pTravelVector) {
+        if (this.isEffectiveAi() && this.isBodyInWater) {
+            this.moveRelative(this.getSpeed(), pTravelVector);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
+        } else {
+            super.travel(pTravelVector);
+        }
+    }
+
+    public boolean isBodyInWater() {
+        return isBodyInWater;
+    }
+
+    private void updateFluidOnBody() {
+        double bodyY = this.getY() + getDimensions(getPose()).height * 0.5D;
+        BlockPos blockpos = new BlockPos(this.getX(), bodyY, this.getZ());
+        FluidState fluidstate = this.level.getFluidState(blockpos);
+        double fluidHeight = (float)blockpos.getY() + fluidstate.getHeight(this.level, blockpos);
+        final boolean isBodyInWater = !fluidstate.isEmpty() && fluidHeight > bodyY;
+        if(isBodyInWater != this.isBodyInWater()) {
+            this.isBodyInWater = isBodyInWater;
+            refreshDimensions();
+        }
     }
 
     //// SOUNDS ////
@@ -267,7 +334,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
     //// GECKOLIB ////
 
     private PlayState handleAnimation(AnimationEvent<Irritator> event) {
-        final boolean inWater = isBodyInWater;
+        final boolean inWater = isBodyInWater();
         final boolean isWalking = getDeltaMovement().horizontalDistanceSqr() > 2.5000003E-7F;
         if(inWater) {
             event.getController().setAnimation(ANIM_SWIM);
@@ -288,6 +355,25 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
     @Override
     public AnimationFactory getFactory() {
         return instanceCache;
+    }
+
+    //// MOVE CONTROL ////
+
+    static class IrritatorMoveControl extends SmoothSwimmingMoveControl {
+        private final Irritator entity;
+
+        public IrritatorMoveControl(Irritator entity) {
+            super(entity, 85, 10, 1.0F, 1.0F, false);
+            this.entity = entity;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            if(!entity.getEyeInFluidType().isAir()) {
+                this.entity.setSpeed(this.entity.getSpeed() * 0.5F);
+            }
+        }
     }
 
     //// GOALS ////
@@ -312,6 +398,34 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
         @Override
         protected boolean isValidTarget(final LevelReader level, final BlockPos pos) {
             return isShallowWater(level, pos.above(1));
+        }
+    }
+
+    private static class IrritatorSwimmingGoal extends RandomSwimmingGoal {
+        private final Irritator entity;
+
+        public IrritatorSwimmingGoal(Irritator entity, double moveSpeed, int interval) {
+            super(entity, moveSpeed, interval);
+            this.entity = entity;
+        }
+
+        @Override
+        public boolean canUse() {
+            return !this.entity.getEyeInFluidType().isAir() && super.canUse();
+        }
+    }
+
+    private static class IrritatorWanderGoal extends RandomStrollGoal {
+        private final Irritator entity;
+
+        public IrritatorWanderGoal(Irritator entity, double moveSpeed, int interval) {
+            super(entity, moveSpeed, interval);
+            this.entity = entity;
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.entity.getEyeInFluidType().isAir() && super.canUse();
         }
     }
 }

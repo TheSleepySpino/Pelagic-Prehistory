@@ -89,6 +89,16 @@ public class Dugong extends WaterAnimal implements IAnimatable {
         return super.getBoundingBoxForCulling().inflate(0.5F, 0.25F, 0.5F);
     }
 
+    @Override
+    public int getMaxHeadXRot() {
+        return 20;
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 20;
+    }
+
     //// NBT ////
 
     @Override

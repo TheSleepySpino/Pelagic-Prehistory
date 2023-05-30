@@ -88,6 +88,16 @@ public class Henodus extends WaterAnimal implements IAnimatable {
         return 0.09375F;
     }
 
+    @Override
+    public int getMaxHeadXRot() {
+        return 20;
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 20;
+    }
+
     //// NBT ////
 
     @Override

@@ -22,8 +22,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
-import pelagic_prehistory.PPRegistry;
 import pelagic_prehistory.entity.goal.BreachGoal;
+import pelagic_prehistory.entity.goal.FloppingGoal;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -63,6 +63,7 @@ public class Plesiosaurus extends WaterAnimal implements IAnimatable {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(1, new FloppingGoal(this, 0.4F, 2));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new BreachGoal(this, 10));
@@ -101,6 +102,16 @@ public class Plesiosaurus extends WaterAnimal implements IAnimatable {
         return super.getBoundingBoxForCulling().inflate(1.25F, 0.25F, 1.25F);
     }
 
+    @Override
+    public int getMaxHeadXRot() {
+        return 20;
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 20;
+    }
+
     //// SOUNDS ////
 
     @Override
@@ -117,19 +128,19 @@ public class Plesiosaurus extends WaterAnimal implements IAnimatable {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return PPRegistry.SoundReg.PLESIOSAURUS_AMBIENT.get();
+        return super.getAmbientSound(); //PPRegistry.SoundReg.PLESIOSAURUS_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return PPRegistry.SoundReg.PLESIOSAURUS_HURT.get();
+        return super.getHurtSound(pDamageSource); // PPRegistry.SoundReg.PLESIOSAURUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return PPRegistry.SoundReg.PLESIOSAURUS_DEATH.get();
+        return super.getDeathSound(); //PPRegistry.SoundReg.PLESIOSAURUS_DEATH.get();
     }
 
     //// NBT ////

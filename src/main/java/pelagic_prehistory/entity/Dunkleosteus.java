@@ -6,6 +6,7 @@ import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
@@ -24,9 +25,12 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Guardian;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import pelagic_prehistory.entity.goal.FloppingGoal;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -39,7 +43,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable {
+public class Dunkleosteus extends WaterAnimal implements IAnimatable, NeutralMob, Enemy {
 
     // NEUTRAL MOB //
     private static final UniformInt ANGER_RANGE = TimeUtil.rangeOfSeconds(20, 39);
@@ -59,7 +63,7 @@ public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 1.30D)
+                .add(Attributes.MOVEMENT_SPEED, 1.2D)
                 .add(Attributes.ATTACK_DAMAGE, 5.0D);
     }
 
@@ -74,10 +78,12 @@ public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
-        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 10.0F, 1.0D, 1.0D));
+        this.goalSelector.addGoal(1, new FloppingGoal(this, 0.4F, 8));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25D, true));
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.84D, 110));
+        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 10.0F, 0.75D, 1.0D));
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Drowned.class, true, false));
         this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(this, false));
     }
@@ -115,7 +121,22 @@ public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable
         return super.getBoundingBoxForCulling().inflate(0.5F, 0.25F, 0.5F);
     }
 
+    @Override
+    public int getMaxHeadXRot() {
+        return 20;
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 20;
+    }
+
     //// NEUTRAL MOB ////
+
+    @Override
+    public boolean canAttack(LivingEntity pTarget) {
+        return super.canAttack(pTarget) && pTarget.isInWaterOrBubble();
+    }
 
     @Override
     public void startPersistentAngerTimer() {
@@ -140,6 +161,13 @@ public class Dunkleosteus extends WaterAnimal implements NeutralMob, IAnimatable
     @Override
     public UUID getPersistentAngerTarget() {
         return this.angerTarget;
+    }
+
+    //// HOSTILE MOB ////
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
     }
 
     //// NBT ////

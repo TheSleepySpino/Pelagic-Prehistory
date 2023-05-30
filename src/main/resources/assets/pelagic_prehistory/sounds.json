@@ -32,8 +32,7 @@
   },
   "entity.pliosaurus.ambient": {
     "sounds": [
-      "pelagic_prehistory:pliosaurus_ambient",
-      "pelagic_prehistory:pliosaurus_broad"
+      "pelagic_prehistory:pliosaurus_ambient"
     ],
     "subtitle": "subtitles.entity.pelagic_prehistory.pliosaurus.ambient"
   },

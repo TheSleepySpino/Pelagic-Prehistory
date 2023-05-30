@@ -13,28 +13,30 @@
         "input": {
           "item": "unusualprehistory:amber_fossil"
         },
-        "results": [
-          {
-            "weight": 15,
-            "item": "unusualprehistory:brachi_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:rex_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:trike_flask"
-          },
-          {
-            "weight": 5,
-            "item": "unusualprehistory:hwacha_flask"
-          },
-          {
-            "weight": 25,
-            "item": "unusualprehistory:encrusted_flask"
-          }
-        ]
+		"output": {
+		  "pool": [
+            {
+              "weight": 15,
+              "data": "unusualprehistory:brachi_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:rex_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:trike_flask"
+            },
+            {
+              "weight": 5,
+              "data": "unusualprehistory:hwacha_flask"
+            },
+            {
+              "weight": 25,
+              "data": "unusualprehistory:encrusted_flask"
+            }
+          ]
+		}
       }
     }
   ]

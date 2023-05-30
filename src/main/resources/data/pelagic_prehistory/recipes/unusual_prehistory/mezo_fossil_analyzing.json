@@ -13,64 +13,66 @@
         "input": {
           "item": "unusualprehistory:mezo_fossil"
         },
-        "results": [
-          {
-            "weight": 50,
-            "item": "minecraft:coal"
-          },
-          {
-            "weight": 50,
-            "item": "minecraft:cobblestone"
-          },
-          {
-            "weight": 50,
-            "item": "minecraft:bone"
-          },
-          {
-            "weight": 40,
-            "item": "unusualprehistory:ammonite_flask"
-          },
-          {
-            "weight": 40,
-            "item": "unusualprehistory:anuro_flask"
-          },
-          {
-            "weight": 40,
-            "item": "unusualprehistory:beelz_flask"
-          },
-          {
-            "weight": 40,
-            "item": "unusualprehistory:kentro_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:majunga_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:antarcto_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:austro_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:raptor_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:pachy_flask"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:eryon_flask"
-          },
-          {
-            "weight": 1,
-            "item": "unusualprehistory:ulugh_flask"
-          }
-        ]
+        "output": {
+          "pool": [
+            {
+              "weight": 50,
+              "data": "minecraft:coal"
+            },
+            {
+              "weight": 50,
+              "data": "minecraft:cobblestone"
+            },
+            {
+              "weight": 50,
+              "data": "minecraft:bone"
+            },
+            {
+              "weight": 40,
+              "data": "unusualprehistory:ammonite_flask"
+            },
+            {
+              "weight": 40,
+              "data": "unusualprehistory:anuro_flask"
+            },
+            {
+              "weight": 40,
+              "data": "unusualprehistory:beelz_flask"
+            },
+            {
+              "weight": 40,
+              "data": "unusualprehistory:kentro_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:majunga_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:antarcto_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:austro_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:raptor_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:pachy_flask"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:eryon_flask"
+            },
+            {
+              "weight": 1,
+              "data": "unusualprehistory:ulugh_flask"
+            }
+          ]
+        }
       }
     }
   ]

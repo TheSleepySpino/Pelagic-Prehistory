@@ -13,40 +13,42 @@
         "input": {
           "item": "unusualprehistory:paleo_fossil"
         },
-        "results": [
-          {
-            "weight": 50,
-            "item": "minecraft:coal"
-          },
-          {
-            "weight": 50,
-            "item": "minecraft:cobblestone"
-          },
-          {
-            "weight": 50,
-            "item": "minecraft:bone"
-          },
-          {
-            "weight": 50,
-            "item": "unusualprehistory:ammonite_flask"
-          },
-          {
-            "weight": 40,
-            "item": "unusualprehistory:scau_flask"
-          },
-          {
-            "weight": 35,
-            "item": "unusualprehistory:coty_flask"
-          },
-          {
-            "weight": 35,
-            "item": "unusualprehistory:stetha_flask"
-          },
-          {
-            "weight": 20,
-            "item": "unusualprehistory:dunk_flask"
-          }
-        ]
+        "output": {
+          "pool": [
+            {
+              "weight": 50,
+              "data": "minecraft:coal"
+            },
+            {
+              "weight": 50,
+              "data": "minecraft:cobblestone"
+            },
+            {
+              "weight": 50,
+              "data": "minecraft:bone"
+            },
+            {
+              "weight": 50,
+              "data": "unusualprehistory:ammonite_flask"
+            },
+            {
+              "weight": 40,
+              "data": "unusualprehistory:scau_flask"
+            },
+            {
+              "weight": 35,
+              "data": "unusualprehistory:coty_flask"
+            },
+            {
+              "weight": 35,
+              "data": "unusualprehistory:stetha_flask"
+            },
+            {
+              "weight": 20,
+              "data": "unusualprehistory:dunk_flask"
+            }
+          ]
+        }
       }
     }
   ]

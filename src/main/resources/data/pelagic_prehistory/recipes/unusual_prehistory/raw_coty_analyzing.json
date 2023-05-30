@@ -13,12 +13,10 @@
         "input": {
           "item": "unusualprehistory:raw_coty"
         },
-        "results": [
-          {
-            "weight": 100,
-            "item": "unusualprehistory:coty_flask"
-          }
-        ]
+        "output": {
+          "weight": 100,
+          "data": "unusualprehistory:coty_flask"
+        }
       }
     }
   ]

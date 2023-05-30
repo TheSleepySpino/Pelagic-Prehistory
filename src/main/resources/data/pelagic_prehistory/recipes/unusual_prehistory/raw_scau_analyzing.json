@@ -13,12 +13,10 @@
         "input": {
           "item": "unusualprehistory:raw_scau"
         },
-        "results": [
-          {
-            "weight": 100,
-            "item": "unusualprehistory:scau_flask"
-          }
-        ]
+        "output": {
+          "weight": 100,
+          "data": "unusualprehistory:scau_flask"
+        }
       }
     }
   ]

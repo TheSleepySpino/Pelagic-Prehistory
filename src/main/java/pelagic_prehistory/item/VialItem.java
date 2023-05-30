@@ -1,8 +1,13 @@
 package pelagic_prehistory.item;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
@@ -11,6 +16,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.MultiItemValue;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import pelagic_prehistory.PPRegistry;
 import pelagic_prehistory.recipe.InfuserRecipe;
@@ -40,14 +46,30 @@ public class VialItem extends Item {
                     .filter(p -> p.getIngredient().test(pStack)).findFirst();
             // validate recipe and base ingredient
             if(oRecipe.isPresent() && !oRecipe.get().getBase().isEmpty()) {
-                // create a component for the recipe base ingredient
+                // load recipe base ingredient and convert to JSON
                 final Ingredient base = oRecipe.get().getBase();
-                Ingredient.Value value = Ingredient.valueFromJson(base.toJson().getAsJsonObject());
+                JsonElement baseJsonElement = base.toJson();
+                // hardcoded support for tag ingredients (which are expanded before being sent to the client)
+                if(baseJsonElement.isJsonArray() && !baseJsonElement.getAsJsonArray().isEmpty()) {
+                    // parse the array
+                    final JsonArray baseJsonArray = baseJsonElement.getAsJsonArray();
+                    // load the n-th item based on elapsed ticks
+                    baseJsonElement = baseJsonArray.get(((int)(pLevel.getGameTime() / 20) % baseJsonArray.size()));
+                } else if(!baseJsonElement.isJsonObject()) {
+                    return;
+                }
+                // hardcoded support for item ingredients
+                final JsonObject baseJson = baseJsonElement.getAsJsonObject();
+                // create a component for the recipe base ingredient (hardcoded support for tags and items only)
                 final Component baseName;
-                if(value instanceof Ingredient.TagValue tagBase) {
-                    baseName = Component.translatable("item.pelagic_prehistory.vial.tooltip.tag", tagBase.serialize().get("tag").getAsString()).withStyle(ChatFormatting.WHITE);
+                if(baseJson.has("item")) {
+                    final ResourceLocation key = new ResourceLocation(baseJson.get("item").getAsString());
+                    final Item item = ForgeRegistries.ITEMS.getValue(key);
+                    baseName = item.getDescription().copy().withStyle(ChatFormatting.WHITE);
+                } else if(baseJson.has("tag")) {
+                    baseName = Component.translatable("item.pelagic_prehistory.vial.tooltip.tag", baseJson.get("tag").getAsString()).withStyle(ChatFormatting.WHITE);;
                 } else {
-                    baseName = Component.empty().append(base.getItems()[0].getHoverName()).withStyle(ChatFormatting.WHITE);
+                    return;
                 }
                 // create a component for the infuser block
                 final Component infuserName = PPRegistry.BlockReg.INFUSER.get().getName();

@@ -13,20 +13,22 @@
         "input": {
           "tag": "unusualprehistory:petrified_wood"
         },
-        "results": [
-          {
-            "weight": 50,
-            "item": "minecraft:coal"
-          },
-          {
-            "weight": 50,
-            "item": "minecraft:cobblestone"
-          },
-          {
-            "weight": 15,
-            "item": "unusualprehistory:ginkgo_flask"
-          }
-        ]
+        "output": {
+          "pool": [
+            {
+              "weight": 50,
+              "data": "minecraft:coal"
+            },
+            {
+              "weight": 50,
+              "data": "minecraft:cobblestone"
+            },
+            {
+              "weight": 15,
+              "data": "unusualprehistory:ginkgo_flask"
+            }
+          ]
+        }
       }
     }
   ]

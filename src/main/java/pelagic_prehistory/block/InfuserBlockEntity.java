@@ -30,7 +30,7 @@ public class InfuserBlockEntity extends PPBlockEntityBase<InfuserRecipe> {
 
     public InfuserBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
-        this.maxProgress = 120;
+        this.maxProgress = 200;
     }
 
     // TICKING //

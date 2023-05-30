@@ -13,12 +13,10 @@
         "input": {
           "item": "unusualprehistory:ginkgo_fruit"
         },
-        "results": [
-          {
-            "weight": 100,
-            "item": "unusualprehistory:ginkgo_flask"
-          }
-        ]
+        "output": {
+          "weight": 100,
+          "data": "unusualprehistory:ginkgo_flask"
+        }
       }
     }
   ]

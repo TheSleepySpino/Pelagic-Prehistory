@@ -15,4 +15,9 @@ public class CladoselacheModel<T extends Cladoselache> extends SimplePitchGeoMod
     protected Optional<IBone> getHeadBone() {
         return Optional.empty();
     }
+
+    @Override
+    protected Optional<IBone> getBodyBone() {
+        return Optional.ofNullable(getBone("bone"));
+    }
 }

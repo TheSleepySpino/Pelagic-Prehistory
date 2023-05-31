@@ -16,20 +16,15 @@ public class LepidotesModel<T extends Lepidotes> extends SimplePitchGeoModel<T> 
     @Override
     public void setCustomAnimations(T animatable, int instanceId, AnimationEvent animationEvent) {
         super.setCustomAnimations(animatable, instanceId, animationEvent);
-        //rotateTail(animatable, instanceId, animationEvent);
     }
 
     @Override
     protected Optional<IBone> getHeadBone() {
-        return super.getHeadBone();// Optional.empty();
+        return Optional.ofNullable(getBone("Head"));
     }
 
-    protected void rotateTail(T animatable, int instanceId, AnimationEvent animationState) {
-        Optional<IBone> tail = Optional.ofNullable(getBone("Tail"));
-        if(tail.isPresent()) {
-            final float ageInTicks = (animatable.tickCount + animatable.getId()) + animationState.getPartialTick();
-            final float tailAngle = Mth.cos(ageInTicks * 0.28F) * 0.52F;
-            tail.get().setRotationY(tailAngle);
-        }
+    @Override
+    protected Optional<IBone> getBodyBone() {
+        return Optional.ofNullable(getBone("Lepidotes"));
     }
 }

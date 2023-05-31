@@ -363,7 +363,7 @@ public class Irritator extends PathfinderMob implements IAnimatable, NeutralMob,
         private final Irritator entity;
 
         public IrritatorMoveControl(Irritator entity) {
-            super(entity, 85, 10, 1.0F, 1.0F, false);
+            super(entity, 85, 10, 0.9F, 0.8F, false);
             this.entity = entity;
         }
 

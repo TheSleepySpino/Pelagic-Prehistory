@@ -5,9 +5,9 @@
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"body": {
+				"bone": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.2) * 180) * 6", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 180) * 6", "Math.sin((query.anim_time - 0.2) * 180) * 3"]
 					}
 				},
 				"bone2": {
@@ -20,12 +20,12 @@
 						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 15", 0]
 					}
 				},
-				"neck": {
+				"bone4": {
 					"rotation": {
 						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 4", 0]
 					}
 				},
-				"head": {
+				"bone5": {
 					"rotation": {
 						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 3", 0]
 					}
@@ -56,9 +56,9 @@
 			"loop": true,
 			"animation_length": 0.83333,
 			"bones": {
-				"body": {
+				"bone": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.2) * 420) * 6", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 420) * 6", "Math.sin((query.anim_time - 0.2) * 520) * 2"]
 					}
 				},
 				"bone2": {
@@ -71,12 +71,12 @@
 						"vector": [0, "Math.cos((query.anim_time - 0.5) * 420) * 12", 0]
 					}
 				},
-				"neck": {
+				"bone4": {
 					"rotation": {
 						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 4", 0]
 					}
 				},
-				"head": {
+				"bone5": {
 					"rotation": {
 						"vector": [0, "Math.cos((query.anim_time - 0.8) * 420) * 3", 0]
 					}
@@ -102,6 +102,9 @@
 					}
 				}
 			}
+		},
+		"dry_out": {
+			"loop": true
 		}
 	},
 	"geckolib_format_version": 2

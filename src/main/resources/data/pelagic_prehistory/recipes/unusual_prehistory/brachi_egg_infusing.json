@@ -1,0 +1,22 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "unusualprehistory"
+        }
+      ],
+      "recipe": {
+        "type": "pelagic_prehistory:infusing",
+        "ingredient": {
+          "item": "unusualprehistory:brachi_flask"
+        },
+        "result": {
+          "item": "unusualprehistory:brachi_egg"
+        }
+      }
+    }
+  ]
+}

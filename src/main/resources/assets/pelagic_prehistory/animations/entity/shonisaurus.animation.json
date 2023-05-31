@@ -7,52 +7,52 @@
 			"bones": {
 				"body": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.2) * 90) * 4", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 90) * 10", "Math.sin((query.anim_time - 0.2) * 90) * 3"]
 					}
 				},
 				"tail": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.5) * 90) * 6", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.5) * 90) * 12", 0]
 					}
 				},
 				"bone2": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.8) * 90) * 8", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 90) * 14", 0]
 					}
 				},
 				"bone": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.8) * 90) * 8", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.99) * 90) * 16", 0]
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.6) * 90) * 4", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 90) * 10", 0]
 					}
 				},
 				"leftfrontfin": {
 					"rotation": {
 						"0.0": {
-							"vector": [16.32493, 15.6999, -21.79319]
+							"vector": [9.00714, 20.70484, -44.91032]
 						},
 						"2.0": {
-							"vector": [19.73389, 11.03114, -7.13453]
+							"vector": [14.15249, 17.67418, -29.3477]
 						},
 						"4.0": {
-							"vector": [16.32493, 15.6999, -21.79319]
+							"vector": [9.00714, 20.70484, -44.91032]
 						}
 					}
 				},
 				"rightfrontfin": {
 					"rotation": {
 						"0.0": {
-							"vector": [16.32495, -15.69986, 21.79319]
+							"vector": [9.00717, -20.70481, 44.9103]
 						},
 						"2.0": {
-							"vector": [19.7339, -11.0311, 7.13453]
+							"vector": [14.15251, -17.67415, 29.3477]
 						},
 						"4.0": {
-							"vector": [16.32495, -15.69986, 21.79319]
+							"vector": [9.00717, -20.70481, 44.9103]
 						}
 					}
 				},
@@ -90,52 +90,52 @@
 			"bones": {
 				"body": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.2) * 180) * 4", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 180) * 10 ", "Math.sin((query.anim_time - 0.2) * 180) * 3"]
 					}
 				},
 				"tail": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.5) * 180) * 6", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.5) * 180) * 12", 0]
 					}
 				},
 				"bone2": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 8", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 14", 0]
 					}
 				},
 				"bone": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 8", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 16", 0]
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.6) * 180) * 4", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 8", 0]
 					}
 				},
 				"leftfrontfin": {
 					"rotation": {
 						"0.0": {
-							"vector": [16.32493, 15.6999, -21.79319]
+							"vector": [9.00714, 20.70484, -44.91032]
 						},
 						"1.0": {
-							"vector": [19.73389, 11.03114, -7.13453]
+							"vector": [14.15249, 17.67418, -29.3477]
 						},
 						"2.0": {
-							"vector": [16.32493, 15.6999, -21.79319]
+							"vector": [9.00714, 20.70484, -44.91032]
 						}
 					}
 				},
 				"rightfrontfin": {
 					"rotation": {
 						"0.0": {
-							"vector": [16.32495, -15.69986, 21.79319]
+							"vector": [9.00717, -20.70481, 44.9103]
 						},
 						"1.0": {
-							"vector": [19.7339, -11.0311, 7.13453]
+							"vector": [14.15251, -17.67415, 29.3477]
 						},
 						"2.0": {
-							"vector": [16.32495, -15.69986, 21.79319]
+							"vector": [9.00717, -20.70481, 44.9103]
 						}
 					}
 				},
@@ -163,6 +163,31 @@
 						"2.0": {
 							"vector": [22.5, 0, 22.5]
 						}
+					}
+				}
+			}
+		},
+		"dry_out": {
+			"loop": true,
+			"bones": {
+				"leftfrontfin": {
+					"rotation": {
+						"vector": [0, 0, -85]
+					}
+				},
+				"rightfrontfin": {
+					"rotation": {
+						"vector": [0, 0, 85]
+					}
+				},
+				"leftbackfin": {
+					"rotation": {
+						"vector": [0, 0, -80]
+					}
+				},
+				"rightbackfin": {
+					"rotation": {
+						"vector": [0, 0, 80]
 					}
 				}
 			}

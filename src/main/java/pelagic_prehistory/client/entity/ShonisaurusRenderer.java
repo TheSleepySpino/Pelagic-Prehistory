@@ -7,7 +7,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 public class ShonisaurusRenderer<T extends Shonisaurus> extends GeoEntityRenderer<T> {
 
     public ShonisaurusRenderer(EntityRendererProvider.Context context) {
-        super(context, new SimplePitchGeoModel<T>("shonisaurus"));
+        super(context, new ShonisaurusModel<>("shonisaurus"));
     }
 
     @Override

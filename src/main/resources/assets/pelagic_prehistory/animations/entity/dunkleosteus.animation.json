@@ -5,53 +5,99 @@
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"body": {
+				"bone": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.2) * 360) * 6", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 180) * 10", "Math.sin((query.anim_time - 0.2) * 180) * 3"]
 					}
 				},
-				"head": {
+				"bone2": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.8) * 360) * 3", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 180) * 6", 0]
 					}
 				},
 				"bone3": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.5) * 360) * 12", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.5) * 180) * 13", 0]
 					}
 				},
 				"bone4": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.8) * 360) * 15", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.8) * 180) * 15", 0]
 					}
 				},
 				"bone5": {
 					"rotation": {
 						"0.0": {
-							"vector": [16.32493, 15.6999, -21.79319]
+							"vector": [16.32495, 15.69986, -42.7342]
 						},
 						"1.0": {
-							"vector": [19.73389, 11.03114, -7.13453]
+							"pre": {
+								"vector": [9.92926, 20.29348, -63.21864]
+							},
+							"post": {
+								"vector": [9.92926, 20.29348, -63.21864]
+							},
+							"lerp_mode": "catmullrom"
 						},
 						"2.0": {
-							"vector": [16.32493, 15.6999, -21.79319]
+							"post": {
+								"vector": [16.32495, 15.69986, -42.7342]
+							},
+							"lerp_mode": "catmullrom"
 						}
 					}
 				},
 				"bone7": {
 					"rotation": {
 						"0.0": {
-							"vector": [16.32495, -15.69986, 21.79319]
+							"vector": [16.32495, -15.69986, 42.73421]
 						},
 						"1.0": {
-							"vector": [19.7339, -11.0311, 7.13453]
+							"pre": {
+								"vector": [9.9293, -20.2935, 63.2186]
+							},
+							"post": {
+								"vector": [9.9293, -20.2935, 63.2186]
+							},
+							"lerp_mode": "catmullrom"
 						},
 						"2.0": {
-							"vector": [16.32495, -15.69986, 21.79319]
+							"post": {
+								"vector": [16.32495, -15.69986, 42.73421]
+							},
+							"lerp_mode": "catmullrom"
 						}
 					}
 				}
 			}
+		},
+		"dry_out": {
+			"loop": true,
+			"bones": {
+				"bone5": {
+					"rotation": {
+						"vector": [0, 0, -90]
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"vector": [0, 0, 90]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": [0, 0, -60]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [0, 0, 60]
+					}
+				}
+			}
+		},
+		"idle": {
+			"loop": true
 		}
 	},
 	"geckolib_format_version": 2

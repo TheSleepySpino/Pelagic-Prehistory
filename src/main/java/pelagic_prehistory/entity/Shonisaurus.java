@@ -56,6 +56,7 @@ public class Shonisaurus extends WaterAnimal implements NeutralMob, IAnimatable 
     protected AnimationFactory instanceCache = GeckoLibUtil.createFactory(this);
     protected static final AnimationBuilder ANIM_SWIM = new AnimationBuilder().addAnimation("swim");
     protected static final AnimationBuilder ANIM_SWIM_FAST = new AnimationBuilder().addAnimation("swim_fast");
+    protected static final AnimationBuilder ANIM_DRY_OUT = new AnimationBuilder().addAnimation("dry_out");
 
     public Shonisaurus(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
@@ -139,6 +140,19 @@ public class Shonisaurus extends WaterAnimal implements NeutralMob, IAnimatable 
         return 20;
     }
 
+    @Override
+    protected void handleAirSupply(int pAirSupply) {
+        super.handleAirSupply(pAirSupply);
+        if (this.isInWaterOrBubble()) {
+            this.setAirSupply(this.getMaxAirSupply());
+        }
+    }
+
+    @Override
+    public int getMaxAirSupply() {
+        return 2400;
+    }
+
     //// SOUNDS ////
 
     @Override
@@ -219,7 +233,9 @@ public class Shonisaurus extends WaterAnimal implements NeutralMob, IAnimatable 
     //// GECKOLIB ////
 
     private PlayState handleAnimation(AnimationEvent<Shonisaurus> event) {
-        if(getDeltaMovement().lengthSqr() > 2.5000003E-7F) {
+        if(!isInWaterOrBubble()) {
+            event.getController().setAnimation(ANIM_DRY_OUT);
+        } else if(event.isMoving()) {
             event.getController().setAnimation(ANIM_SWIM_FAST);
         } else {
             event.getController().setAnimation(ANIM_SWIM);

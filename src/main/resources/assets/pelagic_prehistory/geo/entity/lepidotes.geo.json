@@ -7,12 +7,12 @@
 				"texture_width": 64,
 				"texture_height": 64,
 				"visible_bounds_width": 3,
-				"visible_bounds_height": 2.5,
-				"visible_bounds_offset": [0, 0.75, 0]
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
 			},
 			"bones": [
 				{
-					"name": "body",
+					"name": "Lepidotes",
 					"pivot": [0, 0, -0.5],
 					"cubes": [
 						{"origin": [-3, 1, -7.5], "size": [6, 10, 15], "uv": [0, 0]},
@@ -21,8 +21,8 @@
 					]
 				},
 				{
-					"name": "head",
-					"parent": "body",
+					"name": "Head",
+					"parent": "Lepidotes",
 					"pivot": [0, 5, -7.5],
 					"cubes": [
 						{"origin": [-2.5, 1, -13.5], "size": [5, 6, 6], "uv": [0, 25]}
@@ -30,7 +30,7 @@
 				},
 				{
 					"name": "Tail",
-					"parent": "body",
+					"parent": "Lepidotes",
 					"pivot": [0, 7, 7.5],
 					"cubes": [
 						{"origin": [0, 2, 11.5], "size": [0, 9, 4], "uv": [0, 0]},
@@ -39,7 +39,7 @@
 				},
 				{
 					"name": "FinR",
-					"parent": "body",
+					"parent": "Lepidotes",
 					"pivot": [-3, 2, -5.5],
 					"cubes": [
 						{"origin": [-3.01, 0, -6.5], "size": [0, 3, 5], "uv": [27, 3], "mirror": true}
@@ -47,7 +47,7 @@
 				},
 				{
 					"name": "FinL",
-					"parent": "body",
+					"parent": "Lepidotes",
 					"pivot": [3, 2, -5.5],
 					"cubes": [
 						{"origin": [3.01, 0, -6.5], "size": [0, 3, 5], "uv": [27, 3]}

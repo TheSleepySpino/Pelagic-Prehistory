@@ -5,19 +5,35 @@
 			"loop": true,
 			"animation_length": 0.58333,
 			"bones": {
-				"body": {
+				"Lepidotes": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.2) * 600) * 4", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.2) * 600) * 4", "Math.sin((query.anim_time - 0.2) * 600) * 3"]
 					}
 				},
-				"head": {
+				"Head": {
 					"rotation": {
 						"vector": [0, "Math.cos((query.anim_time - 0.8) * 630) * 4", 0]
 					}
 				},
 				"Tail": {
 					"rotation": {
-						"vector": [0, "Math.cos((query.anim_time - 0.2) * 630) * 12", 0]
+						"vector": [0, "Math.cos((query.anim_time - 0.4) * 630) * 12", 0]
+					}
+				}
+			}
+		},
+		"idle": {
+			"loop": true
+		},
+		"dry_out": {
+			"loop": true,
+			"bones": {
+				"Lepidotes": {
+					"rotation": {
+						"vector": [0, 0, 90]
+					},
+					"position": {
+						"vector": [-6, 3, 0]
 					}
 				}
 			}

@@ -14,9 +14,23 @@ public class PrognathodonModel<T extends Prognathodon> extends SimplePitchGeoMod
     }
 
     @Override
+    protected Optional<IBone> getHeadBone() {
+        return Optional.ofNullable(getBone("bone5"));
+    }
+
+    @Override
+    protected Optional<IBone> getBodyBone() {
+        return Optional.ofNullable(getBone("bone"));
+    }
+
+    protected Optional<IBone> getNeckBone() {
+        return Optional.ofNullable(getBone("bone4"));
+    }
+
+    @Override
     protected void rotateHead(T animatable, int instanceId, AnimationEvent animationState) {
         Optional<IBone> oHead = getHeadBone();
-        Optional<IBone> oNeck = Optional.ofNullable(getBone("neck"));
+        Optional<IBone> oNeck = getNeckBone();
         if(oHead.isPresent() && oNeck.isPresent()) {
             final IBone head = oHead.get();
             final IBone neck = oNeck.get();

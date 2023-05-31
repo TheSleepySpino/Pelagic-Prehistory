@@ -54,6 +54,7 @@ public class Prognathodon extends WaterAnimal implements IAnimatable, NeutralMob
     protected AnimationFactory instanceCache = GeckoLibUtil.createFactory(this);
     protected static final AnimationBuilder ANIM_SWIM = new AnimationBuilder().addAnimation("swim");
     protected static final AnimationBuilder ANIM_SWIM_FAST = new AnimationBuilder().addAnimation("swim_fast");
+    protected static final AnimationBuilder ANIM_DRY_OUT = new AnimationBuilder().addAnimation("dry_out");
 
     public Prognathodon(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
@@ -79,7 +80,7 @@ public class Prognathodon extends WaterAnimal implements IAnimatable, NeutralMob
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(1, new FloppingGoal(this, 0.4F, 8));
+        this.goalSelector.addGoal(1, new FloppingGoal(this, 0.32F, 8));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.9D, 80));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
@@ -135,6 +136,19 @@ public class Prognathodon extends WaterAnimal implements IAnimatable, NeutralMob
     @Override
     public int getMaxHeadYRot() {
         return 20;
+    }
+
+    @Override
+    protected void handleAirSupply(int pAirSupply) {
+        super.handleAirSupply(pAirSupply);
+        if (this.isInWaterOrBubble()) {
+            this.setAirSupply(this.getMaxAirSupply());
+        }
+    }
+
+    @Override
+    public int getMaxAirSupply() {
+        return 2400;
     }
 
     //// NEUTRAL MOB ////
@@ -193,7 +207,9 @@ public class Prognathodon extends WaterAnimal implements IAnimatable, NeutralMob
     //// GECKOLIB ////
 
     private PlayState handleAnimation(AnimationEvent<Prognathodon> event) {
-        if(getDeltaMovement().lengthSqr() > 2.5000003E-7F) {
+        if(!isInWaterOrBubble()) {
+            event.getController().setAnimation(ANIM_DRY_OUT);
+        } else if(event.isMoving()) {
             event.getController().setAnimation(ANIM_SWIM_FAST);
         } else {
             event.getController().setAnimation(ANIM_SWIM);

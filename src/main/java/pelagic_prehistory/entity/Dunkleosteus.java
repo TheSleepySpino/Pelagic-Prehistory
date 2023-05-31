@@ -52,7 +52,8 @@ public class Dunkleosteus extends WaterAnimal implements IAnimatable, NeutralMob
 
     // GECKOLIB //
     protected AnimationFactory instanceCache = GeckoLibUtil.createFactory(this);
-    protected static final AnimationBuilder ANIM_IDLE = new AnimationBuilder().addAnimation("swim");
+    protected static final AnimationBuilder ANIM_SWIM = new AnimationBuilder().addAnimation("swim");
+    protected static final AnimationBuilder ANIM_DRY_OUT = new AnimationBuilder().addAnimation("dry_out");
 
     public Dunkleosteus(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
@@ -131,6 +132,19 @@ public class Dunkleosteus extends WaterAnimal implements IAnimatable, NeutralMob
         return 20;
     }
 
+    @Override
+    protected void handleAirSupply(int pAirSupply) {
+        super.handleAirSupply(pAirSupply);
+        if (this.isInWaterOrBubble()) {
+            this.setAirSupply(this.getMaxAirSupply());
+        }
+    }
+
+    @Override
+    public int getMaxAirSupply() {
+        return 1200;
+    }
+
     //// NEUTRAL MOB ////
 
     @Override
@@ -187,7 +201,11 @@ public class Dunkleosteus extends WaterAnimal implements IAnimatable, NeutralMob
     //// GECKOLIB ////
 
     private PlayState handleAnimation(AnimationEvent<Dunkleosteus> event) {
-        event.getController().setAnimation(ANIM_IDLE);
+        if(isInWaterOrBubble()) {
+            event.getController().setAnimation(ANIM_SWIM);
+        } else {
+            event.getController().setAnimation(ANIM_DRY_OUT);
+        }
         return PlayState.CONTINUE;
     }
 

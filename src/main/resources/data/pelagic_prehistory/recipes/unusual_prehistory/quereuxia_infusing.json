@@ -1,0 +1,25 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "unusualprehistory"
+        }
+      ],
+      "recipe": {
+        "type": "pelagic_prehistory:infusing",
+        "ingredient": {
+          "item": "unusualprehistory:quereuxia_flask"
+        },
+        "base": {
+          "item": "unusualprehistory:organic_ooze"
+        },
+        "result": {
+          "item": "unusualprehistory:quereuxia"
+        }
+      }
+    }
+  ]
+}

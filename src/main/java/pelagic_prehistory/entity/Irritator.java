@@ -130,8 +130,8 @@ public class Irritator extends PathfinderMob implements IAnimatable, NeutralMob,
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new BreathAirGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0F, false));
+        this.goalSelector.addGoal(1, new BreathAirGoal(this));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0F, false));
         this.goalSelector.addGoal(4, new Irritator.MoveToShallowWaterGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new Irritator.IrritatorSwimmingGoal(this, 0.9D, 40));
         this.goalSelector.addGoal(5, new Irritator.IrritatorWanderGoal(this, 0.9D, 40));
@@ -156,6 +156,9 @@ public class Irritator extends PathfinderMob implements IAnimatable, NeutralMob,
         if(this.tickCount % 4 == 0 && isShallowWater(level, blockPosition())) {
             this.isBodyInWater = false;
             refreshDimensions();
+        }
+        if(this.getAirSupply() < 60 && isBodyInWater() && level.getBlockState(new BlockPos(position().add(0, getDimensions(getPose()).height, 0))).isAir()) {
+            setAirSupply(getMaxAirSupply());
         }
     }
 
@@ -255,6 +258,11 @@ public class Irritator extends PathfinderMob implements IAnimatable, NeutralMob,
     @Override
     public int getMaxAirSupply() {
         return 2400;
+    }
+
+    @Override
+    protected int decreaseAirSupply(int pCurrentAir) {
+        return super.decreaseAirSupply(pCurrentAir); //Math.max(1, super.decreaseAirSupply(pCurrentAir));
     }
 
     @Override

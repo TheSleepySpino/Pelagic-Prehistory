@@ -1,14 +1,15 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "pattern": [
-    "Y",
-    "X"
-  ],
+  "type": "minecraft:crafting_shaped",
   "key": {
     "Y": { "item": "pelagic_prehistory:raw_cuttlefish" },
     "X": { "item": "minecraft:bowl" }
   },
+  "pattern": [
+    "Y",
+    "X"
+  ],
   "result": {
+    "count" : 1,
     "item": "pelagic_prehistory:cuttlefish_stew"
   }
 }

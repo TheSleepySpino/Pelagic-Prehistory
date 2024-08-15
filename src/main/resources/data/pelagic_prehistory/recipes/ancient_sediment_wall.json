@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "#": {
-      "item": "pelagic_prehistory:ancient_sediment"
-    }
+    "#": {"item": "pelagic_prehistory:ancient_sediment"}
   },
   "pattern": [
     "###",

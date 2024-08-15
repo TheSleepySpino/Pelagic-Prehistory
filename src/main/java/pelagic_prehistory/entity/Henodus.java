@@ -41,7 +41,7 @@ public class Henodus extends PathfinderMob implements IAnimatable {
 
     public Henodus(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 30, 20, 0.3F, 0.2F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 30, 20, 0.3F, 0.3F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 15);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0.0F);
@@ -109,7 +109,7 @@ public class Henodus extends PathfinderMob implements IAnimatable {
 
     @Override
     public double getFluidJumpThreshold() {
-        return 1.0D;
+        return 1.1D;
     }
 
     @Override

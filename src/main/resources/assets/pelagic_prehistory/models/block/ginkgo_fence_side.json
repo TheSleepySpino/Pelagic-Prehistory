@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "pelagic_prehistory:block/ginkgo_planks"
+  }
+}

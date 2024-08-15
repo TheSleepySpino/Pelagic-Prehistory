@@ -1,0 +1,91 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"swim": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time*720)*0.25+45)*2.5", 0, 0]
+					}
+				},
+				"BRflipper": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time*720)*0.25+90)*-5", "-Math.sin((query.anim_time*720)*0.25)*25", "-Math.sin((query.anim_time*720)*0.25-45)*25"]
+					}
+				},
+				"FRflipper": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time*720)*0.25-45)*5", "-Math.sin((query.anim_time*720)*0.25+45)*25", "-Math.sin((query.anim_time*720)*0.25)*25"]
+					}
+				},
+				"BLflipper": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time*720)*0.25+90)*-5", "Math.sin((query.anim_time*720)*0.25)*25", "Math.sin((query.anim_time*720)*0.25-45)*25"]
+					}
+				},
+				"FLflipper": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time*720)*0.25-45)*5", "Math.sin((query.anim_time*720)*0.25+45)*25", "Math.sin((query.anim_time*720)*0.25)*25"]
+					}
+				},
+				"Tail": {
+					"rotation": {
+						"vector": [0, "Math.sin((query.anim_time*1440)*0.25+90)*5", 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time*720)*0.25-90)*2.5", 0, 0]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": ["2.75+Math.sin((query.anim_time*720)*0.25+135)*2.5", 0, 0]
+					}
+				}
+			}
+		},
+		"dry-out": {
+			"loop": true,
+			"bones": {
+				"BRflipper": {
+					"rotation": {
+						"vector": [12.5, 0, -5]
+					}
+				},
+				"FRflipper": {
+					"rotation": {
+						"vector": [-7.5, 0, -5]
+					}
+				},
+				"BLflipper": {
+					"rotation": {
+						"vector": [12.5, 0, 5]
+					}
+				},
+				"FLflipper": {
+					"rotation": {
+						"vector": [-5, 0, 5]
+					}
+				},
+				"Tail": {
+					"rotation": {
+						"vector": [-15, 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [2.5, 0, 0]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": [7.5, 0, 0]
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_inventory",
+  "textures": {
+    "texture": "pelagic_prehistory:block/ginkgo_planks"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "variants": {
+	"facing=north": { "model": "pelagic_prehistory:block/analyzer" },
+	"facing=south": { "model": "pelagic_prehistory:block/analyzer", "y": 180 },
+	"facing=west": { "model": "pelagic_prehistory:block/analyzer", "y": 270 },
+	"facing=east": { "model": "pelagic_prehistory:block/analyzer", "y": 90 }
+  }
+}

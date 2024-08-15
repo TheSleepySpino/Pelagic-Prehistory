@@ -1,0 +1,111 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"swim": {
+			"loop": true,
+			"animation_length": 3,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, "Math.sin((query.anim_time*480)*0.25)*5", 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, "Math.sin((query.anim_time*480)*0.25-45)*-5", 0]
+					}
+				},
+				"bone3": {
+					"rotation": {
+						"vector": [0, "Math.sin((query.anim_time*480)*0.25+90)*-15", 0]
+					}
+				},
+				"bone5": {
+					"rotation": {
+						"vector": [0, 0, "15+Math.sin((query.anim_time*480)*0.25-90)*5"]
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"vector": [0, 0, "-15+Math.sin((query.anim_time*480)*0.25-90)*5"]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": [0, 0, "85+Math.sin((query.anim_time*480)*0.25-90)*5"]
+					},
+					"position": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [0, 0, "-85+Math.sin((query.anim_time*480)*0.25-90)*5"]
+					},
+					"position": {
+						"vector": [0, 1, 0]
+					}
+				}
+			}
+		},
+		"dry-out": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"body": {
+					"position": {
+						"vector": [0, -2, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [7.5, 0, 0]
+					}
+				},
+				"bone3": {
+					"rotation": {
+						"vector": [-14.48174, 9.93191, 33.73499]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": [0, 0, 20]
+					}
+				},
+				"bone5": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 7.5]
+						},
+						"0.125": {
+							"vector": [0, 0, 7.5],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, -7.5]
+						},
+						"0.125": {
+							"vector": [0, 0, -7.5],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": [0, 0, 22.5]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": [0, 0, -22.5]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

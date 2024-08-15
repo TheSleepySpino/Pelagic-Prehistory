@@ -1,0 +1,8 @@
+{
+  "variants": {
+	"facing=north": { "model": "pelagic_prehistory:block/infuser" },
+	"facing=south": { "model": "pelagic_prehistory:block/infuser", "y": 180 },
+	"facing=west": { "model": "pelagic_prehistory:block/infuser", "y": 270 },
+	"facing=east": { "model": "pelagic_prehistory:block/infuser", "y": 90 }
+  }
+}

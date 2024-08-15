@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="GNU LGPLv3"
+
+[[mods]]
+    modId="pelagic_prehistory"
+    version="19.2.1"
+    displayName="Pelagic Prehistory"
+    authors="skyjay1, MapleMoose"
+    credits="Definitely Dilo, Jade, Listine, SennaHN, Traut, and The Sleepy Spino"
+    description='''Did someone say Cambrian Explosion?'''
+
+[[dependencies.pelagic_prehistory]]
+    modId="forge"
+    mandatory=true
+    versionRange="[43,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.pelagic_prehistory]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2,1.19.3)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.pelagic_prehistory]]
+    modId="geckolib3"
+    mandatory=true
+    versionRange="[3.1.36,)"
+    ordering="NONE"
+    side="BOTH"

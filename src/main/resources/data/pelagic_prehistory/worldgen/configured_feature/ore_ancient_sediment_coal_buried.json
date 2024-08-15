@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "discard_chance_on_air_exposure": 1.0,
+    "size": 17,
+    "targets": [
+      {
+        "state": {
+          "Name": "pelagic_prehistory:ancient_sediment_coal_ore"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "forge:ore_bearing_ground/ancient_sediment"
+        }
+      }
+    ]
+  }
+}

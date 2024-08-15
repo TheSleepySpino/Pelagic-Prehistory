@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "pelagic_prehistory:block/ginkgo_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "pelagic_prehistory:block/ginkgo_wood"
+    },
+    "axis=z": {
+      "model": "pelagic_prehistory:block/ginkgo_wood",
+      "x": 90
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "pelagic_prehistory:block/stripped_ginkgo_log",
+    "side": "pelagic_prehistory:block/stripped_ginkgo_log"
+  }
+}

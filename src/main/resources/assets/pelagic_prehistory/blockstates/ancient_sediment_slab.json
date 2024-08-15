@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "pelagic_prehistory:block/ancient_sediment_slab" },
+    "type=double": { "model": "pelagic_prehistory:block/ancient_sediment" },
+    "type=top": { "model": "pelagic_prehistory:block/ancient_sediment_slab_top" }
+  }
+}

@@ -1,0 +1,99 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 7,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "body",
+					"pivot": [0, 6, 0],
+					"cubes": [
+						{"origin": [-8, 0, -21], "size": [16, 14, 43], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "BRflipper",
+					"parent": "body",
+					"pivot": [-7, 2, 19],
+					"rotation": [0, 0, 90],
+					"cubes": [
+						{"origin": [-9, -24, 15], "size": [2, 26, 9], "uv": [50, 77]}
+					]
+				},
+				{
+					"name": "FRflipper",
+					"parent": "body",
+					"pivot": [-7, 2, -11],
+					"rotation": [0, 0, 90],
+					"cubes": [
+						{"origin": [-9, -24, -15], "size": [2, 26, 9], "uv": [94, 81]}
+					]
+				},
+				{
+					"name": "BLflipper",
+					"parent": "body",
+					"pivot": [7, 2, 20],
+					"rotation": [0, 0, -90],
+					"cubes": [
+						{"origin": [7, -24, 15], "size": [2, 26, 9], "uv": [72, 81]}
+					]
+				},
+				{
+					"name": "FLflipper",
+					"parent": "body",
+					"pivot": [7, 2, -11],
+					"rotation": [0, 0, -90],
+					"cubes": [
+						{"origin": [7, -24, -15], "size": [2, 26, 9], "uv": [0, 99]}
+					]
+				},
+				{
+					"name": "Tail",
+					"parent": "body",
+					"pivot": [0, 10, 22],
+					"cubes": [
+						{"origin": [-2, 7, 22], "size": [4, 6, 17], "uv": [0, 0]},
+						{"origin": [0, 4, 22], "size": [0, 9, 22], "uv": [0, 35]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 7, -21],
+					"cubes": [
+						{"origin": [-5, 2, -29], "size": [10, 11, 8], "uv": [75, 22]}
+					]
+				},
+				{
+					"name": "bone4",
+					"parent": "head",
+					"pivot": [0, 7, -24],
+					"cubes": [
+						{"origin": [-6, 4.1, -38], "size": [12, 4, 15], "uv": [68, 62]},
+						{"origin": [-3, 5.1, -57], "size": [6, 3, 19], "uv": [75, 0]},
+						{"origin": [3, 8, -57], "size": [2, 0, 18], "pivot": [3, 8, -48], "rotation": [0, 0, -60], "uv": [12, 23]},
+						{"origin": [-5, 8, -57], "size": [2, 0, 18], "pivot": [-3, 8, -48], "rotation": [0, 0, 60], "uv": [8, 23]}
+					]
+				},
+				{
+					"name": "bone3",
+					"parent": "head",
+					"pivot": [0, 9, -24],
+					"cubes": [
+						{"origin": [-6, 8.1, -38], "size": [12, 5, 15], "uv": [29, 57]},
+						{"origin": [-3, 8.1, -57], "size": [6, 3, 19], "uv": [0, 77]},
+						{"origin": [-5, 8, -57], "size": [2, 0, 18], "pivot": [-3, 8, -48], "rotation": [0, 0, -60], "uv": [4, 23]},
+						{"origin": [3, 8, -57], "size": [2, 0, 18], "pivot": [3, 8, -48], "rotation": [0, 0, 60], "uv": [0, 23]}
+					]
+				}
+			]
+		}
+	]
+}

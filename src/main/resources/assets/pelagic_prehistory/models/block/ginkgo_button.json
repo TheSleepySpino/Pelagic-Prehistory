@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "pelagic_prehistory:block/ginkgo_planks"
+  }
+}

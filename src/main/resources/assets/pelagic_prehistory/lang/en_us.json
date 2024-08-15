@@ -111,5 +111,8 @@
   "subtitles.entity.pelagic_prehistory.shonisaurus.death": "Shonisaurus dies",
   "subtitles.entity.pelagic_prehistory.eurhinosaurus.ambient": "Eurhinosaurus squeaks",
   "subtitles.entity.pelagic_prehistory.eurhinosaurus.hurt": "Eurhinosaurus screeches",
-  "subtitles.entity.pelagic_prehistory.eurhinosaurus.death": "Eurhinosaurus dies"
+  "subtitles.entity.pelagic_prehistory.eurhinosaurus.death": "Eurhinosaurus dies",
+  "subtitles.entity.pelagic_prehistory.spinosaurus.ambient": "Spinosaurus growls",
+  "subtitles.entity.pelagic_prehistory.spinosaurus.hurt": "Spinosaurus hisses",
+  "subtitles.entity.pelagic_prehistory.spinosaurus.death": "Spinosaurus dies"
 }

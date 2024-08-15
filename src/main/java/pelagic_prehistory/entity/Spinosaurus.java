@@ -235,22 +235,22 @@ public class Spinosaurus extends PathfinderMob implements NeutralMob, IAnimatabl
 
     @Override
     protected float getSoundVolume() {
-        return 0.4F;
+        return 0.9F;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return PPRegistry.SoundReg.IRRITATOR_AMBIENT.get();
+        return PPRegistry.SoundReg.SPINOSAURUS_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return PPRegistry.SoundReg.IRRITATOR_HURT.get();
+        return PPRegistry.SoundReg.SPINOSAURUS_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return PPRegistry.SoundReg.IRRITATOR_DEATH.get();
+        return PPRegistry.SoundReg.SPINOSAURUS_DEATH.get();
     }
 
     //// NBT ////

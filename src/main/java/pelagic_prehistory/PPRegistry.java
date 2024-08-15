@@ -553,6 +553,9 @@ public final class PPRegistry {
         public static final RegistryObject<SoundEvent> EURHINOSAURUS_AMBIENT = registerSound("entity.eurhinosaurus.ambient");
         public static final RegistryObject<SoundEvent> EURHINOSAURUS_HURT = registerSound("entity.eurhinosaurus.hurt");
         public static final RegistryObject<SoundEvent> EURHINOSAURUS_DEATH = registerSound("entity.eurhinosaurus.death");
+        public static final RegistryObject<SoundEvent> SPINOSAURUS_AMBIENT = registerSound("entity.spinosaurus.ambient");
+        public static final RegistryObject<SoundEvent> SPINOSAURUS_HURT = registerSound("entity.spinosaurus.hurt");
+        public static final RegistryObject<SoundEvent> SPINOSAURUS_DEATH = registerSound("entity.spinosaurus.death");
         
     }
 

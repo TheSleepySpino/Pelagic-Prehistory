@@ -184,7 +184,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
 
     @Override
     public double getFluidJumpThreshold() {
-        return 1.0D;
+        return 1.1D;
     }
 
     @Override
@@ -246,7 +246,7 @@ public class Irritator extends PathfinderMob implements NeutralMob, IAnimatable 
 
     @Override
     protected float getSoundVolume() {
-        return 0.4F;
+        return 0.6F;
     }
 
     @Override

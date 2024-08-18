@@ -18,6 +18,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
@@ -57,6 +58,7 @@ public class Henodus extends PathfinderMob implements IAnimatable {
     //// METHODS ////
 
 
+
     protected boolean isBodyInWater;
 
     @Override
@@ -94,6 +96,7 @@ public class Henodus extends PathfinderMob implements IAnimatable {
     @Override
     public void tick() {
         super.tick();
+        updateFluidOnBody();
     }
 
     @Override
@@ -125,6 +128,15 @@ public class Henodus extends PathfinderMob implements IAnimatable {
     @Override
     public int getMaxHeadYRot() {
         return 25;
+    }
+
+
+    private void updateFluidOnBody() {
+        double bodyY = this.getY() + getDimensions(getPose()).height * 0.5D;
+        BlockPos blockpos = new BlockPos(this.getX(), bodyY, this.getZ());
+        FluidState fluidstate = this.level.getFluidState(blockpos);
+        double fluidHeight = (float)blockpos.getY() + fluidstate.getHeight(this.level, blockpos);
+        this.isBodyInWater = !fluidstate.isEmpty() && fluidHeight > bodyY;
     }
 
 

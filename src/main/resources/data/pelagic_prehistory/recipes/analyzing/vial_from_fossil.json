@@ -3,70 +3,72 @@
   "input": {
     "item": "pelagic_prehistory:fossil"
   },
-  "results": [
-    {
-      "item": "pelagic_prehistory:ginkgo_tree_vial",
-      "weight": 20
-    },
-    {
-      "item": "pelagic_prehistory:charnia_vial",
-      "weight": 20
-    },
-    {
-      "item": "pelagic_prehistory:green_sea_sponge_vial",
-      "weight": 20
-    },
-    {
-      "item": "pelagic_prehistory:bawitius_vial",
-      "weight": 20
-    },
-    {
-      "item": "pelagic_prehistory:cladoselache_vial",
-      "weight": 18
-    },
-    {
-      "item": "pelagic_prehistory:dunkleosteus_vial",
-      "weight": 7
-    },
-    {
-      "item": "pelagic_prehistory:henodus_vial",
-      "weight": 18
-    },
-    {
-      "item": "pelagic_prehistory:lepidotes_vial",
-      "weight": 20
-    },
-    {
-      "item": "pelagic_prehistory:irritator_vial",
-      "weight": 7
-    },
-    {
-      "item": "pelagic_prehistory:plesiosaurus_vial",
-      "weight": 18
-    },
-    {
-      "item": "pelagic_prehistory:pliosaurus_vial",
-      "weight": 4
-    },
-    {
-      "item": "pelagic_prehistory:prognathodon_vial",
-      "weight": 5
-    },
-    {
-      "item": "pelagic_prehistory:shonisaurus_vial",
-      "weight": 2
-    },
-    {
-      "item": "pelagic_prehistory:eurhinosaurus_vial",
-      "weight": 7
-    },
-    {
-      "item": "pelagic_prehistory:orthacanthus_vial",
-      "weight": 10
-    },
-    {
-      "item": "pelagic_prehistory:spinosaurus_vial",
-      "weight": 3
-    }
-  ]
+  "output": {
+    "pool": [
+      {
+        "item": "pelagic_prehistory:ginkgo_tree_vial",
+        "weight": 20
+      },
+      {
+        "item": "pelagic_prehistory:charnia_vial",
+        "weight": 20
+      },
+      {
+        "item": "pelagic_prehistory:green_sea_sponge_vial",
+        "weight": 20
+      },
+      {
+        "item": "pelagic_prehistory:bawitius_vial",
+        "weight": 20
+      },
+      {
+        "item": "pelagic_prehistory:cladoselache_vial",
+        "weight": 18
+      },
+      {
+        "item": "pelagic_prehistory:dunkleosteus_vial",
+        "weight": 7
+      },
+      {
+        "item": "pelagic_prehistory:henodus_vial",
+        "weight": 18
+      },
+      {
+        "item": "pelagic_prehistory:lepidotes_vial",
+        "weight": 20
+      },
+      {
+        "item": "pelagic_prehistory:irritator_vial",
+        "weight": 7
+      },
+      {
+        "item": "pelagic_prehistory:plesiosaurus_vial",
+        "weight": 18
+      },
+      {
+        "item": "pelagic_prehistory:pliosaurus_vial",
+        "weight": 4
+      },
+      {
+        "item": "pelagic_prehistory:prognathodon_vial",
+        "weight": 5
+      },
+      {
+        "item": "pelagic_prehistory:shonisaurus_vial",
+        "weight": 2
+      },
+      {
+        "item": "pelagic_prehistory:eurhinosaurus_vial",
+        "weight": 7
+      },
+      {
+        "item": "pelagic_prehistory:orthacanthus_vial",
+        "weight": 10
+      },
+      {
+        "item": "pelagic_prehistory:spinosaurus_vial",
+        "weight": 3
+      }
+    ]
+  }
 }

@@ -1,22 +1,32 @@
 package pelagic_prehistory.client.entity;
-
 import net.minecraft.world.phys.Vec2;
 import pelagic_prehistory.entity.Prognathodon;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
-
 import java.util.Optional;
-
 public class PrognathodonModel<T extends Prognathodon> extends SimplePitchGeoModel<T> {
-
     public PrognathodonModel(final String name) {
         super(name);
     }
 
     @Override
+    protected Optional<IBone> getHeadBone() {
+        return Optional.ofNullable(getBone("bone5"));
+    }
+
+    @Override
+    protected Optional<IBone> getBodyBone() {
+        return Optional.ofNullable(getBone("bone"));
+    }
+
+    protected Optional<IBone> getNeckBone() {
+        return Optional.ofNullable(getBone("bone4"));
+    }
+
+    @Override
     protected void rotateHead(T animatable, int instanceId, AnimationEvent animationState) {
         Optional<IBone> oHead = getHeadBone();
-        Optional<IBone> oNeck = Optional.ofNullable(getBone("neck"));
+        Optional<IBone> oNeck = getNeckBone();
         if(oHead.isPresent() && oNeck.isPresent()) {
             final IBone head = oHead.get();
             final IBone neck = oNeck.get();

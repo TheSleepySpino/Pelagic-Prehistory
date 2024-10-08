@@ -63,6 +63,9 @@ public class SimplePitchGeoModel<T extends LivingEntity & IAnimatable> extends A
     }
 
     protected void rotateBody(T animatable, int instanceId, AnimationEvent animationState) {
+        if(animatable.isOnGround()) {
+            return;
+        }
         Optional<IBone> bone = getBodyBone();
         if(bone.isPresent()) {
             float xRot = (-1.0F) * animatable.getViewXRot(animationState.getPartialTick()) * getPitchMultiplier();

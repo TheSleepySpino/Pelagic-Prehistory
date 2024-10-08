@@ -9,4 +9,6 @@ public class IrritatorRenderer<T extends Irritator> extends GeoEntityRenderer<T>
     public IrritatorRenderer(EntityRendererProvider.Context context) {
         super(context, new IrritatorModel<>("irritator"));
     }
+
+
 }

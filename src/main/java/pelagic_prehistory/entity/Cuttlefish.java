@@ -21,11 +21,16 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.monster.ElderGuardian;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -50,8 +55,8 @@ public class Cuttlefish extends WaterAnimal implements IAnimatable {
     public Cuttlefish(EntityType<? extends WaterAnimal> type, Level level) {
         super(type, level);
         this.lookControl = new Cuttlefish.NoResetLookControl(this);
-        //this.moveControl = new SmoothSwimmingMoveControl(this, 20, 5, 0.02F, 0.1F, true);
-        //this.lookControl = new SmoothSwimmingLookControl(this, 90);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 20, 5, 0.02F, 0.1F, true);
+        this.lookControl = new SmoothSwimmingLookControl(this, 90);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -75,14 +80,14 @@ public class Cuttlefish extends WaterAnimal implements IAnimatable {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(3, new Cuttlefish.RandomMovementGoal(this));
         this.goalSelector.addGoal(4, new FleeGoal(this));
-        //this.goalSelector.addGoal(8, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.0D, 1.0D));
-        //this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, ElderGuardian.class, 16.0F, 1.0D, 1.0D));
+        this.goalSelector.addGoal(8, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.0D, 1.0D));
+        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, ElderGuardian.class, 16.0F, 1.0D, 1.0D));
     }
 
     @Override
     public void aiStep() {
         super.aiStep();
-        if(this.isInWaterOrBubble()) {
+        if(this.isInWater()) {
             if (!this.level.isClientSide()) {
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.90F));
             }

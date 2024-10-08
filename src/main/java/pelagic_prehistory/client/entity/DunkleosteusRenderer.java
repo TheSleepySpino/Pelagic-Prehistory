@@ -7,6 +7,6 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 public class DunkleosteusRenderer<T extends Dunkleosteus> extends GeoEntityRenderer<T> {
 
     public DunkleosteusRenderer(EntityRendererProvider.Context context) {
-        super(context, new SimplePitchGeoModel<T>("dunkleosteus"));
+        super(context, new DunkleosteusModel<T>("dunkleosteus"));
     }
 }
